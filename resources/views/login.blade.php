@@ -20,7 +20,7 @@ and open the template in the editor.
     <script src="assets/js/login.js" ?random=<?php echo uniqid(); ?>></script>
 </head>
 
-<body class="bg-image" style="background-image: url('images/back1.jpg');">
+<body class="bg-image" style="background-image: url('images/back2.jpg');">
 
     <div class="row m-0 p-3 vh-100 vw-100">
         <div class="col-12 col-md-8 col-lg-4 blur rounded d-flex justify-content-center align-items-center  p-md-5 p-2 ps-4 pe-4 col-30">
