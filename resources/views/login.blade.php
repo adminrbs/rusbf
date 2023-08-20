@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 
 <head>
-    <title>Pharma ERP</title>
+    <title>EasywinBiz LMS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,16 +27,11 @@ and open the template in the editor.
 
             <form method="post" action="#" name="login" class="vw-100 p-md-3 p-2 ">
                 <div style="text-align: center;">
-                    <img src="images/icon.svg" class="img-w">
+                    <img src="images/login_logo.png" class="img-w">
                 </div>
-
-
                 <div class="mb-4 mt-3" style="text-align: center;">
-                    <h1>Pharma ERP</h1>
-                    <small>- Kandana Food and Drugs -</small>
+                    <h4>EasywinBiz LMS</h4>
                 </div>
-
-
                 <div class="form-group-lg pb-3">
                     <label for="email">Email</label>
                     <input type="email" class="form-control form-control-md" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
@@ -49,14 +44,13 @@ and open the template in the editor.
                     <input type="checkbox" class="form-check-input" id="rememberMe">
                     <span class="d-flex justify-content-between">
                         <label class="form-check-label small" for="rememberMe">Remember Me</label>
-                        <small><a href="">Forgot Password?</a></small>
+                        <small><a href="#" style="text-decoration: none">Forgot Password?</a></small>
                     </span>
 
                 </div>
                 <label id="lblMessage" style="color: red;" class="danger"></label>
-                <input type="button" id="submitform" class="btn btn-primary" value="Log in" style="background-color: #4b98cf;">
-                <button type="button" class="btn btn-light border mt-3 w-100">Log in with Google</button>
-
+                <input type="button" id="submitform" class="btn btn-primary" value="Login" style="background-color: #4b98cf; font-size:18px">
+                {{-- <button type="button" class="btn btn-light border mt-3 w-100">Log in with Google</button> --}}
             </form>
         </div>
     </div>

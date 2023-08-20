@@ -33,37 +33,26 @@
                             <i class="ph-dots-three sidebar-resize-show"></i>
                         </li>
                         <li class="nav-item">
-                            <a href="/" class="nav-link">
+                            <a href="/dashboard" class="nav-link">
                                 <i class="ph-house"></i>
                                 <span>
                                     Dashboard
-                                    <span class="d-block fw-normal opacity-50">No pending orders</span>
+                                    {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                 </span>
                             </a>
-                        </li>
-                        <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link">
-                                <i class="ph-swatches"></i>
-                                <span>Themes</span>
-                            </a>
-                            <ul class="nav-group-sub collapse">
-                                <li class="nav-item"><a href="/" class="nav-link">Default</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
+                        </li> 
+                        {{-- <li class="nav-item">
                             <a href="customer_form" class="nav-link">
                                 <i class="ph-list-numbers"></i>
                                 <span>Customer</span>
                             </a>
+                        </li> --}}
+                        <li class="nav-item">
+                            <a href="members" class="nav-link">
+                                <i class="ph-user-plus"></i>
+                                <span>Members</span>
+                            </a>
                         </li>
-
-                        <!-- Forms -->
-                        <li class="nav-item-header">
-                            <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Forms</div>
-                            <i class="ph-dots-three sidebar-resize-show"></i>
-                        </li>
-                        <!-- /Forms -->
-
                     </ul>
                 </div>
                 <!-- /main navigation -->

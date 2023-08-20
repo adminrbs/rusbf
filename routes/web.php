@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
@@ -74,6 +75,23 @@ Route::get('/dashboard', function () {
 
 Route::post('/submitForm', [LoginController::class,'loginForm']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+//members routes
+Route::get('/member_form', function () {
+    return view('add_edit_member');
+});
+
+Route::get('/members', function () {
+    return view('view_all_members');
+});
+Route::get('/get_member_data/{id}', [MemberController::class, 'get_member_data']);
+Route::post('/member_form/update', [MemberController::class, 'update']);
+Route::post('/save_member', [MemberController::class, 'save']);
+Route::get('/get_all_members', [MemberController::class, 'get_all_members']);
+Route::delete('/delete_member/{id}', [MemberController::class, 'delete']);
+
 
 
 
