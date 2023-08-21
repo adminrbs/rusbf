@@ -34,12 +34,12 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Date of Birth<span class="text-danger">*</span></label>
-                        <input type="text" name="date_of_birth" id="date_of_birth" class="form-control daterange-single" required autocomplete="off">
+                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-control form-control-sm" required autocomplete="off">
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Native Language<span class="text-danger">*</span></label>
-                        <select name="language_id" id="language_id" class="form-select" data-minimum-results-for-search="Infinity" required>
-                            <option value="">--Please choose an option--</option>
+                        <select name="language_id" id="language_id" class="form-select form-control-sm custom-background" data-minimum-results-for-search="Infinity" required>
+                            <option value="">Please choose an option</option>
                             <option value="1">English</option>
                             <option value="2">Sinhala</option>
                             <option value="3">Tamil</option>
@@ -50,7 +50,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <!-- Single file upload -->
                     <div>
-                        <label class="col-form-label mb-0">Image(Single File) <span class="text-danger">*</span></label>
+                        <label class="col-form-label mb-0">Image(Max size: 2MB) <span class="text-danger">*</span></label>
                         <div action="#" class="dropzone" id="dropzone_single" required></div>
                     </div>
                     <!-- /Single file upload -->
@@ -83,7 +83,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Joined Date(Department)<span class="text-danger">*</span></label>
-                        <input type="text" name="date_of_joining" id="date_of_joining" class="form-control daterange-single" required autocomplete="off">
+                        <input type="date" name="date_of_joining" id="date_of_joining" class="form-control form-control-sm" required autocomplete="off">
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Cabinet No<span class="text-danger">*</span></label>
@@ -91,8 +91,8 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Work<span class="text-danger">*</span></label>
-                        <select name="work_location_id" id="work_location_id" class="form-select" required>
-                            <option value="">--Please choose an option--</option>
+                        <select name="work_location_id" id="work_location_id" class="form-select form-control-sm custom-background" required>
+                            <option value="">Please choose an option</option>
                             <option value="1">work 1</option>
                             <option value="2">work 2</option>
                         </select>
@@ -119,16 +119,16 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
-                        <select name="designation_id" id="designation_id" class="form-select" required>
-                            <option value="">--Please choose an option--</option>
-                            <option value="1">designation 1</option>
+                        <select name="designation_id" id="designation_id" class="form-select form-control-sm custom-background" required>
+                            <option value="">Please choose an option</option>
+                            <option value="1">designation 1</option> 
                             <option value="2">designation 2</option>
                         </select>
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Payroll<span class="text-danger">*</span></label>
-                        <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-select">
-                            <option value="">--Please Choose an option--</option>
+                        <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-select form-control-sm custom-background" required>
+                            <option value="">Please Choose an option</option>
                             <option value="1">payroll 1</option>
                             <option value="2">payroll 2</option>
                         </select>
@@ -137,8 +137,8 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Serving Sub-department<span class="text-danger">*</span></label>
-                        <select data-placeholder="Select Serving Sub-department" class="form-control" name="serving_sub_department_id" id="serving_sub_department_id">
-                            <option value="">--Please Choose an option--</option>
+                        <select data-placeholder="Select Serving Sub-department" class="form-select form-control-sm custom-background" name="serving_sub_department_id" id="serving_sub_department_id" required>
+                            <option value="">Please Choose an option</option>
                             <option value="1">department 1</option>
                             <option value="2">department 2</option>
                         </select>

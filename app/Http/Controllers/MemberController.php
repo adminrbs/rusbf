@@ -70,7 +70,7 @@ class MemberController extends Controller
                 $exAttatchment->path = $filename;
                 $exAttatchment->save();
 
-                $pathAttach = DB::table('limitless_laravel.members')
+                $pathAttach = DB::table('members')
                               ->where('id', $id)
                               ->update(['path' => $filename]);
 
@@ -81,7 +81,7 @@ class MemberController extends Controller
                 $attachment->path = $filename;
                 $attachment->save();
 
-                $pathAttach = DB::table('limitless_laravel.members')
+                $pathAttach = DB::table('members')
                               ->where('id', $id)
                               ->update(['path' => $filename]);
 
@@ -94,7 +94,7 @@ class MemberController extends Controller
 
         try {
 
-            $all_members = DB::table("limitless_laravel.members")
+            $all_members = DB::table("members")
                             ->select('members.path','members.id','members.member_number','members.name_initials','members.national_id_number','members.mobile_phone_number')
                             ->get();
 
@@ -110,8 +110,8 @@ class MemberController extends Controller
         
         try{
             $memberRequest = Member::where('id',$id)->first();
-            // dd($memberRequest);
-            $get_img_path = DB::table("limitless_laravel.member_attachments")
+
+            $get_img_path = DB::table("member_attachments")
                                 ->select('member_attachments.path')
                                 ->where('member_id', $id)
                                 ->first();
@@ -134,7 +134,9 @@ class MemberController extends Controller
     public function update(Request $request){
         
         try {
+            $file =  $request->file('file');
             $member =Member::find($request->id);
+            
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');
@@ -181,7 +183,7 @@ class MemberController extends Controller
 
             $member = Member::where('id',$id)->first();
             $filePath = $member->path;
-            $baseUrl = "http://127.0.0.1:8000/member_images/";
+            $baseUrl = url('/') . "/member_images/";
 
             $file =  str_replace($baseUrl, '', $filePath);
             $file = public_path('member_images').'/'.$file;

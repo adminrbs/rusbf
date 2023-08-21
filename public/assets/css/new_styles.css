@@ -4,27 +4,22 @@
 }
 
 input[type="text"] {
-    max-height: 35px;
     background-color: #EBFFFF;
   }
 
   input[type="number"] {
-    max-height: 35px;
     background-color: #EBFFFF;
   }
 
   input[type="date"] {
-    max-height: 35px;
     background-color: #EBFFFF;
   }
 
   input[type="tel"] {
-    max-height: 35px;
     background-color: #EBFFFF;
   }
 
   input[type="email"] {
-    max-height: 35px;
     background-color: #EBFFFF;
   }
 
@@ -39,11 +34,11 @@ input[type="text"] {
     background-color:#EBFFFF;
   }
 
-  select {
-    max-height:36px;
-    padding-right: 5px !important;
-    padding-left: 5px !important;
-    background: #EBFFFF !important; 
+  .custom-background {
+    background-color: #EBFFFF !important;
+    max-height: 35px;
+    font-weight: 300 !important;
+    font-size: 13px !important;
   }
 
   .dropzone {

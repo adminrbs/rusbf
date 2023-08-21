@@ -2,18 +2,22 @@ console.log('memberDetails.js');
 
 let dropzoneSingle = undefined;
 var formData = new FormData();
+var thisDropzone = undefined;
 
 $(document).ready(function () {
 
     // Single files
     dropzoneSingle = new Dropzone("#dropzone_single", {
         paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 1, // MB
+        maxFilesize: 2, // MB
         maxFiles: 1,
-        dictDefaultMessage: 'Drop file to upload <span>or CLICK</span>',
+        acceptedFiles: ".jpeg,.jpg,.png",
+        dictDefaultMessage: 'Drop file to upload <span>or CLICK</span> (File formats: jpeg,jpg,png)',
         autoProcessQueue: false,
         addRemoveLinks: true,
         init: function () {
+             thisDropzone = this;
+            
             this.on('addedfile', function (file) {
                 formData.append("file", file);
                 if (this.fileTracker) {
@@ -180,7 +184,7 @@ function saveMember() {
 
 function updateMember(){
     
-    // console.log(formData.get("file"));
+    console.log(formData.get("file"));
     formData.append('id', $('#hiddenmemberid').val());
     formData.append('member_number', $('#member_number').val());
     formData.append('national_id_number', $('#national_id_number').val());
@@ -261,9 +265,9 @@ function loadMemberData(){
 
         },
         success: function (response) {
-            // console.log(response);
+
             var data = response[0];
-            var pathData = response[1]
+            var pathData = response[1];
 
             if (response) {
                 $('#hiddenmemberid').val(data.id);
@@ -292,6 +296,13 @@ function loadMemberData(){
                 $('#beneficiary_relationship').val(data.beneficiary_relationship);
                 $('#beneficiary_private_address').val(data.beneficiary_private_address);
 
+                if(pathData != "not_available"){
+                    var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };
+                    thisDropzone.emit("addedfile", mockFile);
+                    thisDropzone.emit("success", mockFile);
+                    thisDropzone.emit("thumbnail", mockFile, pathData)
+                }
+                
             }
 
         },
