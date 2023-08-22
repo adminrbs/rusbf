@@ -44,10 +44,16 @@ class MemberController extends Controller
             $member->work_location_id = $request->get('work_location_id');
 
             if ($member->save()) {
-                $this->uploadAttachment($file, $member->id);
-                return response()->json(["status" => true, "file" => $file]);
+
+                if($file){
+                    $this->uploadAttachment($file, $member->id);
+                    return response()->json(["status" => "success", "file" => $file]);
+                }else{
+                    return response()->json(["status" => "without_img"]);
+                }  
+            }else{
+                return response()->json(["status" => "failed"]);
             }
-            return response()->json(["status" => false]);
 
         } catch (Exception $ex) {
             return $ex->getMessage();
@@ -58,37 +64,64 @@ class MemberController extends Controller
     public function uploadAttachment($file, $id)
     {
 
-        if ($file) {
-            $file_name = $file->getClientOriginalName();
-            $filename = url('/') . '/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
-            $filename = str_replace(' ', '', str_replace('\'', '', $filename));
-            $file->move(public_path('member_images'), $filename);
+        try{
 
-            $exAttatchment = MemberAttachment::find($id);
+            if ($file) {
 
-            if($exAttatchment){
-                $exAttatchment->path = $filename;
-                $exAttatchment->save();
+                $exAttachment = MemberAttachment::where('member_id', $id)->first();
+    
+                if($exAttachment){
 
-                $pathAttach = DB::table('members')
-                              ->where('id', $id)
-                              ->update(['path' => $filename]);
+                    $ex_filepath = $exAttachment->path;
 
-            }else{
+                    if($ex_filepath){
+                        $baseUrl = url('/') . "/member_images/";
+                        $file_data =  str_replace($baseUrl, '', $ex_filepath);
+                        $file_data = public_path('member_images').'/'.$file_data;
 
-                $attachment = new MemberAttachment();
-                $attachment->member_id = $id;
-                $attachment->path = $filename;
-                $attachment->save();
+                        if(file_exists($file_data)){
+                            unlink($file_data);
+                        }
+                    }
+                    
+                    $file_name = $file->getClientOriginalName();
+                    $filename = url('/') . '/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
+                    $filename = str_replace(' ', '', str_replace('\'', '', $filename));
+                    $file->move(public_path('member_images'), $filename);
 
-                $pathAttach = DB::table('members')
-                              ->where('id', $id)
-                              ->update(['path' => $filename]);
-
+                    $data = DB::table('member_attachments')
+                                        ->where('member_id', $id)
+                                        ->update(['path' => $filename]);
+                    if($data){
+                        $data = DB::table('members')
+                                        ->where('id', $id)
+                                        ->update(['path' => $filename]);
+                    }
+                    
+                }else{
+    
+                    $file_name = $file->getClientOriginalName();
+                    $filename = url('/') . '/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
+                    $filename = str_replace(' ', '', str_replace('\'', '', $filename));
+                    $file->move(public_path('member_images'), $filename);
+    
+                    $attachment = new MemberAttachment();
+                    $attachment->member_id = $id;
+                    $attachment->path = $filename;
+                    $attachment->save();
+    
+                    $pathAttach = DB::table('members')
+                                  ->where('id', $id)
+                                  ->update(['path' => $filename]);
+    
+                }
             }
 
+        }catch(Exception $ex){
+            return $ex;
         }
     }
+
 
     public function get_all_members(){
 
@@ -134,7 +167,9 @@ class MemberController extends Controller
     public function update(Request $request){
         
         try {
+            
             $file =  $request->file('file');
+
             $member =Member::find($request->id);
             
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -161,19 +196,22 @@ class MemberController extends Controller
             $member->personal_address = $request->get('personal_address');
             $member->serving_sub_department_id = $request->get('serving_sub_department_id');
             $member->work_location_id = $request->get('work_location_id');
-            
-            $member->save();
-            return "true";
 
-            // if ($member->save()) {
-            //     $this->uploadAttachment($file, $request->id);
-            //     return response()->json(["status" => true, "file" => $file]);
-            // }
-            // return response()->json(["status" => false]);
+            if ($member->save()) {
+
+                if($file){
+                    $this->uploadAttachment($file, $request->id);
+                    return response()->json(["status" => "success", "file" => $file]);
+                }else{
+                    return response()->json(["status" => "without_img"]);
+                }  
+            }else{
+                return response()->json(["status" => "failed"]);
+            }
 
         }
-         catch (Exception $exception) {
-            return $ex->getMessage();
+         catch (Exception $ex) {
+            return $ex;
         }
     }
 
@@ -191,12 +229,15 @@ class MemberController extends Controller
             if(file_exists($file)){
                 unlink($file);
             }
-            $member->delete();
 
-            $attachment = MemberAttachment::where('id',$id)->first();
-            $attachment->delete();
-
-            return "deleted";
+            if($member->delete()){
+                $attachment = MemberAttachment::where('member_id',$id)->first();
+                $attachment->delete();
+    
+                return "deleted";
+            }else{
+                return "failed";
+            }
             
         } catch (Exception $exception) {
             return $ex->getMessage();

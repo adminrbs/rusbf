@@ -75,6 +75,7 @@ function _delete(id){
             type: 'DELETE',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: '/delete_member/'+id,
+            
             success: function(response){
                 console.log(response);
 
@@ -85,16 +86,17 @@ function _delete(id){
                     }).show();
 
                     loadmembers();
+                }else{
+                    new Noty({
+                        text: 'Something went wrong.',
+                        type: 'error'
+                    }).show();
                 }
             }, error: function(data){
 
-                new Noty({
-                    text: 'Something went wrong.',
-                    type: 'error'
-                }).show();
             }
         });
     } else {
-        window.location.reload();
+        loadmembers();
     }
 }

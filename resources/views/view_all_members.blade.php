@@ -37,9 +37,9 @@
                                 role="grid" aria-describedby="example1_info">
                                 <thead>
                                     <tr>
-                                        <th class="thmemimg">Member Image</th>
+                                        <th class="thmemimg">Image</th>
                                         <th class="thmemno">Member No</th>
-                                        <th class="thname">Name with initials </th>
+                                        <th class="thname">Name </th>
                                         <th class="thnic"> NIC</th>
                                         <th class="thphone"> Phone Number</th>
                                         <th class="edit"> Edit</th>

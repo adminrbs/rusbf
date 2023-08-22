@@ -1,8 +1,9 @@
 console.log('memberDetails.js');
 
 let dropzoneSingle = undefined;
-var formData = new FormData();
+
 var thisDropzone = undefined;
+var image = undefined;
 
 $(document).ready(function () {
 
@@ -16,10 +17,11 @@ $(document).ready(function () {
         autoProcessQueue: false,
         addRemoveLinks: true,
         init: function () {
-             thisDropzone = this;
+            thisDropzone = this;
             
             this.on('addedfile', function (file) {
-                formData.append("file", file);
+                image = file;
+ 
                 if (this.fileTracker) {
                     this.removeFile(this.fileTracker);
                 }
@@ -117,6 +119,9 @@ $(document).ready(function () {
 
 function saveMember() {   
 
+    var formData = new FormData();
+
+    formData.append('file', image);
     console.log(formData.get("file"));
     formData.append('member_number', $('#member_number').val());
     formData.append('national_id_number', $('#national_id_number').val());
@@ -158,32 +163,50 @@ function saveMember() {
 
         },
         success: function (response) {
-
-            if (response.status == true) {
+            console.log(response);
+            if (response.status == "success") {
 
                 new Noty({
-                    text: 'Member details saved.',
+                    text: 'Member details saved with image.',
                     type: 'success'
                 }).show();
 
                 resetForm();
 
-            } else {
+            } else if(response.status == "without_img") {
+
+                new Noty({
+                    text: 'Member details saved without image.',
+                    type: 'success'
+                }).show();
+
+                resetForm();
+
+            }else if(response.status == "failed"){
+
+                new Noty({
+                    text: 'Saving process error.',
+                    type: 'error'
+                }).show();
+
+            }else{
+
                 new Noty({
                     text: 'Something went wrong.',
                     type: 'error'
                 }).show();
+
             }
-            
-
         }
-
     });
 
 }
 
 function updateMember(){
-    
+
+    var formData = new FormData();
+
+    formData.append('file', image);
     console.log(formData.get("file"));
     formData.append('id', $('#hiddenmemberid').val());
     formData.append('member_number', $('#member_number').val());
@@ -228,18 +251,40 @@ function updateMember(){
         success: function (response) {
 
             console.log(response);
-            if(response == 'true'){
+            if (response.status == "success") {
+
                 new Noty({
-                    text: 'Member details updated.',
+                    text: 'Member details updated with image.',
                     type: 'success'
                 }).show();
 
+            } else if(response.status == "without_img") {
+
+                new Noty({
+                    text: 'Member details updated without image.',
+                    type: 'success'
+                }).show();
+
+            }else if(response.status == "failed"){
+
+                new Noty({
+                    text: 'Updating process error.',
+                    type: 'error'
+                }).show();
+
             }else{
+
                 new Noty({
                     text: 'Something went wrong.',
                     type: 'error'
                 }).show();
+
             }
+        }
+        , error: function (data) {
+            console.log(data)
+        }, complete: function () {
+
         }
 
     });
@@ -265,7 +310,7 @@ function loadMemberData(){
 
         },
         success: function (response) {
-
+            console.log(response);
             var data = response[0];
             var pathData = response[1];
 
