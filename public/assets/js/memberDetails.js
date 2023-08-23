@@ -307,7 +307,15 @@ function loadMemberData(){
         var param = sPageURL.split('&');
         var id = param[0];
 
-        $('#btnsave').text('Update');
+        if(param.length == 1){
+            $('#btnsave').text('Update');
+        }else if(param.length == 2){
+            $("#member_reg_frm :input").prop("disabled", true);
+            $('#dropzone_single').prop("disabled", true);
+            $("#btnsave").hide();
+            $("#btnReset").hide();
+        }
+       
     }
     $.ajax({
         type: "GET",
@@ -378,6 +386,7 @@ function loadMemberData(){
 
     });
 }
+
 
 function resetForm() {
     $('.validation-invalid-label').empty();

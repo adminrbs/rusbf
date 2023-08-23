@@ -40,7 +40,7 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Email Address</label>
-                        <input type="text" name="member_email" id="member_email" placeholder="Member's Email Address" class="form-control form-control-sm">
+                        <input type="email" name="member_email" id="member_email" placeholder="Member's Email Address" class="form-control form-control-sm">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
@@ -185,7 +185,7 @@
                 <div class="col-md-6">
                     <div>
                         <label class="col-form-label mb-0">Email Address</label>
-                        <input type="text" name="beneficiary_email" id="beneficiary_email" placeholder="Beneficiary Email" class="form-control form-control-sm">
+                        <input type="email" name="beneficiary_email" id="beneficiary_email" placeholder="Beneficiary Email" class="form-control form-control-sm">
                     </div>
                 </div>
                 <div class="col-md-6">

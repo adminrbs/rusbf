@@ -71,6 +71,12 @@ function edit(id){
     location.href = "/member_form?"+ id;
 }
 
+function view(id){
+
+    location.href = "/member_form?" + id + "&view";
+
+}
+
 function _delete(id){
     
     if (confirm('Are you sure you want to delete this record?')) {
