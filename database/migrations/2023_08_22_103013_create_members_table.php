@@ -39,7 +39,11 @@ return new class extends Migration
             $table->string('beneficiary_private_address', 250);
             $table->string('monthly_payment_amount', 10);
             $table->integer('language_id');
-            $table->string('path', 300);
+            $table->string('member_whatsapp')->nullable();
+            $table->string('member_email')->nullable();
+            $table->string('beneficiary_email')->nullable();
+            $table->string('beneficiary_nic')->nullable();
+            $table->string('path', 300)->nullable();
             $table->timestamps();
         });
     }

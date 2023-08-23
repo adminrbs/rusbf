@@ -10,13 +10,13 @@ $(document).ready(function () {
           { "data": "thmemno" },
           { "data": "thname" },
           { "data": "thnic" },
+          { "data": "thcomno" },
           { "data": "thphone" },
-          { "data": "edit" },
-          { "data": "delete" },
+          { "data": "actions" },
         ],
         "columnDefs": [
             {
-                "targets": 0,
+                "targets": [0, 4, 6],
                 "className": "text-center" 
             }
         ]
@@ -30,10 +30,12 @@ function loadmembers(){
         url: '/get_all_members',
         success: function(response){
             console.log(response.all_members);
+
             var data = [];
                 for (i = 0; i < response.all_members.length; i++) {
 
                     var id  = response.all_members[i]['id'];
+                    var com_no  = response.all_members[i]['computer_number'];
                     var member_no  = response.all_members[i]['member_number'];
                     var mobile_no  = response.all_members[i]['mobile_phone_number'];
                     var name  = response.all_members[i]['name_initials'];
@@ -41,7 +43,7 @@ function loadmembers(){
                     var path  = response.all_members[i]['path'];
 
                     if(path == null){
-                        path = "member_images/no_profile.png";
+                        path = "attachments/member_images/no_profile.png";
                     }
 
                     data.push({
@@ -49,16 +51,17 @@ function loadmembers(){
                         "thmemno": member_no,
                         "thname":name,
                         "thnic":nic,
+                        "thcomno":com_no,
                         "thphone":mobile_no,
-                        "edit": '<button class="btn btn-success" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button>',
-                        "delete": '<button class="btn btn-danger" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                        "actions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
+                        '<button class="btn btn-success btn-icon" onclick="view(' + id + ')"><i class="ph-eye" aria-hidden="true"></i></button> ' +
+                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')" ' + 'disabled><i class="ph-trash" aria-hidden="true"></i></button>',
                      });
-                }
 
+                }
                 var table = $('#tbl_members').DataTable();
                 table.clear();
-                table.rows.add(data).draw();
-         
+                table.rows.add(data).draw();      
         }
     });
 }

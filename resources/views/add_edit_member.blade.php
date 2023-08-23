@@ -28,14 +28,7 @@
                         <label class="col-form-label mb-0">Member No<span class="text-danger">*</span></label>
                         <input type="text" name="member_number" id="member_number" placeholder="Member No" class="form-control form-control-sm" required autocomplete="off">
                     </div>
-                    <div>
-                        <label class="col-form-label mb-0">NIC No<span class="text-danger">*</span></label>
-                        <input type="text" name="national_id_number" id="national_id_number" placeholder="NIC No" class="form-control form-control-sm" required autocomplete="off">
-                    </div>
-                    <div>
-                        <label class="col-form-label mb-0">Date of Birth<span class="text-danger">*</span></label>
-                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-control form-control-sm" required autocomplete="off">
-                    </div>
+                    
                     <div>
                         <label class="col-form-label mb-0">Native Language<span class="text-danger">*</span></label>
                         <select name="language_id" id="language_id" class="form-select form-control-sm custom-background" data-minimum-results-for-search="Infinity" required>
@@ -45,17 +38,35 @@
                             <option value="3">Tamil</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="col-form-label mb-0">Email Address</label>
+                        <input type="text" name="member_email" id="member_email" placeholder="Member's Email Address" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div>
+                        <label class="col-form-label mb-0">NIC No<span class="text-danger">*</span></label>
+                        <input type="text" name="national_id_number" id="national_id_number" placeholder="NIC No" class="form-control form-control-sm" required>
+                    </div>
+                    <div>
+                        <label class="col-form-label mb-0">Date of Birth<span class="text-danger">*</span></label>
+                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-control form-control-sm" required>
+                    </div>
+                    <div>
+                        <label class="col-form-label mb-0">WhatsApp Number</label>
+                        <input type="text" name="member_whatsapp" id="member_whatsapp" placeholder="Member's WhatsApp Number" class="form-control form-control-sm">
+                    </div>
                 </div>
                 <div class="col-lg-1 col-md-1 col-sm-1"></div>
                 <div class="col-lg-3 col-md-3 col-sm-3">
                     <!-- Single file upload -->
                     <div>
                         <label class="col-form-label mb-0">Image(Max size: 2MB) <span class="text-danger">*</span></label>
-                        <div action="#" class="dropzone" id="dropzone_single" required></div>
+                        <div action="#" class="dropzone custom-dropzone" id="dropzone_single" required></div>
                     </div>
                     <!-- /Single file upload -->
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                
             </div>
             <div class="row">
                 <div>
@@ -83,7 +94,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Joined Date(Department)<span class="text-danger">*</span></label>
-                        <input type="date" name="date_of_joining" id="date_of_joining" class="form-control form-control-sm" required autocomplete="off">
+                        <input type="date" name="date_of_joining" id="date_of_joining" class="form-control form-control-sm" required>
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Cabinet No<span class="text-danger">*</span></label>
@@ -101,7 +112,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Phone Number(Home) <span class="text-danger">*</span></label>
-                        <input type="number" name="home_phone_number" id="home_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required autocomplete="off">
+                        <input type="number" name="home_phone_number" id="home_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required>
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Official No<span class="text-danger">*</span></label>
@@ -115,7 +126,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Phone Number(Mobile) <span class="text-danger">*</span></label>
-                        <input type="number" name="mobile_phone_number" id="mobile_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required autocomplete="off">
+                        <input type="number" name="mobile_phone_number" id="mobile_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required>
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
@@ -149,7 +160,7 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Expected Amount(monthly)<span class="text-danger">*</span></label>
-                        <input type="number" name="monthly_payment_amount" placeholder="Expected Amount(monthly)" id="monthly_payment_amount" class="form-control form-control-sm" required autocomplete="off">
+                        <input type="number" name="monthly_payment_amount" placeholder="Expected Amount(monthly)" id="monthly_payment_amount" class="form-control form-control-sm" required>
                     </div>
                 </div>
             </div>
@@ -161,7 +172,7 @@
                 </div>
                 <div>
                     <label class="col-form-label mb-0">Full Name<span class="text-danger">*</span></label>
-                    <input type="text" name="beneficiary_full_name" id="beneficiary_full_name" placeholder="Beneficiary Full Name" class="form-control form-control-sm" required autocomplete="off">
+                    <input type="text" name="beneficiary_full_name" id="beneficiary_full_name" placeholder="Beneficiary Full Name" class="form-control form-control-sm" required>
                 </div>
                 <div>
                     <label class="col-form-label mb-0">Relationship<span class="text-danger">*</span></label>
@@ -170,6 +181,18 @@
                 <div>
                     <label class="col-form-label mb-0">Private Address<span class="text-danger">*</span></label>
                     <input type="text" name="beneficiary_private_address" id="beneficiary_private_address" placeholder="Beneficiary Private Address" class="form-control form-control-sm" required autocomplete="off">
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label class="col-form-label mb-0">Email Address</label>
+                        <input type="text" name="beneficiary_email" id="beneficiary_email" placeholder="Beneficiary Email" class="form-control form-control-sm">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <label class="col-form-label mb-0">NIC No</label>
+                        <input type="text" name="beneficiary_nic" id="beneficiary_nic" placeholder="Beneficiary NIC" class="form-control form-control-sm">
+                    </div>
                 </div>
             </div>
             <div class="row mt-4">

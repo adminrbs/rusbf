@@ -42,6 +42,10 @@ class MemberController extends Controller
             $member->personal_address = $request->get('personal_address');
             $member->serving_sub_department_id = $request->get('serving_sub_department_id');
             $member->work_location_id = $request->get('work_location_id');
+            $member->member_email = $request->get('member_email');
+            $member->member_whatsapp = $request->get('member_whatsapp');
+            $member->beneficiary_email = $request->get('beneficiary_email');
+            $member->beneficiary_nic = $request->get('beneficiary_nic');
 
             if ($member->save()) {
 
@@ -75,9 +79,9 @@ class MemberController extends Controller
                     $ex_filepath = $exAttachment->path;
 
                     if($ex_filepath){
-                        $baseUrl = url('/') . "/member_images/";
+                        $baseUrl = url('/') . "/attachments/member_images/";
                         $file_data =  str_replace($baseUrl, '', $ex_filepath);
-                        $file_data = public_path('member_images').'/'.$file_data;
+                        $file_data = public_path('attachments/member_images').'/'.$file_data;
 
                         if(file_exists($file_data)){
                             unlink($file_data);
@@ -85,9 +89,9 @@ class MemberController extends Controller
                     }
                     
                     $file_name = $file->getClientOriginalName();
-                    $filename = url('/') . '/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
+                    $filename = url('/') . '/attachments/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
                     $filename = str_replace(' ', '', str_replace('\'', '', $filename));
-                    $file->move(public_path('member_images'), $filename);
+                    $file->move(public_path('attachments/member_images'), $filename);
 
                     $data = DB::table('member_attachments')
                                         ->where('member_id', $id)
@@ -101,9 +105,9 @@ class MemberController extends Controller
                 }else{
     
                     $file_name = $file->getClientOriginalName();
-                    $filename = url('/') . '/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
+                    $filename = url('/') . '/attachments/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
                     $filename = str_replace(' ', '', str_replace('\'', '', $filename));
-                    $file->move(public_path('member_images'), $filename);
+                    $file->move(public_path('attachments/member_images'), $filename);
     
                     $attachment = new MemberAttachment();
                     $attachment->member_id = $id;
@@ -128,7 +132,7 @@ class MemberController extends Controller
         try {
 
             $all_members = DB::table("members")
-                            ->select('members.path','members.id','members.member_number','members.name_initials','members.national_id_number','members.mobile_phone_number')
+                            ->select('members.computer_number','members.path','members.id','members.member_number','members.name_initials','members.national_id_number','members.mobile_phone_number')
                             ->get();
 
             return compact('all_members');
@@ -169,7 +173,6 @@ class MemberController extends Controller
         try {
             
             $file =  $request->file('file');
-
             $member =Member::find($request->id);
             
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -196,13 +199,39 @@ class MemberController extends Controller
             $member->personal_address = $request->get('personal_address');
             $member->serving_sub_department_id = $request->get('serving_sub_department_id');
             $member->work_location_id = $request->get('work_location_id');
+            $member->member_email = $request->get('member_email');
+            $member->member_whatsapp = $request->get('member_whatsapp');
+            $member->beneficiary_email = $request->get('beneficiary_email');
+            $member->beneficiary_nic = $request->get('beneficiary_nic');
 
             if ($member->save()) {
 
-                if($file){
+                if($file != 'undefined'){
                     $this->uploadAttachment($file, $request->id);
                     return response()->json(["status" => "success", "file" => $file]);
                 }else{
+
+                    $exAttachment = MemberAttachment::where('member_id', $id)->first();
+                    $ex_filepath = $exAttachment->path;
+
+                    $baseUrl = url('/') . "/attachments/member_images/";
+                    $file_data =  str_replace($baseUrl, '', $ex_filepath);
+                    $file_data = public_path('attachments/member_images').'/'.$file_data;
+
+                    if(file_exists($file_data)){
+                        unlink($file_data);
+                    }
+
+                    $remove_att_path = DB::table("member_attachments")
+                                            ->select('member_attachments.path')
+                                            ->where('member_id', $id)
+                                            ->update(['path' => null]);
+
+                    $remove_mem_path = DB::table("members")
+                                            ->select('members.path')
+                                            ->where('id', $id)
+                                            ->update(['path' => null]);
+
                     return response()->json(["status" => "without_img"]);
                 }  
             }else{
@@ -221,10 +250,10 @@ class MemberController extends Controller
 
             $member = Member::where('id',$id)->first();
             $filePath = $member->path;
-            $baseUrl = url('/') . "/member_images/";
+            $baseUrl = url('/') . "/attachments/member_images/";
 
             $file =  str_replace($baseUrl, '', $filePath);
-            $file = public_path('member_images').'/'.$file;
+            $file = public_path('attachments/member_images').'/'.$file;
 
             if(file_exists($file)){
                 unlink($file);

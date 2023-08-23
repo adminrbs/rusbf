@@ -38,12 +38,12 @@
                                 <thead>
                                     <tr>
                                         <th class="thmemimg">Image</th>
-                                        <th class="thmemno">Member No</th>
+                                        <th class="thmemno">#No</th>
                                         <th class="thname">Name </th>
                                         <th class="thnic"> NIC</th>
-                                        <th class="thphone"> Phone Number</th>
-                                        <th class="edit"> Edit</th>
-                                        <th class="delete"> Delete</th>
+                                        <th class="thnic"> Computer No</th>
+                                        <th class="thphone"> Phone</th>
+                                        <th class="actions"> Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

@@ -123,10 +123,13 @@ function saveMember() {
 
     formData.append('file', image);
     console.log(formData.get("file"));
+
     formData.append('member_number', $('#member_number').val());
     formData.append('national_id_number', $('#national_id_number').val());
     formData.append('date_of_birth', $('#date_of_birth').val());
     formData.append('language_id', $('#language_id').val());
+    formData.append('member_email', $('#member_email').val());
+    formData.append('member_whatsapp', $('#member_whatsapp').val());
     formData.append('full_name', $('#full_name').val());
     formData.append('name_initials', $('#name_initials').val());
     formData.append('full_name_unicode', $('#full_name_unicode').val());
@@ -147,6 +150,8 @@ function saveMember() {
     formData.append('beneficiary_full_name', $('#beneficiary_full_name').val());
     formData.append('beneficiary_relationship', $('#beneficiary_relationship').val());
     formData.append('beneficiary_private_address', $('#beneficiary_private_address').val());
+    formData.append('beneficiary_email', $('#beneficiary_email').val());
+    formData.append('beneficiary_nic', $('#beneficiary_nic').val());
 
     $.ajax({
         type: "POST",
@@ -208,9 +213,12 @@ function updateMember(){
 
     formData.append('file', image);
     console.log(formData.get("file"));
+
     formData.append('id', $('#hiddenmemberid').val());
     formData.append('member_number', $('#member_number').val());
     formData.append('national_id_number', $('#national_id_number').val());
+    formData.append('member_email', $('#member_email').val());
+    formData.append('member_whatsapp', $('#member_whatsapp').val());
     formData.append('date_of_birth', $('#date_of_birth').val());
     formData.append('language_id', $('#language_id').val());
     formData.append('full_name', $('#full_name').val());
@@ -233,6 +241,8 @@ function updateMember(){
     formData.append('beneficiary_full_name', $('#beneficiary_full_name').val());
     formData.append('beneficiary_relationship', $('#beneficiary_relationship').val());
     formData.append('beneficiary_private_address', $('#beneficiary_private_address').val());
+    formData.append('beneficiary_email', $('#beneficiary_email').val());
+    formData.append('beneficiary_nic', $('#beneficiary_nic').val());
 
     $.ajax({
         type: "POST",
@@ -340,6 +350,10 @@ function loadMemberData(){
                 $('#beneficiary_full_name').val(data.beneficiary_full_name);
                 $('#beneficiary_relationship').val(data.beneficiary_relationship);
                 $('#beneficiary_private_address').val(data.beneficiary_private_address);
+                $('#beneficiary_email').val(data.beneficiary_email);
+                $('#beneficiary_nic').val(data.beneficiary_nic);
+                $('#member_email').val(data.member_email);
+                $('#member_whatsapp').val(data.member_whatsapp);
 
                 if(pathData != "not_available"){
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };
