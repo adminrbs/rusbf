@@ -171,7 +171,7 @@ class MemberController extends Controller
     public function update(Request $request){
         
         try {
-            
+            $id = $request->input('id');
             $file =  $request->file('file');
             $member =Member::find($request->id);
             
@@ -206,7 +206,7 @@ class MemberController extends Controller
 
             if ($member->save()) {
 
-                if($file != 'undefined'){
+                if(isset($file)){
                     $this->uploadAttachment($file, $request->id);
                     return response()->json(["status" => "success", "file" => $file]);
                 }else{
@@ -222,10 +222,9 @@ class MemberController extends Controller
                         unlink($file_data);
                     }
 
-                    $remove_att_path = DB::table("member_attachments")
-                                            ->select('member_attachments.path')
-                                            ->where('member_id', $id)
-                                            ->update(['path' => null]);
+                    $remove_att_records = DB::table("member_attachments")
+                                                ->where('member_id', $id)
+                                                ->delete();
 
                     $remove_mem_path = DB::table("members")
                                             ->select('members.path')
@@ -240,7 +239,7 @@ class MemberController extends Controller
 
         }
          catch (Exception $ex) {
-            return $ex;
+            return $ex->getMessage();
         }
     }
 

@@ -18,7 +18,6 @@ $(document).ready(function () {
         addRemoveLinks: true,
         init: function () {
             thisDropzone = this;
-            
             this.on('addedfile', function (file) {
                 image = file;
  
@@ -26,6 +25,9 @@ $(document).ready(function () {
                     this.removeFile(this.fileTracker);
                 }
                 this.fileTracker = file;
+            });
+            this.on('removedfile', function (file) {
+                image = undefined;
             });
             this.on("success", function (file, responseText) {
                 console.log(responseText); // console should show the ID you pointed to
@@ -268,12 +270,16 @@ function updateMember(){
                     type: 'success'
                 }).show();
 
+                window.location.reload(); 
+
             } else if(response.status == "without_img") {
 
                 new Noty({
                     text: 'Member details updated without image.',
                     type: 'success'
                 }).show();
+
+                window.location.reload(); 
 
             }else if(response.status == "failed"){
 
@@ -311,7 +317,6 @@ function loadMemberData(){
             $('#btnsave').text('Update');
         }else if(param.length == 2){
             $("#member_reg_frm :input").prop("disabled", true);
-            $('#dropzone_single').prop("disabled", true);
             $("#btnsave").hide();
             $("#btnReset").hide();
         }
