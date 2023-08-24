@@ -23,7 +23,7 @@
         <div class="row mb-3">
             <div class="col-md-10"></div>
             <div class="col-md-2">
-                <a href="/member_form"><button type="button" class="btn btn-primary form-btn" style="float:right;"><i class="ph-plus"></i>&nbsp;Add Member</button></a>
+                <a href="/member_form"><button type="button" class="btn btn-primary form-btn" style="float:right;"><i class="ph-plus"></i>&nbsp;Add New</button></a>
             </div>   
         </div>
         

@@ -267,19 +267,23 @@ function updateMember(){
 
                 new Noty({
                     text: 'Member details updated with image.',
-                    type: 'success'
+                    type: 'success',
                 }).show();
 
-                window.location.reload(); 
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2300);
 
             } else if(response.status == "without_img") {
 
                 new Noty({
                     text: 'Member details updated without image.',
-                    type: 'success'
+                    type: 'success',
                 }).show();
 
-                window.location.reload(); 
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2300);
 
             }else if(response.status == "failed"){
 

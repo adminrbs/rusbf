@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>EasywinBiz LMS</title>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('assets/images/favicon.svg')}}">
-    <link rel="stylesheet" type="text/css" href="/assets/css/new_styles.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/master_styles.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
    @include('layouts.head-css')
