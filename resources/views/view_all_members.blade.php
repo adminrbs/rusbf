@@ -33,8 +33,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="tbl_members" class="table table-striped "
-                                role="grid" aria-describedby="example1_info">
+                            <table id="tbl_members" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th class="thmemimg">Image</th>
@@ -60,10 +59,6 @@
 
 
 
-
-
-
-
 </div>
 <!-- /content area -->
 
@@ -74,12 +69,7 @@
 <!-- Theme JS files -->
 <script src="{{URL::asset('assets/js/vendor/visualization/d3/d3.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/visualization/d3/d3_tooltip.js')}}"></script>
-<script src="{{URL::asset('assets/js/vendor/forms/validation/validate.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/vendor/forms/selects/select2.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/ui/moment/moment.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/vendor/pickers/daterangepicker.js')}}"></script>
-<script src="{{URL::asset('assets/js/vendor/pickers/datepicker.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/vendor/uploaders/dropzone.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/notifications/noty.min.js')}}"></script>
 
 @endsection

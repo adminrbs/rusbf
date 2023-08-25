@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\DB;
 class MemberController extends Controller
 {
 
+    public function view_member_form(){
+
+        $get_designation_data = DB::table('master_designations') 
+                                    ->select('id','name')
+								    ->get();
+
+        return view('add_edit_member',compact('get_designation_data'));
+    }
+
     public function save(Request $request){
         try {
             

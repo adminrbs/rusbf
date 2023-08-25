@@ -53,10 +53,17 @@ textarea {
   padding: 0.25rem 0.25rem !important; 
 }
 
-/* .select {
+/* select {
   background-color: #EBFFFF !important;
 } */
 
 /* #payroll_preparation_location_id {
   background-color: #EBFFFF;
 }  */
+
+.select2-selection{
+  background-color: #EBFFFF !important;
+  max-height: 35px;
+  font-weight: 300 !important;
+  font-size: 13px !important;
+}

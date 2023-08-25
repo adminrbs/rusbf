@@ -32,7 +32,7 @@
                     <div>
                         <label class="col-form-label mb-0">Native Language<span class="text-danger">*</span></label>
                         <select name="language_id" id="language_id" class="form-select form-control-sm custom-background" data-minimum-results-for-search="Infinity" required>
-                            <option value="">Please choose an option</option>
+                            <option value="">-- Select--</option>
                             <option value="1">English</option>
                             <option value="2">Sinhala</option>
                             <option value="3">Tamil</option>
@@ -103,7 +103,7 @@
                     <div>
                         <label class="col-form-label mb-0">Place of Work<span class="text-danger">*</span></label>
                         <select name="work_location_id" id="work_location_id" class="form-select form-control-sm custom-background" required>
-                            <option value="">Please choose an option</option>
+                            <option value="">-- Select--</option>
                             <option value="1">work 1</option>
                             <option value="2">work 2</option>
                         </select>
@@ -130,16 +130,19 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
-                        <select name="designation_id" id="designation_id" class="form-select form-control-sm custom-background" required>
-                            <option value="">Please choose an option</option>
-                            <option value="1">designation 1</option> 
-                            <option value="2">designation 2</option>
+                        <select name="designation_id" id="designation_id" class="form-control select2 form-control-sm"" required>
+                            <option value="">-- Select--</option>
+                            @if(!empty($get_designation_data))
+                                @foreach ($get_designation_data as $val)
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Payroll<span class="text-danger">*</span></label>
                         <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-select form-control-sm custom-background" required>
-                            <option value="">Please Choose an option</option>
+                            <option value="">-- Select--</option>
                             <option value="1">payroll 1</option>
                             <option value="2">payroll 2</option>
                         </select>
@@ -149,7 +152,7 @@
                     <div>
                         <label class="col-form-label mb-0">Serving Sub-department<span class="text-danger">*</span></label>
                         <select data-placeholder="Select Serving Sub-department" class="form-select form-control-sm custom-background" name="serving_sub_department_id" id="serving_sub_department_id" required>
-                            <option value="">Please Choose an option</option>
+                            <option value="">-- Select--</option>
                             <option value="1">department 1</option>
                             <option value="2">department 2</option>
                         </select>
@@ -197,7 +200,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-4">
-                    <button type="submit" id="btnsave" class="btn btn-primary form-btn" style="width: 6rem;">Save</button>
+                    <button type="submit" id="btnsave" class="btn btn-success form-btn" style="width: 6rem;">Save</button>
                     <button type="button" id="btnReset" class="btn btn-warning form-btn" style="width: 6rem;">Reset</button>
                 </div>
             </div>

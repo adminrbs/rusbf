@@ -90,7 +90,7 @@ function _delete(id){
 
                 if (response == "deleted") {
                     new Noty({
-                        text: 'Member deleted successfully.',
+                        text: 'Member deleted successfully!',
                         type: 'success'
                     }).show();
 

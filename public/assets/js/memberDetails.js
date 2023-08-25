@@ -113,7 +113,7 @@ $(document).ready(function () {
     // End of Date Range Basic initialization
 
     // Default initialization
-    $('.select').select2();
+    $('.select2').select2();
     // End of Default initialization
 
 });
@@ -121,6 +121,7 @@ $(document).ready(function () {
 
 function saveMember() {   
 
+    $('.modal-title').text('Create Designation');
     var formData = new FormData();
 
     formData.append('file', image);
@@ -174,7 +175,7 @@ function saveMember() {
             if (response.status == "success") {
 
                 new Noty({
-                    text: 'Member details saved with image.',
+                    text: 'Member details saved with image!',
                     type: 'success'
                 }).show();
 
@@ -183,7 +184,7 @@ function saveMember() {
             } else if(response.status == "without_img") {
 
                 new Noty({
-                    text: 'Member details saved without image.',
+                    text: 'Member details saved without image!',
                     type: 'success'
                 }).show();
 
@@ -192,7 +193,7 @@ function saveMember() {
             }else if(response.status == "failed"){
 
                 new Noty({
-                    text: 'Saving process error.',
+                    text: 'Saving process error!',
                     type: 'error'
                 }).show();
 
@@ -266,7 +267,7 @@ function updateMember(){
             if (response.status == "success") {
 
                 new Noty({
-                    text: 'Member details updated with image.',
+                    text: 'Member details updated with image!',
                     type: 'success',
                 }).show();
 
@@ -277,7 +278,7 @@ function updateMember(){
             } else if(response.status == "without_img") {
 
                 new Noty({
-                    text: 'Member details updated without image.',
+                    text: 'Member details updated without image!',
                     type: 'success',
                 }).show();
 
@@ -288,7 +289,7 @@ function updateMember(){
             }else if(response.status == "failed"){
 
                 new Noty({
-                    text: 'Updating process error.',
+                    text: 'Updating process error!',
                     type: 'error'
                 }).show();
 
@@ -358,7 +359,7 @@ function loadMemberData(){
                 $('#serving_sub_department_id').val(data.serving_sub_department_id);
                 $('#cabinet_number').val(data.cabinet_number);
                 $('#official_number').val(data.official_number);
-                $('#designation_id').val(data.designation_id);
+                $('#designation_id').val(data.designation_id).trigger('change');
                 $('#computer_number').val(data.computer_number);
                 $('#work_location_id').val(data.work_location_id);
                 $('#payroll_number').val(data.payroll_number);

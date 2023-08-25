@@ -49,9 +49,18 @@
                         </li> --}}
                         <li class="nav-item">
                             <a href="members" class="nav-link">
-                                <i class="ph-user-plus"></i>
+                                <i class="ph-user-list"></i>
                                 <span>Members</span>
                             </a>
+                        </li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
+                                <span>Master Data</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

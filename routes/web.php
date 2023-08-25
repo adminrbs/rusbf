@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MasterDesignationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
@@ -79,20 +80,26 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //members routes
-Route::get('/member_form', function () {
-    return view('add_edit_member');
-});
-
 Route::get('/members', function () {
     return view('view_all_members');
 });
+Route::get('/member_form', [MemberController::class, 'view_member_form']);
 Route::get('/get_member_data/{id}', [MemberController::class, 'get_member_data']);
 Route::post('/member_form/update', [MemberController::class, 'update']);
 Route::post('/save_member', [MemberController::class, 'save']);
 Route::get('/get_all_members', [MemberController::class, 'get_all_members']);
 Route::delete('/delete_member/{id}', [MemberController::class, 'delete']);
 
-
+// Master Data
+Route::get('/master_designation', function () {
+    return view('designation');
+});
+Route::post('/save_designation', [MasterDesignationController::class, 'save_designation']);
+Route::get('/get_all_designations', [MasterDesignationController::class, 'get_all_designations']);
+Route::get('/get_designation_data/{id}', [MasterDesignationController::class, 'get_designation_data']);
+Route::post('/master_designation/update', [MasterDesignationController::class, 'update']);
+Route::delete('/delete_designation/{id}', [MasterDesignationController::class, 'delete']);
+Route::post('/designationStatus/{id}', [MasterDesignationController::class, 'designationStatus']);
 
 
 
