@@ -65,6 +65,12 @@
                                 <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of Payroll Preparation</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="/user_role_list" class="nav-link">
+                                <i class="ph-users"></i>
+                                <span>User Roles</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /main navigation -->

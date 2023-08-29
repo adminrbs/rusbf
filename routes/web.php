@@ -6,6 +6,7 @@ use App\Http\Controllers\MasterPlaceWorkController;
 use App\Http\Controllers\MasterSubDepartmentController;
 use App\Http\Controllers\MasterPayrollController;
 use App\Http\Controllers\MasterDesignationController;
+use App\Http\Controllers\UserRoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
@@ -138,3 +139,14 @@ Route::get('/get_payroll_data/{id}', [MasterPayrollController::class, 'get_payro
 Route::post('/master_payroll/update', [MasterPayrollController::class, 'update']);
 Route::delete('/delete_payroll/{id}', [MasterPayrollController::class, 'delete']);
 Route::post('/payrollStatus/{id}', [MasterPayrollController::class, 'payrollStatus']);
+
+// User Roles
+Route::get('/user_role_list', function () {
+    return view('user_role_list');
+});
+Route::post('/save_user_role', [UserRoleController::class, 'save_user_role']);
+Route::get('/get_user_roles', [UserRoleController::class, 'get_user_roles']);
+Route::get('/get_role_data/{id}', [UserRoleController::class, 'get_role_data']);
+Route::post('/user_role/update', [UserRoleController::class, 'update']);
+Route::delete('/user_role/{id}', [UserRoleController::class, 'delete']);
+Route::post('/user_role_status/{id}', [UserRoleController::class, 'user_role_status']);

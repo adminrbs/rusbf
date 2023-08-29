@@ -178,7 +178,7 @@ class MemberController extends Controller
             return compact('all_members');
 
         }
-         catch (Exception $exception) {
+         catch (Exception $ex) {
             return $ex->getMessage();
         }
     }
@@ -311,7 +311,7 @@ class MemberController extends Controller
                 return "failed";
             }
             
-        } catch (Exception $exception) {
+        } catch (Exception $ex) {
             return $ex->getMessage();
         }
 
