@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterDesignation;
-use App\Models\Member;
+use App\Models\MasterPayroll;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Models\Member;
 
-class MasterDesignationController extends Controller
+class MasterPayrollController extends Controller
 {
 
-    public function save_designation(Request $request){
+
+    public function save_payroll(Request $request){
         
         try{
-            $designation = new MasterDesignation();
-            $designation->name = $request->get('name');
+            $payroll = new MasterPayroll();
+            $payroll->name = $request->get('name');
             
-            if($designation->save()){
+            if($payroll->save()){
                 return response()->json(["status" => "succeed"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -29,12 +30,13 @@ class MasterDesignationController extends Controller
 
     }
 
-    public function get_all_designations(){
+
+    public function get_all_payroll(){
 
         try {
 
-            $data = DB::table("master_designations")
-                            ->select('master_designations.id','master_designations.name','master_designations.status')
+            $data = DB::table("master_payrolls")
+                            ->select('master_payrolls.id','master_payrolls.name','master_payrolls.status')
                             ->get();
 
             return compact('data');
@@ -45,12 +47,12 @@ class MasterDesignationController extends Controller
         }
     }
 
-    public function get_designation_data($id){
+    public function get_payroll_data($id){
 
         try{
 
-            $data = DB::table("master_designations")
-                            ->select('master_designations.name')
+            $data = DB::table("master_payrolls")
+                            ->select('master_payrolls.name')
                             ->where('id',$id)
                             ->first();
 
@@ -66,11 +68,11 @@ class MasterDesignationController extends Controller
     {
         try{
             $id = $request->input('id');
-            $designation = MasterDesignation::find($id);
+            $payroll = MasterPayroll::find($id);
     
-            $designation->name = $request->get('name');
+            $payroll->name = $request->get('name');
             
-            if($designation->update()){
+            if($payroll->update()){
                 return response()->json(["status" => "updated"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -83,20 +85,20 @@ class MasterDesignationController extends Controller
 
     public function delete($id){
         try {
-            $isUsed = Member::where('designation_id', $id)->exists();
-            $getone = MasterDesignation::where('id', 1)->exists();
+            $isUsed = Member::where('payroll_preparation_location_id', $id)->exists();
+            $getone = MasterPayroll::where('id', 1)->exists();
 
             if ($isUsed) {
                 
-                return response()->json(["status" => "designation_used"]);
+                return response()->json(["status" => "payroll_used"]);
 
             }elseif($getone){
                 return response()->json(["status" => "cannot"]);
             }else{
 
-                $designation = MasterDesignation::where('id', $id)->first();
+                $payroll = MasterPayroll::where('id', $id)->first();
 
-                if ($designation->delete()) {
+                if ($payroll->delete()) {
                     return response()->json(["status" => "deleted"]);
                 } else {
                     return response()->json(["status" => "failed"]);
@@ -110,12 +112,12 @@ class MasterDesignationController extends Controller
     }
 
 
-    public function designationStatus(Request $request, $id){
+    public function payrollStatus(Request $request, $id){
         try{
-            $designation = MasterDesignation::findOrFail($id);
-            $designation->status = $request->get('status');
+            $payroll = MasterPayroll::findOrFail($id);
+            $payroll->status = $request->get('status');
           
-            if($designation->save()){
+            if($payroll->save()){
                 return response()->json(["status" => "saved"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -124,5 +126,5 @@ class MasterDesignationController extends Controller
         }catch(Exception $ex){
             return $ex->getMessage();
         }
-    }   
+    }  
 }

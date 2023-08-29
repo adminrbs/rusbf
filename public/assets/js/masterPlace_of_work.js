@@ -1,8 +1,8 @@
-console.log("masterDesignation.js loading");
+console.log("masterPlace_of_work.js loading");
 
 $(document).ready(function () {
 
-    $('#tbl_create_designation').DataTable({
+    $('#tbl_create_place_of_work').DataTable({
         responsive: true,
         "order": [],
         "columns": [
@@ -34,19 +34,19 @@ $(document).ready(function () {
             },
         ]
     });
-    loaddesignations();
+    loadPlaceOfWorks();
 
     $('#add_modal').on('shown.bs.modal', function() {
-        $('#designation_name').focus();
+        $('#work_name').focus();
     })
 
     $('#btnsave').on('click', function () {
 
         if($('#btnsave').text().trim()=='Save'){
-           save_designation();
+            save_work();
         }
         else{
-            update_designation();
+            update_work();
         }
 
     });
@@ -55,16 +55,17 @@ $(document).ready(function () {
 });
 
 
-function add_designation(){
+function add_place_of_work(){
     $('#add_modal').modal('show');
-    $('.modal-title').text('Create Designation');
+    $('.modal-title').text('Create Place of Work');
     $('#btnsave').text('Save');
     resetModal();
 }
 
-function save_designation(){
 
-    var name = $('#designation_name').val();
+function save_work(){
+
+    var name = $('#work_name').val();
     
     if (name === '') {
         name = "Not Applicable";
@@ -75,7 +76,7 @@ function save_designation(){
 
         $.ajax({
             type: "POST",
-            url: "/save_designation",
+            url: "/save_place_of_work",
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -97,7 +98,7 @@ function save_designation(){
                         type: 'success',
                     }).show();
 
-                    loaddesignations();
+                    loadPlaceOfWorks();
                 }else{
                     new Noty({
                         text: 'Saving process error!',
@@ -112,13 +113,13 @@ function save_designation(){
             }, complete: function () {
             }
         });
-
 }
 
-function loaddesignations(){
+
+function loadPlaceOfWorks(){
     $.ajax({
         type: 'GET',
-        url: '/get_all_designations',
+        url: '/get_all_place_of_work',
         success: function(response){
 
             var dt = response.data;
@@ -134,11 +135,11 @@ function loaddesignations(){
                         "thname":name,
                         "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
                         '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
-                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxDesignationStatus" value="1"  onclick="cbxDesignationStatus('+ dt[i].id + ')" required '+isChecked+'></lable>',
+                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxPlaceOfWorkStatus" value="1"  onclick="cbxPlaceOfWorkStatus('+ dt[i].id + ')" required '+isChecked+'></lable>',
                      });
 
                 }
-                var table = $('#tbl_create_designation').DataTable();
+                var table = $('#tbl_create_place_of_work').DataTable();
                 table.clear();
                 table.rows.add(data).draw();
 
@@ -151,16 +152,17 @@ function loaddesignations(){
     });
 }
 
+
 function edit(id){
 
     $('#add_modal').modal('show');
-    $('.modal-title').text('Update Designation');
+    $('.modal-title').text('Update Place of Work');
     $('#btnsave').text('Update');
     $('#hidden_id').val(id);
 
     $.ajax({
         type: "GET",
-        url: "/get_designation_data/" + id,
+        url: "/get_place_of_work_data/" + id,
         processData: false,
         contentType: false,
         cache: false,
@@ -174,7 +176,7 @@ function edit(id){
             let name = response.data.name;
 
             if (response) {
-                $('#designation_name').val(name); 
+                $('#work_name').val(name); 
             }else{
                 console.log('error');
             }
@@ -195,10 +197,11 @@ function edit(id){
 
 }
 
-function update_designation(){
+
+function update_work(){
 
     var isValid = true;
-    var name = $('#designation_name').val();
+    var name = $('#work_name').val();
 
     if (name === '') {
         $('#name_error').html('This is a required field.');
@@ -208,11 +211,11 @@ function update_designation(){
         var formData = new FormData();
 
         formData.append('id', $('#hidden_id').val());
-        formData.append('name', $('#designation_name').val());
+        formData.append('name', $('#work_name').val());
 
         $.ajax({
             type: "POST",
-            url: "/master_designation/update",
+            url: "/master_place_of_work/update",
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -234,7 +237,7 @@ function update_designation(){
                         type: 'success',
                     }).show();
 
-                    loaddesignations();
+                    loadPlaceOfWorks();
                 }else{
                     new Noty({
                         text: 'Saving process error!',
@@ -253,31 +256,32 @@ function update_designation(){
 
 }
 
+
 function _delete(id){
 
     if (confirm('Are you sure you want to delete this record?')) {
         $.ajax({
             type: 'DELETE',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: '/delete_designation/'+id,
+            url: '/delete_place_of_work/'+id,
             
             success: function(response){
                 console.log(response);
                 if(response.status == "deleted"){
-                    loaddesignations();
+                    loadPlaceOfWorks();
 
                     new Noty({
                         text: 'Data deleted!',
                         type: 'success',
                     }).show();
 
-                }else if(response.status == "designation_used"){
+                }else if(response.status == "work_place_used"){
                     new Noty({
-                        text: 'This designation is currently in use and cannot be deleted!',
+                        text: 'This data is currently in use and cannot be deleted!',
                         type: 'warning'
                     }).show();
 
-                    loaddesignations();
+                    loadPlaceOfWorks();
                     
                 }else if(response.status == "cannot"){
                     new Noty({
@@ -285,7 +289,7 @@ function _delete(id){
                         type: 'warning'
                     }).show();
 
-                    loaddesignations();
+                    loadPlaceOfWorks();
                     
                 }else{
                     new Noty({
@@ -300,17 +304,16 @@ function _delete(id){
             }
         });
     } else {
-        loaddesignations();
+        loadPlaceOfWorks();
     }
 }
 
-
-function cbxDesignationStatus(id){
+function cbxPlaceOfWorkStatus(id){
     
-    var status = $('#cbxDesignationStatus').is(':checked') ? 1 : 0;
+    var status = $('#cbxPlaceOfWorkStatus').is(':checked') ? 1 : 0;
 
     $.ajax({
-        url: '/designationStatus/'+id,
+        url: '/place_of_workStatus/'+id,
         type: 'POST',
         data: {
             '_token': $('meta[name="csrf-token"]').attr('content'),

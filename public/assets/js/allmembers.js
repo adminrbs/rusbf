@@ -41,7 +41,9 @@ function loadmembers(){
                     var name  = response.all_members[i]['name_initials'];
                     var nic  = response.all_members[i]['national_id_number'];
                     var path  = response.all_members[i]['path'];
-
+                  
+                    // var imageIcon_path = "attachments/member_icon_images/" + id + ".png";
+                    
                     if(path == null){
                         path = "attachments/member_images/no_profile.png";
                     }
@@ -68,12 +70,12 @@ function loadmembers(){
 
 function edit(id){
 
-    location.href = "/member_form?"+ id;
+    location.href = "/member_form?id="+ id +"&action=edit" ;
 }
 
 function view(id){
 
-    location.href = "/member_form?" + id + "&view";
+    location.href = "/member_form?id=" + id + "&action=view";
 
 }
 

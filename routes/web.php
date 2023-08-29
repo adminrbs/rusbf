@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MasterPlaceWorkController;
+use App\Http\Controllers\MasterSubDepartmentController;
+use App\Http\Controllers\MasterPayrollController;
 use App\Http\Controllers\MasterDesignationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
@@ -9,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LimitlessController;
 use App\Models\User;
 use App\Notifications\UserNotification;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -90,7 +95,7 @@ Route::post('/save_member', [MemberController::class, 'save']);
 Route::get('/get_all_members', [MemberController::class, 'get_all_members']);
 Route::delete('/delete_member/{id}', [MemberController::class, 'delete']);
 
-// Master Data
+// Master Data - Designation
 Route::get('/master_designation', function () {
     return view('designation');
 });
@@ -101,5 +106,35 @@ Route::post('/master_designation/update', [MasterDesignationController::class, '
 Route::delete('/delete_designation/{id}', [MasterDesignationController::class, 'delete']);
 Route::post('/designationStatus/{id}', [MasterDesignationController::class, 'designationStatus']);
 
+// Master Data - Place of Work
+Route::get('/master_place_of_work', function () {
+    return view('place_of_work');
+});
+Route::post('/save_place_of_work', [MasterPlaceWorkController::class, 'save_place_of_work']);
+Route::get('/get_all_place_of_work', [MasterPlaceWorkController::class, 'get_all_place_of_work']);
+Route::get('/get_place_of_work_data/{id}', [MasterPlaceWorkController::class, 'get_place_of_work_data']);
+Route::post('/master_place_of_work/update', [MasterPlaceWorkController::class, 'update']);
+Route::delete('/delete_place_of_work/{id}', [MasterPlaceWorkController::class, 'delete']);
+Route::post('/place_of_workStatus/{id}', [MasterPlaceWorkController::class, 'place_of_workStatus']);
 
+// Master Data - Serving Sub-Department
+Route::get('/master_sub_department', function () {
+    return view('serving_sub_department');
+});
+Route::post('/save_department', [MasterSubDepartmentController::class, 'save_department']);
+Route::get('/get_all_departments', [MasterSubDepartmentController::class, 'get_all_departments']);
+Route::get('/get_department_data/{id}', [MasterSubDepartmentController::class, 'get_department_data']);
+Route::post('/master_department/update', [MasterSubDepartmentController::class, 'update']);
+Route::delete('/delete_department/{id}', [MasterSubDepartmentController::class, 'delete']);
+Route::post('/departmentStatus/{id}', [MasterSubDepartmentController::class, 'departmentStatus']);
 
+// Master Data - Place of Payroll
+Route::get('/master_place_of_payroll', function () {
+    return view('place_of_payroll');
+});
+Route::post('/save_payroll', [MasterPayrollController::class, 'save_payroll']);
+Route::get('/get_all_payroll', [MasterPayrollController::class, 'get_all_payroll']);
+Route::get('/get_payroll_data/{id}', [MasterPayrollController::class, 'get_payroll_data']);
+Route::post('/master_payroll/update', [MasterPayrollController::class, 'update']);
+Route::delete('/delete_payroll/{id}', [MasterPayrollController::class, 'delete']);
+Route::post('/payrollStatus/{id}', [MasterPayrollController::class, 'payrollStatus']);

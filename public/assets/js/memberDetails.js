@@ -1,13 +1,46 @@
 console.log('memberDetails.js');
 
 let dropzoneSingle = undefined;
-
-var thisDropzone = undefined;
-var image = undefined;
+var ACTION = undefined;
+var ID = undefined;
 
 $(document).ready(function () {
 
     // Single files
+    // dropzoneSingle = new Dropzone("#dropzone_single", {
+    //     paramName: "file", // The name that will be used to transfer the file
+    //     maxFilesize: 2, // MB
+    //     maxFiles: 1,
+    //     acceptedFiles: ".jpeg,.jpg,.png",
+    //     dictDefaultMessage: 'Drop file to upload <span>or CLICK</span> (File formats: jpeg,jpg,png)',
+    //     autoProcessQueue: false,
+    //     addRemoveLinks: true,
+    //     init: function () {
+    //         thisDropzone = this;
+    //         this.on('addedfile', function (file) {
+    //             alert("addedfile");
+    //             image = file;
+ 
+    //             if (this.fileTracker) {
+    //                 this.removeFile(this.fileTracker);
+    //             }
+    //             this.fileTracker = file;
+    //         });
+    //         this.on('removedfile', function (file) {
+    //             alert("removedfile");
+    //             image = undefined;
+    //         });
+    //         this.on("success", function (file, responseText) {
+    //             console.log(responseText); // console should show the ID you pointed to
+    //         });
+    //         this.on("complete", function (file) {
+
+    //             this.removeAllFiles(true);
+    //             console.log(file);
+    //         });
+    //     }
+    // });
+    // End of Single files
     dropzoneSingle = new Dropzone("#dropzone_single", {
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 2, // MB
@@ -16,18 +49,41 @@ $(document).ready(function () {
         dictDefaultMessage: 'Drop file to upload <span>or CLICK</span> (File formats: jpeg,jpg,png)',
         autoProcessQueue: false,
         addRemoveLinks: true,
+        selectedImage: undefined,
+        imageIcon: undefined,
         init: function () {
-            thisDropzone = this;
             this.on('addedfile', function (file) {
-                image = file;
- 
+                console.log(file);
+                this.selectedImage = file;
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const size = 40;
+                    const base64 = reader.result; // This is the Data URL of the uploaded file
+                    const image = new Image();
+                    image.crossOrigin = 'anonymous';
+                    image.src = base64;
+                    image.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.height = size;
+                        canvas.width = size;
+                        ctx.drawImage(image, 0, 0, size, size);
+                        const dataUrl = canvas.toDataURL();
+                        this.imageIcon = dataUrl;
+                        //console.log(this.resizeImage);
+                    }
+                };
+                if (ACTION == 'save') {
+                    reader.readAsDataURL(file);
+                }
                 if (this.fileTracker) {
                     this.removeFile(this.fileTracker);
                 }
                 this.fileTracker = file;
             });
             this.on('removedfile', function (file) {
-                image = undefined;
+                //this.selectedImage = undefined;
             });
             this.on("success", function (file, responseText) {
                 console.log(responseText); // console should show the ID you pointed to
@@ -37,9 +93,11 @@ $(document).ready(function () {
                 this.removeAllFiles(true);
                 console.log(file);
             });
+            this.on('getSelectedImage', function () {
+                return "file"
+            });
         }
     });
-    // End of Single files
 
     $('#member_reg_frm').submit(function (e) {
         e.preventDefault();
@@ -55,11 +113,10 @@ $(document).ready(function () {
         else{
             updateMember();
         }
-       
         
     });
 
-    loadMemberData();
+    
 
     //Reset button
     $('#btnReset').on('click', function () {
@@ -116,16 +173,40 @@ $(document).ready(function () {
     $('.select2').select2();
     // End of Default initialization
 
+
+    if (window.location.search.length > 0) {
+        var sPageURL = window.location.search.substring(1);
+        var param = sPageURL.split('?');
+        var id = param[0].split('=')[1].split('&')[0];
+        var action = param[0].split('=')[2].split('&')[0];
+        
+        ID = id;
+        ACTION = action;
+        loadMemberData(id);
+
+        if(action == 'view'){
+            $("#member_reg_frm :input").prop("disabled", true);
+            $("#btnsave").hide();
+            $("#btnReset").hide();
+        }else if(action == 'edit'){
+            $('#btnsave').text('Update');
+        }
+    // call your "getdata(id)" function here
+
+    } else {
+        ACTION = 'save';
+    }
+
 });
 
 
 function saveMember() {   
 
-    $('.modal-title').text('Create Designation');
     var formData = new FormData();
 
-    formData.append('file', image);
-    console.log(formData.get("file"));
+    formData.append('file', dropzoneSingle.selectedImage);
+    formData.append('imageIcon', dropzoneSingle.imageIcon);
+    console.log(formData.get("imageIcon"));
 
     formData.append('member_number', $('#member_number').val());
     formData.append('national_id_number', $('#national_id_number').val());
@@ -214,8 +295,9 @@ function updateMember(){
 
     var formData = new FormData();
 
-    formData.append('file', image);
-    console.log(formData.get("file"));
+    formData.append('file', dropzoneSingle.selectedImage);
+    formData.append('imageIcon', dropzoneSingle.imageIcon);
+    console.log(formData.get("imageIcon"));
 
     formData.append('id', $('#hiddenmemberid').val());
     formData.append('member_number', $('#member_number').val());
@@ -311,22 +393,22 @@ function updateMember(){
     });
 }
 
-function loadMemberData(){
+function loadMemberData(id){
     
-    if (window.location.search.length > 0) {
-        var sPageURL = window.location.search.substring(1);
-        var param = sPageURL.split('&');
-        var id = param[0];
+    // if (window.location.search.length > 0) {
+    //     var sPageURL = window.location.search.substring(1);
+    //     var param = sPageURL.split('&');
+    //     var id = param[0];
 
-        if(param.length == 1){
-            $('#btnsave').text('Update');
-        }else if(param.length == 2){
-            $("#member_reg_frm :input").prop("disabled", true);
-            $("#btnsave").hide();
-            $("#btnReset").hide();
-        }
+    //     if(param.length == 1){
+    //         $('#btnsave').text('Update');
+    //     }else if(param.length == 2){
+    //         $("#member_reg_frm :input").prop("disabled", true);
+    //         $("#btnsave").hide();
+    //         $("#btnReset").hide();
+    //     }
        
-    }
+    // }
     $.ajax({
         type: "GET",
         url: "/get_member_data/" + id,
@@ -356,14 +438,14 @@ function loadMemberData(){
                 $('#date_of_joining').val(data.date_of_joining);
                 $('#home_phone_number').val(data.home_phone_number);
                 $('#mobile_phone_number').val(data.mobile_phone_number);
-                $('#serving_sub_department_id').val(data.serving_sub_department_id);
+                $('#serving_sub_department_id').val(data.serving_sub_department_id).trigger('change');
                 $('#cabinet_number').val(data.cabinet_number);
                 $('#official_number').val(data.official_number);
                 $('#designation_id').val(data.designation_id).trigger('change');
                 $('#computer_number').val(data.computer_number);
-                $('#work_location_id').val(data.work_location_id);
+                $('#work_location_id').val(data.work_location_id).trigger('change');
                 $('#payroll_number').val(data.payroll_number);
-                $('#payroll_preparation_location_id').val(data.payroll_preparation_location_id);
+                $('#payroll_preparation_location_id').val(data.payroll_preparation_location_id).trigger('change');
                 $('#monthly_payment_amount').val(data.monthly_payment_amount);
                 $('#beneficiary_full_name').val(data.beneficiary_full_name);
                 $('#beneficiary_relationship').val(data.beneficiary_relationship);
@@ -375,9 +457,9 @@ function loadMemberData(){
 
                 if(pathData != "not_available"){
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };
-                    thisDropzone.emit("addedfile", mockFile);
-                    thisDropzone.emit("success", mockFile);
-                    thisDropzone.emit("thumbnail", mockFile, pathData)
+                    dropzoneSingle.emit("addedfile", mockFile);
+                    dropzoneSingle.emit("success", mockFile);
+                    dropzoneSingle.emit("thumbnail", mockFile, pathData)
                 }
                 
             }

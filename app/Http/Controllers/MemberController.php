@@ -14,17 +14,31 @@ class MemberController extends Controller
 
     public function view_member_form(){
 
-        $get_designation_data = DB::table('master_designations') 
+        $designation_data = DB::table('master_designations') 
                                     ->select('id','name')
 								    ->get();
 
-        return view('add_edit_member',compact('get_designation_data'));
+        $works_data = DB::table('master_place_works') 
+                                    ->select('id','name')
+                                    ->get();
+        
+        $department_data = DB::table('master_sub_departments') 
+                                ->select('id','name')
+                                ->get();
+
+        $payroll_data = DB::table('master_payrolls') 
+                            ->select('id','name')
+                            ->get();
+
+        return view('add_edit_member',compact('designation_data', 'works_data', 'department_data', 'payroll_data'));
     }
 
     public function save(Request $request){
         try {
             
             $file =  $request->file('file');
+            $image_icon =  $request->get('imageIcon');
+
             $member = new Member();
 
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -60,6 +74,11 @@ class MemberController extends Controller
 
                 if($file){
                     $this->uploadAttachment($file, $member->id);
+                    
+                    if($image_icon){
+                        $this->uploadImageIcon($image_icon, $member->id);
+                    }
+
                     return response()->json(["status" => "success", "file" => $file]);
                 }else{
                     return response()->json(["status" => "without_img"]);
@@ -73,6 +92,18 @@ class MemberController extends Controller
         }
 
     }
+
+    private function uploadImageIcon($img, $name)
+    {
+        $folderPath = "attachments/member_icon_images/" . $name . ".png";
+        $image_parts = explode(";base64,", $img);
+        $image_base64 = base64_decode($image_parts[1]);
+        $file = $folderPath;
+        file_put_contents($file, $image_base64);
+
+        return $file;
+    }
+
 
     public function uploadAttachment($file, $id)
     {
@@ -182,6 +213,7 @@ class MemberController extends Controller
         try {
             $id = $request->input('id');
             $file =  $request->file('file');
+            
             $member =Member::find($request->id);
             
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -229,6 +261,8 @@ class MemberController extends Controller
 
                     if(file_exists($file_data)){
                         unlink($file_data);
+                    } else {
+                        echo "File not found: " . $icon_filepath;
                     }
 
                     $remove_att_records = DB::table("member_attachments")

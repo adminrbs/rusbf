@@ -15,7 +15,7 @@
 <!-- Dashboard content -->
 <div class="card">
     <div class="card-header d-flex align-items-center">
-        <h5 class="mb-0">Designations</h5>
+        <h5 class="mb-0">Serving Sub-Department</h5>
         <div class="d-inline-flex ms-auto"></div>
     </div>
 
@@ -23,7 +23,7 @@
         <div class="row mb-3">
             <div class="col-md-10"></div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-primary" onclick="add_designation();" style="float:right;"><i class="ph-plus"></i>&nbsp;Add New</button>
+                <button type="button" class="btn btn-primary" onclick="add_sub_department();" style="float:right;"><i class="ph-plus"></i>&nbsp;Add New</button>
             </div>   
         </div>
         
@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="tbl_create_designation" class="table table-striped "
+                            <table id="tbl_create_sub_department" class="table table-striped "
                                 role="grid" aria-describedby="example1_info">
                                 <thead>
                                     <tr>
@@ -53,7 +53,7 @@
     <hr>
 </div>
 <!-- /dashboard content -->
-<!--Designation Modal -->
+<!--Serving Sub-Department Modal -->
 <div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,7 +67,7 @@
                     <input type="hidden" class="form-control" id="hidden_id" name="hidden_id"/>
                     <div class="mb-3">
                         <label class="col-form-label">Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="designation_name" name="designation_name" placeholder="Not Applicable" required/>
+                        <input type="text" class="form-control" id="sub_department_name" name="sub_department_name" placeholder="Not Applicable"  required/>
                     </div>
                     
                     <div>
@@ -78,7 +78,7 @@
         </div>
     </div>
 </div>
-<!--Designation Modal -->
+<!--Serving Sub-Department Modal -->
 
 
 
@@ -107,5 +107,5 @@
 <script src="{{URL::asset('assets/demo/pages/datatables_basic.js')}}"></script>
 
 
-<script src="{{URL::asset('assets/js/masterDesignation.js')}}"></script>
+<script src="{{URL::asset('assets/js/masterSubDepartment.js')}}"></script>
 @endsection

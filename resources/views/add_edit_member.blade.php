@@ -102,10 +102,13 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Work<span class="text-danger">*</span></label>
-                        <select name="work_location_id" id="work_location_id" class="form-select form-control-sm custom-background" required>
+                        <select name="work_location_id" id="work_location_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
-                            <option value="1">work 1</option>
-                            <option value="2">work 2</option>
+                            @if(!empty($works_data))
+                                @foreach ($works_data as $val)
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -130,10 +133,10 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
-                        <select name="designation_id" id="designation_id" class="form-control select2 form-control-sm"" required>
+                        <select name="designation_id" id="designation_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
-                            @if(!empty($get_designation_data))
-                                @foreach ($get_designation_data as $val)
+                            @if(!empty($designation_data))
+                                @foreach ($designation_data as $val)
                                     <option value="{{ $val->id }}">{{ $val->name }}</option>
                                 @endforeach
                             @endif
@@ -141,20 +144,26 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Payroll<span class="text-danger">*</span></label>
-                        <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-select form-control-sm custom-background" required>
+                        <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
-                            <option value="1">payroll 1</option>
-                            <option value="2">payroll 2</option>
+                            @if(!empty($payroll_data))
+                                @foreach ($payroll_data as $val)
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Serving Sub-department<span class="text-danger">*</span></label>
-                        <select data-placeholder="Select Serving Sub-department" class="form-select form-control-sm custom-background" name="serving_sub_department_id" id="serving_sub_department_id" required>
+                        <select data-placeholder="Select Serving Sub-department" class="form-control select2 form-control-sm" name="serving_sub_department_id" id="serving_sub_department_id" required>
                             <option value="">-- Select--</option>
-                            <option value="1">department 1</option>
-                            <option value="2">department 2</option>
+                            @if(!empty($department_data))
+                                @foreach ($department_data as $val)
+                                    <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div>

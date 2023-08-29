@@ -60,6 +60,9 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
+                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a></li>
+                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving Sub-Department</a></li>
+                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of Payroll Preparation</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -1,8 +1,8 @@
-console.log("masterDesignation.js loading");
+console.log("masterPlaceOfPayroll.js loading");
 
 $(document).ready(function () {
 
-    $('#tbl_create_designation').DataTable({
+    $('#tbl_create_payroll').DataTable({
         responsive: true,
         "order": [],
         "columns": [
@@ -34,19 +34,19 @@ $(document).ready(function () {
             },
         ]
     });
-    loaddesignations();
+    loadPayrolls();
 
     $('#add_modal').on('shown.bs.modal', function() {
-        $('#designation_name').focus();
+        $('#payroll_name').focus();
     })
 
     $('#btnsave').on('click', function () {
 
         if($('#btnsave').text().trim()=='Save'){
-           save_designation();
+           save_payroll();
         }
         else{
-            update_designation();
+            update_payroll();
         }
 
     });
@@ -55,16 +55,16 @@ $(document).ready(function () {
 });
 
 
-function add_designation(){
+function add_payroll(){
     $('#add_modal').modal('show');
-    $('.modal-title').text('Create Designation');
+    $('.modal-title').text('Create Place of Payroll');
     $('#btnsave').text('Save');
     resetModal();
 }
 
-function save_designation(){
+function save_payroll(){
 
-    var name = $('#designation_name').val();
+    var name = $('#payroll_name').val();
     
     if (name === '') {
         name = "Not Applicable";
@@ -75,7 +75,7 @@ function save_designation(){
 
         $.ajax({
             type: "POST",
-            url: "/save_designation",
+            url: "/save_payroll",
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -97,7 +97,7 @@ function save_designation(){
                         type: 'success',
                     }).show();
 
-                    loaddesignations();
+                    loadPayrolls();
                 }else{
                     new Noty({
                         text: 'Saving process error!',
@@ -112,13 +112,12 @@ function save_designation(){
             }, complete: function () {
             }
         });
-
 }
 
-function loaddesignations(){
+function loadPayrolls(){
     $.ajax({
         type: 'GET',
-        url: '/get_all_designations',
+        url: '/get_all_payroll',
         success: function(response){
 
             var dt = response.data;
@@ -134,11 +133,11 @@ function loaddesignations(){
                         "thname":name,
                         "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
                         '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
-                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxDesignationStatus" value="1"  onclick="cbxDesignationStatus('+ dt[i].id + ')" required '+isChecked+'></lable>',
+                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxPayrollStatus" value="1"  onclick="cbxPayrollStatus('+ dt[i].id + ')" required '+isChecked+'></lable>',
                      });
 
                 }
-                var table = $('#tbl_create_designation').DataTable();
+                var table = $('#tbl_create_payroll').DataTable();
                 table.clear();
                 table.rows.add(data).draw();
 
@@ -154,13 +153,13 @@ function loaddesignations(){
 function edit(id){
 
     $('#add_modal').modal('show');
-    $('.modal-title').text('Update Designation');
+    $('.modal-title').text('Update Place of Payroll');
     $('#btnsave').text('Update');
     $('#hidden_id').val(id);
 
     $.ajax({
         type: "GET",
-        url: "/get_designation_data/" + id,
+        url: "/get_payroll_data/" + id,
         processData: false,
         contentType: false,
         cache: false,
@@ -174,7 +173,7 @@ function edit(id){
             let name = response.data.name;
 
             if (response) {
-                $('#designation_name').val(name); 
+                $('#payroll_name').val(name); 
             }else{
                 console.log('error');
             }
@@ -195,10 +194,10 @@ function edit(id){
 
 }
 
-function update_designation(){
+function update_payroll(){
 
     var isValid = true;
-    var name = $('#designation_name').val();
+    var name = $('#payroll_name').val();
 
     if (name === '') {
         $('#name_error').html('This is a required field.');
@@ -208,11 +207,11 @@ function update_designation(){
         var formData = new FormData();
 
         formData.append('id', $('#hidden_id').val());
-        formData.append('name', $('#designation_name').val());
+        formData.append('name', $('#payroll_name').val());
 
         $.ajax({
             type: "POST",
-            url: "/master_designation/update",
+            url: "/master_payroll/update",
             data: formData,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -234,7 +233,7 @@ function update_designation(){
                         type: 'success',
                     }).show();
 
-                    loaddesignations();
+                    loadPayrolls();
                 }else{
                     new Noty({
                         text: 'Saving process error!',
@@ -259,25 +258,25 @@ function _delete(id){
         $.ajax({
             type: 'DELETE',
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: '/delete_designation/'+id,
+            url: '/delete_payroll/'+id,
             
             success: function(response){
                 console.log(response);
                 if(response.status == "deleted"){
-                    loaddesignations();
+                    loadPayrolls();
 
                     new Noty({
                         text: 'Data deleted!',
                         type: 'success',
                     }).show();
 
-                }else if(response.status == "designation_used"){
+                }else if(response.status == "payroll_used"){
                     new Noty({
-                        text: 'This designation is currently in use and cannot be deleted!',
+                        text: 'This data is currently in use and cannot be deleted!',
                         type: 'warning'
                     }).show();
 
-                    loaddesignations();
+                    loadPayrolls();
                     
                 }else if(response.status == "cannot"){
                     new Noty({
@@ -285,7 +284,7 @@ function _delete(id){
                         type: 'warning'
                     }).show();
 
-                    loaddesignations();
+                    loadPayrolls();
                     
                 }else{
                     new Noty({
@@ -300,17 +299,17 @@ function _delete(id){
             }
         });
     } else {
-        loaddesignations();
+        loadPayrolls();
     }
 }
 
 
-function cbxDesignationStatus(id){
+function cbxPayrollStatus(id){
     
-    var status = $('#cbxDesignationStatus').is(':checked') ? 1 : 0;
+    var status = $('#cbxPayrollStatus').is(':checked') ? 1 : 0;
 
     $.ajax({
-        url: '/designationStatus/'+id,
+        url: '/payrollStatus/'+id,
         type: 'POST',
         data: {
             '_token': $('meta[name="csrf-token"]').attr('content'),

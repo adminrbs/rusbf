@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterDesignation;
-use App\Models\Member;
+use App\Models\MasterSubDepartment;
 use Illuminate\Http\Request;
+use App\Models\Member;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class MasterDesignationController extends Controller
+class MasterSubDepartmentController extends Controller
 {
-
-    public function save_designation(Request $request){
+    
+    public function save_department(Request $request){
         
         try{
-            $designation = new MasterDesignation();
-            $designation->name = $request->get('name');
+            $department = new MasterSubDepartment();
+            $department->name = $request->get('name');
             
-            if($designation->save()){
+            if($department->save()){
                 return response()->json(["status" => "succeed"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -29,12 +29,12 @@ class MasterDesignationController extends Controller
 
     }
 
-    public function get_all_designations(){
+    public function get_all_departments(){
 
         try {
 
-            $data = DB::table("master_designations")
-                            ->select('master_designations.id','master_designations.name','master_designations.status')
+            $data = DB::table("master_sub_departments")
+                            ->select('master_sub_departments.id','master_sub_departments.name','master_sub_departments.status')
                             ->get();
 
             return compact('data');
@@ -45,12 +45,13 @@ class MasterDesignationController extends Controller
         }
     }
 
-    public function get_designation_data($id){
+
+    public function get_department_data($id){
 
         try{
 
-            $data = DB::table("master_designations")
-                            ->select('master_designations.name')
+            $data = DB::table("master_sub_departments")
+                            ->select('master_sub_departments.name')
                             ->where('id',$id)
                             ->first();
 
@@ -61,16 +62,15 @@ class MasterDesignationController extends Controller
         }
     }
 
-
     public function update(Request $request)
     {
         try{
             $id = $request->input('id');
-            $designation = MasterDesignation::find($id);
+            $department = MasterSubDepartment::find($id);
     
-            $designation->name = $request->get('name');
+            $department->name = $request->get('name');
             
-            if($designation->update()){
+            if($department->update()){
                 return response()->json(["status" => "updated"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -83,20 +83,20 @@ class MasterDesignationController extends Controller
 
     public function delete($id){
         try {
-            $isUsed = Member::where('designation_id', $id)->exists();
-            $getone = MasterDesignation::where('id', 1)->exists();
+            $isUsed = Member::where('serving_sub_department_id', $id)->exists();
+            $getone = MasterSubDepartment::where('id', 1)->exists();
 
             if ($isUsed) {
                 
-                return response()->json(["status" => "designation_used"]);
+                return response()->json(["status" => "department_used"]);
 
             }elseif($getone){
                 return response()->json(["status" => "cannot"]);
             }else{
 
-                $designation = MasterDesignation::where('id', $id)->first();
+                $department = MasterSubDepartment::where('id', $id)->first();
 
-                if ($designation->delete()) {
+                if ($department->delete()) {
                     return response()->json(["status" => "deleted"]);
                 } else {
                     return response()->json(["status" => "failed"]);
@@ -110,12 +110,12 @@ class MasterDesignationController extends Controller
     }
 
 
-    public function designationStatus(Request $request, $id){
+    public function departmentStatus(Request $request, $id){
         try{
-            $designation = MasterDesignation::findOrFail($id);
-            $designation->status = $request->get('status');
+            $department = MasterSubDepartment::findOrFail($id);
+            $department->status = $request->get('status');
           
-            if($designation->save()){
+            if($department->save()){
                 return response()->json(["status" => "saved"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -125,4 +125,6 @@ class MasterDesignationController extends Controller
             return $ex->getMessage();
         }
     }   
+
+
 }
