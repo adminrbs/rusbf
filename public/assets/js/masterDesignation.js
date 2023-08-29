@@ -127,6 +127,7 @@ function loaddesignations(){
                 for (i = 0; i < response.data.length; i++) {
 
                     var id  = dt[i]['id'];
+                    var stringId = "'"+id+"'";
                     var name  = dt[i]['name'];
                     var isChecked = dt[i].status ? "checked" : "";
 
@@ -134,7 +135,7 @@ function loaddesignations(){
                         "thname":name,
                         "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
                         '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
-                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxDesignationStatus" value="1"  onclick="cbxDesignationStatus('+ dt[i].id + ')" required '+isChecked+'></lable>',
+                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxDesignationStatus" value="1"  onclick="cbxDesignationStatus('+ stringId + ',this)" required '+isChecked+'></lable>',
                      });
 
                 }
@@ -305,9 +306,9 @@ function _delete(id){
 }
 
 
-function cbxDesignationStatus(id){
+function cbxDesignationStatus(id, event){
     
-    var status = $('#cbxDesignationStatus').is(':checked') ? 1 : 0;
+    var status = $(event).is(':checked') ? 1 : 0;
 
     $.ajax({
         url: '/designationStatus/'+id,
@@ -323,6 +324,8 @@ function cbxDesignationStatus(id){
                 type: 'success',
                 timeout: 2000,
             }).show();
+
+            loaddesignations();
         },
         error: function (data) {
             console.log(data);

@@ -44,7 +44,7 @@ function loadmembers(){
                   
                     // var imageIcon_path = "attachments/member_icon_images/" + id + ".png";
                     
-                    if(path == null){
+                    if(path == ''){
                         path = "attachments/member_images/no_profile.png";
                     }
 

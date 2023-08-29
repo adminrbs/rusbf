@@ -253,16 +253,17 @@ class MemberController extends Controller
                 }else{
 
                     $exAttachment = MemberAttachment::where('member_id', $id)->first();
-                    $ex_filepath = $exAttachment->path;
+                    $ex_filepath = "";
 
+                    if(isset($exAttachment->path)){
+                        $ex_filepath =  $exAttachment->path;
+                    }
                     $baseUrl = url('/') . "/attachments/member_images/";
                     $file_data =  str_replace($baseUrl, '', $ex_filepath);
                     $file_data = public_path('attachments/member_images').'/'.$file_data;
 
-                    if(file_exists($file_data)){
+                    if(file_exists('attachments/member_images/'. $file_data)){
                         unlink($file_data);
-                    } else {
-                        echo "File not found: " . $icon_filepath;
                     }
 
                     $remove_att_records = DB::table("member_attachments")
@@ -272,7 +273,7 @@ class MemberController extends Controller
                     $remove_mem_path = DB::table("members")
                                             ->select('members.path')
                                             ->where('id', $id)
-                                            ->update(['path' => null]);
+                                            ->update(['path' => '']);
 
                     return response()->json(["status" => "without_img"]);
                 }  
@@ -282,7 +283,7 @@ class MemberController extends Controller
 
         }
          catch (Exception $ex) {
-            return $ex->getMessage();
+            return $ex;
         }
     }
 
