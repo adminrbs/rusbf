@@ -84,13 +84,12 @@ class MasterSubDepartmentController extends Controller
     public function delete($id){
         try {
             $isUsed = Member::where('serving_sub_department_id', $id)->exists();
-            $getone = MasterSubDepartment::where('id', 1)->exists();
 
             if ($isUsed) {
                 
                 return response()->json(["status" => "department_used"]);
 
-            }elseif($getone){
+            }elseif($id == 1){
                 return response()->json(["status" => "cannot"]);
             }else{
 

@@ -86,13 +86,12 @@ class MasterPayrollController extends Controller
     public function delete($id){
         try {
             $isUsed = Member::where('payroll_preparation_location_id', $id)->exists();
-            $getone = MasterPayroll::where('id', 1)->exists();
 
             if ($isUsed) {
                 
                 return response()->json(["status" => "payroll_used"]);
 
-            }elseif($getone){
+            }elseif($id == 1){
                 return response()->json(["status" => "cannot"]);
             }else{
 

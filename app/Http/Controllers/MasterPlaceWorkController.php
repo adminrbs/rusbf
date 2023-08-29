@@ -86,13 +86,12 @@ class MasterPlaceWorkController extends Controller
     public function delete($id){
         try {
             $isUsed = Member::where('work_location_id', $id)->exists();
-            $getone = MasterPlaceWork::where('id', 1)->exists();
 
             if ($isUsed) {
                 
                 return response()->json(["status" => "work_place_used"]);
 
-            }elseif($getone){
+            }elseif($id == 1){
                 return response()->json(["status" => "cannot"]);
             }else{
 
