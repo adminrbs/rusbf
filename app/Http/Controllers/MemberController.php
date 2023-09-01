@@ -293,26 +293,32 @@ class MemberController extends Controller
 
             $member = Member::where('id',$id)->first();
             $filePath = $member->path;
-            $baseUrl = url('/') . "/attachments/member_images/";
 
-            $file =  str_replace($baseUrl, '', $filePath);
-            $file = public_path('attachments/member_images').'/'.$file;
+            if($filePath){
+                $baseUrl = url('/') . "/attachments/member_images/";
 
-            if(file_exists($file)){
-                unlink($file);
-            }
-
-            if($member->delete()){
-                $attachment = MemberAttachment::where('member_id',$id)->first();
-                $attachment->delete();
+                $file =  str_replace($baseUrl, '', $filePath);
+                $file = public_path('attachments/member_images').'/'.$file;
     
-                return "deleted";
+                if(file_exists($file)){
+                    unlink($file);
+                }
+    
+                if($member->delete()){
+                    $attachment = MemberAttachment::where('member_id',$id)->first();
+                    $attachment->delete();
+        
+                    return "deleted";
+                }else{
+                    return "failed";
+                }
             }else{
-                return "failed";
+                $member->delete();
+                return "deleted";
             }
             
         } catch (Exception $ex) {
-            return $ex->getMessage();
+            return $ex;
         }
 
     }

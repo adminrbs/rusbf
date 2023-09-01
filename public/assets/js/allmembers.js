@@ -44,7 +44,7 @@ function loadmembers(){
                   
                     // var imageIcon_path = "attachments/member_icon_images/" + id + ".png";
                     
-                    if(path == ''){
+                    if(path == null || path == ''){
                         path = "attachments/member_images/no_profile.png";
                     }
 
@@ -57,7 +57,7 @@ function loadmembers(){
                         "thphone":mobile_no,
                         "actions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
                         '<button class="btn btn-success btn-icon" onclick="view(' + id + ')"><i class="ph-eye" aria-hidden="true"></i></button> ' +
-                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')" ' + 'disabled><i class="ph-trash" aria-hidden="true"></i></button>',
+                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                      });
 
                 }

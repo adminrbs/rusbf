@@ -107,5 +107,5 @@
 <script src="{{URL::asset('assets/demo/pages/datatables_basic.js')}}"></script>
 
 
-<script src="{{URL::asset('assets/js/userRoles.js')}}"></script>
+<script src="{{URL::asset('assets/js/Roles.js')}}"></script>
 @endsection

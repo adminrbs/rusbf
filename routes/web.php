@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MasterPlaceWorkController;
 use App\Http\Controllers\MasterSubDepartmentController;
 use App\Http\Controllers\MasterPayrollController;
 use App\Http\Controllers\MasterDesignationController;
-use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
@@ -140,13 +141,17 @@ Route::post('/master_payroll/update', [MasterPayrollController::class, 'update']
 Route::delete('/delete_payroll/{id}', [MasterPayrollController::class, 'delete']);
 Route::post('/payrollStatus/{id}', [MasterPayrollController::class, 'payrollStatus']);
 
-// User Roles
+//Settings- Roles
 Route::get('/user_role_list', function () {
-    return view('user_role_list');
+    return view('role_list');
 });
-Route::post('/save_user_role', [UserRoleController::class, 'save_user_role']);
-Route::get('/get_user_roles', [UserRoleController::class, 'get_user_roles']);
-Route::get('/get_role_data/{id}', [UserRoleController::class, 'get_role_data']);
-Route::post('/user_role/update', [UserRoleController::class, 'update']);
-Route::delete('/user_role/{id}', [UserRoleController::class, 'delete']);
-Route::post('/user_role_status/{id}', [UserRoleController::class, 'user_role_status']);
+Route::post('/save_user_role', [RoleController::class, 'save_user_role']);
+Route::get('/get_user_roles', [RoleController::class, 'get_user_roles']);
+Route::get('/get_role_data/{id}', [RoleController::class, 'get_role_data']);
+Route::post('/user_role/update', [RoleController::class, 'update']);
+Route::delete('/user_role/{id}', [RoleController::class, 'delete']);
+Route::post('/user_role_status/{id}', [RoleController::class, 'user_role_status']);
+
+//Settings- User Roles
+Route::get('/view_user', [UserController::class, 'view_user']);
+Route::post('/save_user', [UserController::class, 'save_user']);

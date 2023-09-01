@@ -55,7 +55,7 @@
                         </li>
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
-                                <i class="ph-gear"></i>
+                                <i class="ph-files"></i>
                                 <span>Master Data</span>
                             </a>
                             <ul class="nav-group-sub collapse">
@@ -65,11 +65,16 @@
                                 <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of Payroll Preparation</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="/user_role_list" class="nav-link">
-                                <i class="ph-users"></i>
-                                <span>User Roles</span>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
+                                <span>Settings</span>
                             </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item"><a href="/user_role_list" class="nav-link">User Roles</a></li>
+                                <li class="nav-item"><a href="/view_user" class="nav-link">Create User</a></li>
+                                <li class="nav-item"><a href="/view_users_list" class="nav-link">User List</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

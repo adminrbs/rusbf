@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserRole;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
-class UserRoleController extends Controller
+class RoleController extends Controller
 {
     
     public function save_user_role(Request $request){
         
         try{
-            $user_role = new UserRole();
-            $user_role->name = $request->get('role_name');
+            $role = new Role();
+            $role->name = $request->get('role_name');
             
-            if($user_role->save()){
+            if($role->save()){
                 return response()->json(["status" => "succeed"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -32,8 +32,8 @@ class UserRoleController extends Controller
 
         try {
 
-            $data = DB::table("user_roles")
-                            ->select('user_roles.id','user_roles.name','user_roles.status')
+            $data = DB::table("roles")
+                            ->select('roles.id','roles.name','roles.status')
                             ->get();
 
             return compact('data');
@@ -48,8 +48,8 @@ class UserRoleController extends Controller
 
         try{
 
-            $data = DB::table("user_roles")
-                            ->select('user_roles.name')
+            $data = DB::table("roles")
+                            ->select('roles.name')
                             ->where('id',$id)
                             ->first();
 
@@ -65,11 +65,11 @@ class UserRoleController extends Controller
     {
         try{
             $id = $request->input('id');
-            $user_role = UserRole::find($id);
+            $role = Role::find($id);
     
-            $user_role->name = $request->get('role_name');
+            $role->name = $request->get('role_name');
             
-            if($user_role->update()){
+            if($role->update()){
                 return response()->json(["status" => "updated"]);
             }else{
                 return response()->json(["status" => "failed"]);
@@ -82,9 +82,9 @@ class UserRoleController extends Controller
 
     public function delete($id){
         try {
-            $user_role = UserRole::where('id', $id)->first();
+            $role = Role::where('id', $id)->first();
 
-                if ($user_role->delete()) {
+                if ($role->delete()) {
                     return response()->json(["status" => "deleted"]);
                 } else {
                     return response()->json(["status" => "failed"]);
@@ -98,10 +98,10 @@ class UserRoleController extends Controller
 
     public function user_role_status(Request $request, $id){
         try{
-            $user_role = UserRole::findOrFail($id);
-            $user_role->status = $request->get('status');
+            $role = Role::findOrFail($id);
+            $role->status = $request->get('status');
           
-            if($user_role->save()){
+            if($role->save()){
                 return response()->json(["status" => "saved"]);
             }else{
                 return response()->json(["status" => "failed"]);

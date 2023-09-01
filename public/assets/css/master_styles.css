@@ -23,6 +23,10 @@ input[type="email"] {
   background-color: #EBFFFF;
 }
 
+input[type="password"] {
+  background-color: #EBFFFF;
+}
+
 textarea {
   background-color: #EBFFFF !important;
 }

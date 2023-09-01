@@ -11,20 +11,5 @@ use Spatie\Activitylog\LogOptions;
 
 class UserRole extends Model
 {
-    use HasFactory, LogsActivity;
-    protected $fillable = [];
-
-    protected static $logOnlyDirty = true;
-    public function tapActivity(Activity $activity, string $eventName)
-    {
-        $activity->log_name = "user roles";
-        $activity->description = $eventName;
-        $activity->causer_id = 1;
-    }
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['*']);
-        // Chain fluent methods for configuration options
-    }
+    use HasFactory;
 }
