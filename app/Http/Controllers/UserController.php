@@ -47,4 +47,32 @@ class UserController extends Controller
         }
 
     }
+
+    public function view_users_list(){
+
+        return view('view_all_users');
+    }
+
+    public function load_users_list(){
+
+        try {
+
+            $userData = DB::table("users")
+                                ->select(
+                                    'users.id',
+                                    'users.name',
+                                    'users.email',
+                                    'users.user_type',
+                                    'user_roles.role_id'
+                                )
+                                ->leftJoin('user_roles', 'users.id', '=', 'user_roles.user_id')
+                                ->get();
+
+            return compact('userData');
+
+        }
+         catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
 }

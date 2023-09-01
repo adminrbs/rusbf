@@ -155,3 +155,5 @@ Route::post('/user_role_status/{id}', [RoleController::class, 'user_role_status'
 //Settings- User Roles
 Route::get('/view_user', [UserController::class, 'view_user']);
 Route::post('/save_user', [UserController::class, 'save_user']);
+Route::get('/view_users_list', [UserController::class, 'view_users_list']);
+Route::get('/load_users_list', [UserController::class, 'load_users_list']);
