@@ -16,21 +16,29 @@ class MemberController extends Controller
 
         $designation_data = DB::table('master_designations') 
                                     ->select('id','name')
+                                    ->where('status',1)
 								    ->get();
 
         $works_data = DB::table('master_place_works') 
                                     ->select('id','name')
+                                    ->where('status',1)
                                     ->get();
-        
+                                          
         $department_data = DB::table('master_sub_departments') 
                                 ->select('id','name')
+                                ->where('status',1)
                                 ->get();
-
+                                
         $payroll_data = DB::table('master_payrolls') 
                             ->select('id','name')
+                            ->where('status',1)
                             ->get();
 
-        return view('add_edit_member',compact('designation_data', 'works_data', 'department_data', 'payroll_data'));
+        $members = DB::table('members') 
+                            ->select('id','name_initials','member_number')
+                            ->get();
+                
+        return view('add_edit_member',compact('designation_data', 'works_data', 'department_data', 'payroll_data', 'members'));
     }
 
     public function save(Request $request){
@@ -69,6 +77,7 @@ class MemberController extends Controller
             $member->member_whatsapp = $request->get('member_whatsapp');
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
+            $member->ref_by = $request->get('ref_by');
 
             if ($member->save()) {
 
@@ -244,6 +253,7 @@ class MemberController extends Controller
             $member->member_whatsapp = $request->get('member_whatsapp');
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
+            $member->ref_by = $request->get('ref_by');
 
             if ($member->save()) {
 

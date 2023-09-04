@@ -12,13 +12,14 @@ use DB;
 class UserController extends Controller
 {
 
-    public function view_user(){
+    public function get_user_role (){
 
         $role_data = DB::table('roles') 
                         ->select('id','name')
+                        ->where('status', 1)
                         ->get();
 
-        return view('view_user_create',compact('role_data'));
+        return response()->json($role_data);
     }
 
     public function save_user(Request $request){
@@ -58,20 +59,45 @@ class UserController extends Controller
         try {
 
             $userData = DB::table("users")
-                                ->select(
-                                    'users.id',
-                                    'users.name',
-                                    'users.email',
-                                    'users.user_type',
-                                    'user_roles.role_id'
-                                )
-                                ->leftJoin('user_roles', 'users.id', '=', 'user_roles.user_id')
-                                ->get();
+                            ->select(
+                                'users.id',
+                                'users.name',
+                                'users.email',
+                                'users.user_type',
+                                'roles.name AS role_name' // Include the role name from the roles table
+                            )
+                            ->leftJoin('user_roles', 'users.id', '=', 'user_roles.user_id')
+                            ->leftJoin('roles', 'user_roles.role_id', '=', 'roles.id') // Join the roles table
+                            ->get();
+
 
             return compact('userData');
 
         }
          catch (Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
+
+    public function get_user_data($id){
+        
+        try{
+
+            $data = DB::table("users")
+                        ->select('users.id','users.name','users.email','users.user_type','users.password')
+                        ->where('id', $id)
+                        ->first();
+
+            $role_name = DB::table('user_roles')
+                            ->select('roles.id','roles.name')
+                            ->join('roles', 'user_roles.role_id', '=', 'roles.id')
+                            ->where('user_roles.user_id', $id)
+                            ->first();
+
+            return [$data, $role_name];
+
+        }catch(Exception $ex) {
             return $ex->getMessage();
         }
     }

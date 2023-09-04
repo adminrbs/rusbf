@@ -319,13 +319,30 @@ function cbxDesignationStatus(id, event){
         },
         success: function (response) {
             console.log(response);
-            new Noty({
-                text: 'Status changed!',
-                type: 'success',
-                timeout: 2000,
-            }).show();
+            if(response.status == 'used'){
 
-            loaddesignations();
+                new Noty({
+                    text: 'This data is currently in use and cannot be changed!',
+                    type: 'warning'
+                }).show();
+
+                loaddesignations();
+
+            }else if(response.status == 'saved'){
+
+                new Noty({
+                    text: 'Status changed!',
+                    type: 'success',
+                    timeout: 2000,
+                }).show();
+    
+                loaddesignations();
+            }else{
+                new Noty({
+                    text: 'Saving process error!',
+                    type: 'error'
+                }).show();
+            }
         },
         error: function (data) {
             console.log(data);

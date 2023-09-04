@@ -274,6 +274,13 @@ function _delete(id){
                         type: 'success',
                     }).show();
 
+                }else if(response.status == "role_used"){
+                    loadUserRoles();
+
+                    new Noty({
+                        text: 'This data is currently in use and cannot be deleted!!',
+                        type: 'warning'
+                    }).show();
                 }else{
                     new Noty({
                         text: 'deleting process error!',

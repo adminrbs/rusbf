@@ -44,6 +44,7 @@ return new class extends Migration
             $table->string('beneficiary_email')->nullable();
             $table->string('beneficiary_nic')->nullable();
             $table->string('path', 300)->nullable();
+            $table->integer('ref_by')->nullable();
             $table->timestamps();
         });
     }

@@ -317,14 +317,31 @@ function cbxPayrollStatus(id, event){
             'status': status
         },
         success: function (response) {
-            console.log(response);
-            new Noty({
-                text: 'Status changed!',
-                type: 'success',
-                timeout: 2000,
-            }).show();
 
-            loadPayrolls();
+            if(response.status == 'used'){
+
+                new Noty({
+                    text: 'This data is currently in use and cannot be changed!',
+                    type: 'warning'
+                }).show();
+
+                loadPayrolls();
+
+            }else if(response.status == 'saved'){
+
+                new Noty({
+                    text: 'Status changed!',
+                    type: 'success',
+                    timeout: 2000,
+                }).show();
+    
+                loadPayrolls();
+            }else{
+                new Noty({
+                    text: 'Saving process error!',
+                    type: 'error'
+                }).show();
+            }
         },
         error: function (data) {
             console.log(data);

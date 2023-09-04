@@ -236,6 +236,7 @@ function saveMember() {
     formData.append('beneficiary_private_address', $('#beneficiary_private_address').val());
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
+    formData.append('ref_by', $('#ref_by').val());
 
     $.ajax({
         type: "POST",
@@ -297,7 +298,7 @@ function updateMember(){
 
     formData.append('file', dropzoneSingle.selectedImage);
     formData.append('imageIcon', dropzoneSingle.imageIcon);
-    console.log(formData.get("imageIcon"));
+    console.log(formData.get("file"));
 
     formData.append('id', $('#hiddenmemberid').val());
     formData.append('member_number', $('#member_number').val());
@@ -328,6 +329,7 @@ function updateMember(){
     formData.append('beneficiary_private_address', $('#beneficiary_private_address').val());
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
+    formData.append('ref_by', $('#ref_by').val());
 
     $.ajax({
         type: "POST",
@@ -454,6 +456,7 @@ function loadMemberData(id){
                 $('#beneficiary_nic').val(data.beneficiary_nic);
                 $('#member_email').val(data.member_email);
                 $('#member_whatsapp').val(data.member_whatsapp);
+                $('#ref_by').val(data.ref_by).trigger('change');
 
                 if(pathData != "not_available"){
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };

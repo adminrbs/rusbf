@@ -71,9 +71,12 @@
                                 <span>Settings</span>
                             </a>
                             <ul class="nav-group-sub collapse">
+                                @if (Auth::user()->id == 1)
                                 <li class="nav-item"><a href="/user_role_list" class="nav-link">User Roles</a></li>
-                                <li class="nav-item"><a href="/view_user" class="nav-link">Create User</a></li>
+                                @endif
+                                @if (Auth::user()->id == 1)
                                 <li class="nav-item"><a href="/view_users_list" class="nav-link">User List</a></li>
+                                @endif
                             </ul>
                         </li>
                     </ul>

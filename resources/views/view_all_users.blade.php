@@ -20,6 +20,13 @@
     </div>
 
     <div class="card-body border-top">
+        <div class="row mb-3">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" onclick="add_user();" style="float:right;"><i class="ph-plus"></i>&nbsp;Add New</button>
+            </div>   
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -46,6 +53,70 @@
     </div>
 </div>
 <!-- /dashboard content -->
+<!--User Modal -->
+<div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"> {{-- style="max-height: 80vh; overflow-y: auto;" --}}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="user_form">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input type="hidden" class="form-control" name="hiddenuserid" id="hiddenuserid">
+                                <div>
+                                    <label class="col-form-label mb-0">Username<span class="text-danger">*</span></label>
+                                    <input type="text" name="username" id="username" placeholder="Username" class="form-control form-control-sm" autofocus required>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">Email Address<span class="text-danger">*</span></label>
+                                    <input type="email" name="email" id="email" placeholder="Email Address" class="form-control form-control-sm" required>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">Password<span class="text-danger">*</span></label>
+                                    <input type="password" name="password" id="password" placeholder="Password" class="form-control form-control-sm" required autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">Confirm Password<span class="text-danger">*</span></label>
+                                    <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" class="form-control form-control-sm" required autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">User Role<span class="text-danger">*</span></label>
+                                    <select name="userrole" id="userrole" class="form-control select2 form-control-sm" required>
+                                        <option value="">-- Select--</option>
+                                        @if(!empty($role_data))
+                                            @foreach ($role_data as $val)
+                                                <option value="{{ $val->id }}">{{ $val->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">User Type<span class="text-danger">*</span></label>
+                                    <select name="usertype" id="usertype" class="form-select form-control-sm custom-background" required>
+                                        <option value="">-- Select--</option>
+                                        <option value="0">Guest</option>
+                                        <option value="1">Employee</option>
+                                    </select>
+                                </div>
+                                &nbsp;
+                                <div>
+                                    <button type="submit" id="btnsave" class="btn btn-success form-btn" style="width: 6rem; float: right">Save</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--User Modal -->
 
 
 

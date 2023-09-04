@@ -102,7 +102,7 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Work<span class="text-danger">*</span></label>
-                        <select name="work_location_id" id="work_location_id" class="form-control select2 form-control-sm" required>
+                        <select data-placeholder="-- Select--" name="work_location_id" id="work_location_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
                             @if(!empty($works_data))
                                 @foreach ($works_data as $val)
@@ -133,7 +133,7 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
-                        <select name="designation_id" id="designation_id" class="form-control select2 form-control-sm" required>
+                        <select data-placeholder="-- Select--" name="designation_id" id="designation_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
                             @if(!empty($designation_data))
                                 @foreach ($designation_data as $val)
@@ -144,7 +144,7 @@
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Payroll<span class="text-danger">*</span></label>
-                        <select name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-control select2 form-control-sm" required>
+                        <select data-placeholder="-- Select--" name="payroll_preparation_location_id" id="payroll_preparation_location_id" class="form-control select2 form-control-sm" required>
                             <option value="">-- Select--</option>
                             @if(!empty($payroll_data))
                                 @foreach ($payroll_data as $val)
@@ -157,7 +157,7 @@
                 <div class="col-lg-3">
                     <div>
                         <label class="col-form-label mb-0">Serving Sub-department<span class="text-danger">*</span></label>
-                        <select data-placeholder="Select Serving Sub-department" class="form-control select2 form-control-sm" name="serving_sub_department_id" id="serving_sub_department_id" required>
+                        <select data-placeholder="-- Select--" class="form-control select2 form-control-sm" name="serving_sub_department_id" id="serving_sub_department_id" required>
                             <option value="">-- Select--</option>
                             @if(!empty($department_data))
                                 @foreach ($department_data as $val)
@@ -207,6 +207,22 @@
                     </div>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        <h6 class="col-form-label mb-0">Referred By(optional)</h6>
+                        <select data-placeholder="-- Select--" class="form-control select2 form-control-sm" name="ref_by" id="ref_by">
+                            <option value="">-- Select--</option>
+                            @if(!empty($members))
+                                @foreach ($members as $val)
+                                    <option value="{{ $val->id }}">{{ $val->member_number }} - {{ $val->name_initials }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="col-md-4">
                     <button type="submit" id="btnsave" class="btn btn-success form-btn" style="width: 6rem;">Save</button>
@@ -215,7 +231,6 @@
             </div>
         </div>
     </form> 
-    <hr>
 </div>
 <!-- /dashboard content -->
 

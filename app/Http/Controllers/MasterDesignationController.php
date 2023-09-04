@@ -111,13 +111,24 @@ class MasterDesignationController extends Controller
 
     public function designationStatus(Request $request, $id){
         try{
-            $designation = MasterDesignation::findOrFail($id);
-            $designation->status = $request->get('status');
-          
-            if($designation->save()){
-                return response()->json(["status" => "saved"]);
+
+            $isUsed = Member::where('designation_id', $id)->exists();
+
+            if ($isUsed) {
+                
+                return response()->json(["status" => "used"]);
+
             }else{
-                return response()->json(["status" => "failed"]);
+
+                $designation = MasterDesignation::findOrFail($id);
+                $designation->status = $request->get('status');
+                
+                if($designation->save()){
+                    return response()->json(["status" => "saved"]);
+                }else{
+                    return response()->json(["status" => "failed"]);
+                }
+
             }
             
         }catch(Exception $ex){

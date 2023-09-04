@@ -111,13 +111,24 @@ class MasterSubDepartmentController extends Controller
 
     public function departmentStatus(Request $request, $id){
         try{
-            $department = MasterSubDepartment::findOrFail($id);
-            $department->status = $request->get('status');
-          
-            if($department->save()){
-                return response()->json(["status" => "saved"]);
+
+            $isUsed = Member::where('serving_sub_department_id', $id)->exists();
+
+            if ($isUsed) {
+                
+                return response()->json(["status" => "used"]);
+
             }else{
-                return response()->json(["status" => "failed"]);
+                
+                $department = MasterSubDepartment::findOrFail($id);
+                $department->status = $request->get('status');
+            
+                if($department->save()){
+                    return response()->json(["status" => "saved"]);
+                }else{
+                    return response()->json(["status" => "failed"]);
+                }
+
             }
             
         }catch(Exception $ex){

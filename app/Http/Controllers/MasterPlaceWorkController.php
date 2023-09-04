@@ -112,13 +112,24 @@ class MasterPlaceWorkController extends Controller
 
     public function place_of_workStatus(Request $request, $id){
         try{
-            $placework = MasterPlaceWork::findOrFail($id);
-            $placework->status = $request->get('status');
-          
-            if($placework->save()){
-                return response()->json(["status" => "saved"]);
+
+            $isUsed = Member::where('work_location_id', $id)->exists();
+
+            if ($isUsed) {
+                
+                return response()->json(["status" => "used"]);
+
             }else{
-                return response()->json(["status" => "failed"]);
+                
+                $placework = MasterPlaceWork::findOrFail($id);
+                $placework->status = $request->get('status');
+            
+                if($placework->save()){
+                    return response()->json(["status" => "saved"]);
+                }else{
+                    return response()->json(["status" => "failed"]);
+                }
+
             }
             
         }catch(Exception $ex){

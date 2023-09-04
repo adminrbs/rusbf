@@ -318,13 +318,32 @@ function cbxDepartmentStatus(id, event){
         },
         success: function (response) {
             console.log(response);
-            new Noty({
-                text: 'Status changed!',
-                type: 'success',
-                timeout: 2000,
-            }).show();
 
-            loadSubDepartments();
+            if(response.status == 'used'){
+
+                new Noty({
+                    text: 'This data is currently in use and cannot be changed!',
+                    type: 'warning'
+                }).show();
+
+                loadSubDepartments();
+
+            }else if(response.status == 'saved'){
+
+                new Noty({
+                    text: 'Status changed!',
+                    type: 'success',
+                    timeout: 2000,
+                }).show();
+    
+                loadSubDepartments();
+            }else{
+                new Noty({
+                    text: 'Saving process error!',
+                    type: 'error'
+                }).show();
+            }
+
         },
         error: function (data) {
             console.log(data);

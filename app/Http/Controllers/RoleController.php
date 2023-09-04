@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -82,13 +83,20 @@ class RoleController extends Controller
 
     public function delete($id){
         try {
-            $role = Role::where('id', $id)->first();
+
+            $isUsed = UserRole::where('role_id', $id)->exists();
+
+            if($isUsed){
+                return response()->json(["status" => "role_used"]);
+            }else{
+                $role = Role::where('id', $id)->first();
 
                 if ($role->delete()) {
                     return response()->json(["status" => "deleted"]);
                 } else {
                     return response()->json(["status" => "failed"]);
                 }
+            }
 
         } catch (Exception $ex) {
             return $ex;

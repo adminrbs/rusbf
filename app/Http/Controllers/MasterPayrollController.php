@@ -113,13 +113,24 @@ class MasterPayrollController extends Controller
 
     public function payrollStatus(Request $request, $id){
         try{
-            $payroll = MasterPayroll::findOrFail($id);
-            $payroll->status = $request->get('status');
-          
-            if($payroll->save()){
-                return response()->json(["status" => "saved"]);
+
+            $isUsed = Member::where('payroll_preparation_location_id', $id)->exists();
+
+            if ($isUsed) {
+                
+                return response()->json(["status" => "used"]);
+
             }else{
-                return response()->json(["status" => "failed"]);
+                
+                $payroll = MasterPayroll::findOrFail($id);
+                $payroll->status = $request->get('status');
+              
+                if($payroll->save()){
+                    return response()->json(["status" => "saved"]);
+                }else{
+                    return response()->json(["status" => "failed"]);
+                }
+
             }
             
         }catch(Exception $ex){
