@@ -9,7 +9,7 @@
 
             <div class="navbar-brand flex-1 flex-lg-0 pt-3">
                 <a href="/dashboard" class="d-inline-flex align-items-center">
-                    <img src="{{URL::asset('assets/images/logo_icon.svg')}}" alt="">
+                    <img src="{{ URL::asset('assets/images/logo_icon.svg') }}" alt="">
                     {{-- <img src="{{URL::asset('assets/images/logo_text_light.svg')}}" class="d-none d-sm-inline-block h-16px ms-3" alt=""> --}}
                 </a>
                 {{-- <a href="/dashboard" style="color: white"><h1>Pharma ERP</h1></a> --}}
@@ -17,13 +17,15 @@
 
             <ul class="nav flex-row">
                 <li class="nav-item d-lg-none">
-                    <a href="#navbar_search" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="collapse">
+                    <a href="#navbar_search" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
+                        data-bs-toggle="collapse">
                         <i class="ph-magnifying-glass"></i>
                     </a>
                 </li>
 
                 <li class="nav-item nav-item-dropdown-lg dropdown">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="dropdown">
+                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
+                        data-bs-toggle="dropdown">
                         <i class="ph-squares-four"></i>
                     </a>
 
@@ -38,9 +40,11 @@
 
                         <div class="row row-cols-1 row-cols-sm-2 g-0">
                             <div class="col">
-                                <button type="button" class="dropdown-item text-wrap h-100 align-items-start border-end-sm border-bottom p-3">
+                                <button type="button"
+                                    class="dropdown-item text-wrap h-100 align-items-start border-end-sm border-bottom p-3">
                                     <div>
-                                        <img src="{{URL::asset('assets/images/demo/logos/1.svg')}}" class="h-40px mb-2" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/logos/1.svg') }}"
+                                            class="h-40px mb-2" alt="">
                                         <div class="fw-semibold my-1">Customer data platform</div>
                                         <div class="text-muted">Unify customer data from multiple sources</div>
                                     </div>
@@ -48,9 +52,11 @@
                             </div>
 
                             <div class="col">
-                                <button type="button" class="dropdown-item text-wrap h-100 align-items-start border-bottom p-3">
+                                <button type="button"
+                                    class="dropdown-item text-wrap h-100 align-items-start border-bottom p-3">
                                     <div>
-                                        <img src="{{URL::asset('assets/images/demo/logos/2.svg')}}" class="h-40px mb-2" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/logos/2.svg') }}"
+                                            class="h-40px mb-2" alt="">
                                         <div class="fw-semibold my-1">Data catalog</div>
                                         <div class="text-muted">Discover, inventory, and organize data assets</div>
                                     </div>
@@ -58,9 +64,11 @@
                             </div>
 
                             <div class="col">
-                                <button type="button" class="dropdown-item text-wrap h-100 align-items-start border-end-sm border-bottom border-bottom-sm-0 rounded-bottom-start p-3">
+                                <button type="button"
+                                    class="dropdown-item text-wrap h-100 align-items-start border-end-sm border-bottom border-bottom-sm-0 rounded-bottom-start p-3">
                                     <div>
-                                        <img src="{{URL::asset('assets/images/demo/logos/3.svg')}}" class="h-40px mb-2" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/logos/3.svg') }}"
+                                            class="h-40px mb-2" alt="">
                                         <div class="fw-semibold my-1">Data governance</div>
                                         <div class="text-muted">The collaboration hub and data marketplace</div>
                                     </div>
@@ -68,9 +76,11 @@
                             </div>
 
                             <div class="col">
-                                <button type="button" class="dropdown-item text-wrap h-100 align-items-start rounded-bottom-end p-3">
+                                <button type="button"
+                                    class="dropdown-item text-wrap h-100 align-items-start rounded-bottom-end p-3">
                                     <div>
-                                        <img src="{{URL::asset('assets/images/demo/logos/4.svg')}}" class="h-40px mb-2" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/logos/4.svg') }}"
+                                            class="h-40px mb-2" alt="">
                                         <div class="fw-semibold my-1">Data privacy</div>
                                         <div class="text-muted">Automated provisioning of non-production datasets</div>
                                     </div>
@@ -81,9 +91,11 @@
                 </li>
 
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="ph-chats"></i>
-                        <span class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">8</span>
+                        <span
+                            class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">8</span>
                     </a>
 
                     <div class="dropdown-menu wmin-lg-400 p-0">
@@ -93,7 +105,8 @@
                                 <a href="#" class="text-body rounded-pill">
                                     <i class="ph-plus-circle"></i>
                                 </a>
-                                <a href="#search_messages" class="collapsed text-body rounded-pill ms-2" data-bs-toggle="collapse">
+                                <a href="#search_messages" class="collapsed text-body rounded-pill ms-2"
+                                    data-bs-toggle="collapse">
                                     <i class="ph-magnifying-glass"></i>
                                 </a>
                             </div>
@@ -113,20 +126,23 @@
                         <div class="dropdown-menu-scrollable pb-2">
                             <a href="#" class="dropdown-item align-items-start text-wrap py-2">
                                 <div class="status-indicator-container me-3">
-                                    <img src="{{URL::asset('assets/images/demo/users/face10.jpg')}}" class="w-40px h-40px rounded-pill" alt="">
+                                    <img src="{{ URL::asset('assets/images/demo/users/face10.jpg') }}"
+                                        class="w-40px h-40px rounded-pill" alt="">
                                     <span class="status-indicator bg-warning"></span>
                                 </div>
 
                                 <div class="flex-1">
                                     <span class="fw-semibold">James Alexander</span>
                                     <span class="text-muted float-end fs-sm">04:58</span>
-                                    <div class="text-muted">who knows, maybe that would be the best thing for me...</div>
+                                    <div class="text-muted">who knows, maybe that would be the best thing for me...
+                                    </div>
                                 </div>
                             </a>
 
                             <a href="#" class="dropdown-item align-items-start text-wrap py-2">
                                 <div class="status-indicator-container me-3">
-                                    <img src="{{URL::asset('assets/images/demo/users/face3.jpg')}}" class="w-40px h-40px rounded-pill" alt="">
+                                    <img src="{{ URL::asset('assets/images/demo/users/face3.jpg') }}"
+                                        class="w-40px h-40px rounded-pill" alt="">
                                     <span class="status-indicator bg-success"></span>
                                 </div>
 
@@ -139,19 +155,22 @@
 
                             <a href="#" class="dropdown-item align-items-start text-wrap py-2">
                                 <div class="status-indicator-container me-3">
-                                    <img src="{{URL::asset('assets/images/demo/users/face24.jpg')}}" class="w-40px h-40px rounded-pill" alt="">
+                                    <img src="{{ URL::asset('assets/images/demo/users/face24.jpg') }}"
+                                        class="w-40px h-40px rounded-pill" alt="">
                                     <span class="status-indicator bg-success"></span>
                                 </div>
                                 <div class="flex-1">
                                     <span class="fw-semibold">Jeremy Victorino</span>
                                     <span class="text-muted float-end fs-sm">22:48</span>
-                                    <div class="text-muted">But that would be extremely strained and suspicious...</div>
+                                    <div class="text-muted">But that would be extremely strained and suspicious...
+                                    </div>
                                 </div>
                             </a>
 
                             <a href="#" class="dropdown-item align-items-start text-wrap py-2">
                                 <div class="status-indicator-container me-3">
-                                    <img src="{{URL::asset('assets/images/demo/users/face4.jpg')}}" class="w-40px h-40px rounded-pill" alt="">
+                                    <img src="{{ URL::asset('assets/images/demo/users/face4.jpg') }}"
+                                        class="w-40px h-40px rounded-pill" alt="">
                                     <span class="status-indicator bg-grey"></span>
                                 </div>
                                 <div class="flex-1">
@@ -163,7 +182,8 @@
 
                             <a href="#" class="dropdown-item align-items-start text-wrap py-2">
                                 <div class="status-indicator-container me-3">
-                                    <img src="{{URL::asset('assets/images/demo/users/face25.jpg')}}" class="w-40px h-40px rounded-pill" alt="">
+                                    <img src="{{ URL::asset('assets/images/demo/users/face25.jpg') }}"
+                                        class="w-40px h-40px rounded-pill" alt="">
                                     <span class="status-indicator bg-danger"></span>
                                 </div>
                                 <div class="flex-1">
@@ -188,10 +208,13 @@
                 </li>
             </ul>
 
-            <div class="navbar-collapse justify-content-center flex-lg-1 order-2 order-lg-1 collapse" id="navbar_search">
+            <div class="navbar-collapse justify-content-center flex-lg-1 order-2 order-lg-1 collapse"
+                id="navbar_search">
                 <div class="navbar-search flex-fill position-relative mt-2 mt-lg-0 mx-lg-3">
-                    <div class="form-control-feedback form-control-feedback-start flex-grow-1" data-color-theme="dark">
-                        <input type="text" class="form-control bg-transparent rounded-pill" placeholder="Search" data-bs-toggle="dropdown">
+                    <div class="form-control-feedback form-control-feedback-start flex-grow-1"
+                        data-color-theme="dark">
+                        <input type="text" class="form-control bg-transparent rounded-pill" placeholder="Search"
+                            data-bs-toggle="dropdown">
                         <div class="form-control-feedback-icon">
                             <i class="ph-magnifying-glass"></i>
                         </div>
@@ -216,7 +239,8 @@
 
                                 <div class="dropdown-item cursor-pointer">
                                     <div class="me-3">
-                                        <img src="{{URL::asset('assets/images/demo/users/face3.jpg')}}" class="w-32px h-32px rounded-pill" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/users/face3.jpg') }}"
+                                            class="w-32px h-32px rounded-pill" alt="">
                                     </div>
 
                                     <div class="d-flex flex-column flex-grow-1">
@@ -233,7 +257,8 @@
 
                                 <div class="dropdown-item cursor-pointer">
                                     <div class="me-3">
-                                        <img src="{{URL::asset('assets/images/demo/users/face24.jpg')}}" class="w-32px h-32px rounded-pill" alt="">
+                                        <img src="{{ URL::asset('assets/images/demo/users/face24.jpg') }}"
+                                            class="w-32px h-32px rounded-pill" alt="">
                                     </div>
 
                                     <div class="d-flex flex-column flex-grow-1">
@@ -260,7 +285,8 @@
 
                                 <div class="dropdown-item cursor-pointer">
                                     <div class="me-3">
-                                        <img src="{{URL::asset('assets/images/brands/adobe.svg')}}" class="w-32px h-32px rounded-pill" alt="">
+                                        <img src="{{ URL::asset('assets/images/brands/adobe.svg') }}"
+                                            class="w-32px h-32px rounded-pill" alt="">
                                     </div>
 
                                     <div class="d-flex flex-column flex-grow-1">
@@ -277,7 +303,8 @@
 
                                 <div class="dropdown-item cursor-pointer">
                                     <div class="me-3">
-                                        <img src="{{URL::asset('assets/images/brands/holiday-inn.svg')}}" class="w-32px h-32px rounded-pill" alt="">
+                                        <img src="{{ URL::asset('assets/images/brands/holiday-inn.svg') }}"
+                                            class="w-32px h-32px rounded-pill" alt="">
                                     </div>
 
                                     <div class="d-flex flex-column flex-grow-1">
@@ -294,7 +321,8 @@
 
                                 <div class="dropdown-item cursor-pointer">
                                     <div class="me-3">
-                                        <img src="{{URL::asset('assets/images/brands/ing.svg')}}" class="w-32px h-32px rounded-pill" alt="">
+                                        <img src="{{ URL::asset('assets/images/brands/ing.svg') }}"
+                                            class="w-32px h-32px rounded-pill" alt="">
                                     </div>
 
                                     <div class="d-flex flex-column flex-grow-1">
@@ -312,7 +340,9 @@
                         </div>
                     </div>
 
-                    <a href="#" class="navbar-nav-link align-items-center justify-content-center w-40px h-32px rounded-pill position-absolute end-0 top-50 translate-middle-y p-0 me-1" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                    <a href="#"
+                        class="navbar-nav-link align-items-center justify-content-center w-40px h-32px rounded-pill position-absolute end-0 top-50 translate-middle-y p-0 me-1"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="ph-faders-horizontal"></i>
                     </a>
 
@@ -382,27 +412,32 @@
 
             <ul class="nav flex-row justify-content-end order-1 order-lg-2">
                 <li class="nav-item">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="offcanvas" data-bs-target="#notifications">
+                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
+                        data-bs-toggle="offcanvas" data-bs-target="#notifications">
                         <i class="ph-bell"></i>
-                        <span class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">2</span>
+                        <span
+                            class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">2</span>
                     </a>
                 </li>
 
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
-                    <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
+                    <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1"
+                        data-bs-toggle="dropdown">
                         <div class="status-indicator-container">
-                            <img src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('images/avatar-1.jpg') }}@endif" class="w-32px h-32px rounded-pill" alt="">
+                            <img src="@if (Auth::user()->avatar != '') {{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('images/avatar-1.jpg') }} @endif"
+                                class="w-32px h-32px rounded-pill" alt="">
                             <span class="status-indicator bg-success"></span>
                         </div>
-                        <span class="d-none d-lg-inline-block mx-lg-2">{{Auth::user()->name}}</span>
+                        <span class="d-none d-lg-inline-block mx-lg-2">{{ Auth::user()->name }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a href="#" class="dropdown-item">
+                        <a href="#" class="dropdown-item" onclick="change_pwd();">
                             <i class="ph-gear me-2"></i>
                             Account settings
                         </a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             <i class="ph-sign-out me-2"></i> {{ __('Logout') }}
                         </a>
@@ -416,3 +451,48 @@
         </div>
     </div>
     <!-- /main navbar -->
+
+    <!--Password change Modal -->
+    <div class="modal fade" id="pwd_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="pwd_changing_form">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="col-form-label">Current Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="current_pwd" name="current_pwd"
+                                placeholder="Current Password" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label">New Password<span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="new_pwd" name="new_pwd"
+                                placeholder="New Password" required />
+                        </div>
+                        <div>
+                            <button type="submit" id="btnPwd" class="btn btn-primary"
+                                style="float: right;">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Password change Modal -->
+    <script>
+        var user_id = "{{ Auth::user()->id }}";
+    </script>
+
+    <!-- Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Theme JS files -->
+    <script src="{{ URL::asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
+    <!-- notification -->
+    <script src="{{ URL::asset('assets/demo/pages/extra_noty.js') }}"></script>
+
+    <script src="{{ URL::asset('assets/js/navbar.js') }}"></script>

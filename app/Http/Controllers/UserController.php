@@ -101,4 +101,31 @@ class UserController extends Controller
             return $ex->getMessage();
         }
     }
+
+    public function change_password(Request $request,$id){
+
+        try{
+
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(["status" => "failed"]);
+            }
+
+            $currentPassword = $request->get('current_pwd');
+
+            // Check if the typed current password matches the existing password
+            if (!Hash::check($currentPassword, $user->password)) {
+                return response()->json(["status" => "incorrect_password"]);
+            }else{
+                $newPassword = $request->get('new_pwd');
+                $user->password = Hash::make($newPassword);
+                $user->save();
+                return response()->json(["status" => "success"]);
+            }
+
+        }catch(Exception $ex){
+            return $ex;
+        }
+    }
 }
