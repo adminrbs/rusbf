@@ -33,16 +33,16 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="tbl_members" class="table table-striped">
+                            <table id="tableMembers" class="table datatable-fixed-both-members table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="thmemimg">Image</th>
-                                        <th class="thmemno">#No</th>
-                                        <th class="thname">Name </th>
-                                        <th class="thnic"> NIC</th>
-                                        <th class="thnic"> Computer No</th>
-                                        <th class="thphone"> Phone</th>
-                                        <th class="actions"> Actions</th>
+                                        <th>Image</th>
+                                        <th>#No</th>
+                                        <th>Name </th>
+                                        <th> NIC</th>
+                                        <th> Computer No</th>
+                                        <th> Phone</th>
+                                        <th> Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -58,14 +58,11 @@
 <!-- /dashboard content -->
 
 
-
-</div>
 <!-- /content area -->
 
 @endsection
 @section('center-scripts')
-<!-- Javascript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <!-- Theme JS files -->
 <script src="{{URL::asset('assets/js/vendor/visualization/d3/d3.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/visualization/d3/d3_tooltip.js')}}"></script>
@@ -79,7 +76,7 @@
 
 <!-- dataTables -->
 <script src="{{URL::asset('assets/js/vendor/tables/datatables/datatables.min.js')}}"></script>
-<script src="{{URL::asset('assets/demo/pages/datatables_basic.js')}}"></script>
+<script src="{{URL::asset('assets/js/vendor/tables/datatables/extensions/fixed_columns.min.js')}}"></script>
 
-<script src="{{URL::asset('assets/js/allmembers.js')}}"></script>
+<script src="{{URL::asset('assets/js/allmembers.js')}}?random=<?php echo uniqid(); ?>"></script>
 @endsection

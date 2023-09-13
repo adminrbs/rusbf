@@ -487,12 +487,3 @@
         var user_id = "{{ Auth::user()->id }}";
     </script>
 
-    <!-- Javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <!-- Theme JS files -->
-    <script src="{{ URL::asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
-    <!-- notification -->
-    <script src="{{ URL::asset('assets/demo/pages/extra_noty.js') }}"></script>
-
-    <script src="{{ URL::asset('assets/js/navbar.js') }}"></script>
