@@ -17,17 +17,21 @@ class LoginController extends Controller
 
     public function loginForm(Request $request){
 
-        $email = $request->txtEmail;
-        $password = $request->txtPassword;
+        try{
+            $email = $request->txtEmail;
+            $password = $request->txtPassword;
 
-        if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
-            // Authentication passed...
+            if (Auth::attempt(['email' => $email, 'password' => $password], true)) {
+                // Authentication passed...
 
-            $login_status = ["status" => "200", "redirect" => ""];
-            return $login_status;
+                $login_status = ["status" => "200", "redirect" => ""];
+                return $login_status;
 
-        } else {
-            return "201";
+            } else {
+                return "201";
+            }
+        }catch(Exception $ex){
+            return $ex;
         }
 
     }

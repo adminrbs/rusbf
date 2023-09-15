@@ -53,7 +53,7 @@
     </div>
 </div>
 <!-- /dashboard content -->
-<!--User Modal -->
+<!--User Create Modal -->
 <div class="modal fade" id="add_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content"> {{-- style="max-height: 80vh; overflow-y: auto;" --}}
@@ -67,7 +67,6 @@
                         <div class="row">
                             <div class="col-lg-1 col-md-1 col-sm-1"></div>
                             <div class="col-lg-10 col-md-10 col-sm-10">
-                                <input type="hidden" class="form-control" name="hiddenuserid" id="hiddenuserid">
                                 <div>
                                     <label class="col-form-label mb-0">Username<span class="text-danger">*</span></label>
                                     <input type="text" name="username" id="username" placeholder="Username" class="form-control form-control-sm" autofocus required>
@@ -97,7 +96,7 @@
                                 </div>
                                 <div>
                                     <label class="col-form-label mb-0">User Type<span class="text-danger">*</span></label>
-                                    <select name="usertype" id="usertype" class="form-select form-control-sm custom-background" required>
+                                    <select name="usertype" id="usertype" class="form-select form-control-sm select2" required>
                                         <option value="">-- Select--</option>
                                         <option value="0">Guest</option>
                                         <option value="1">Employee</option>
@@ -116,7 +115,66 @@
         </div>
     </div>
 </div>
-<!--User Modal -->
+<!--User Create Modal -->
+<!--User Update Modal -->
+<div class="modal fade" id="update_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content"> {{-- style="max-height: 80vh; overflow-y: auto;" --}}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" id="user_update_form">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <input type="hidden" class="form-control" name="hiddenuserid" id="hiddenuserid">
+                                <div>
+                                    <label class="col-form-label mb-0">Username<span class="text-danger">*</span></label>
+                                    <input type="text" name="edit_username" id="edit_username" placeholder="Username" class="form-control form-control-sm" autofocus required>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">Email Address<span class="text-danger">*</span></label>
+                                    <input type="email" name="edit_email" id="edit_email" placeholder="Email Address" class="form-control form-control-sm" required>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">Current Password<span class="text-danger">*</span></label>
+                                    <input type="password" name="cur_password" id="cur_password" placeholder="Current Password" class="form-control form-control-sm" required autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">New Password<span class="text-danger">*</span></label>
+                                    <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control form-control-sm" required autocomplete="off">
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">User Role<span class="text-danger">*</span></label>
+                                    <select name="edit_userrole" id="edit_userrole" class="form-control select2 form-control-sm" required>
+                                        <option value="">-- Select--</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="col-form-label mb-0">User Type<span class="text-danger">*</span></label>
+                                    <select name="edit_usertype" id="edit_usertype" class="form-select form-control-sm select2" required>
+                                        <option value="">-- Select--</option>
+                                        <option value="0">Guest</option>
+                                        <option value="1">Employee</option>
+                                    </select>
+                                </div>
+                                &nbsp;
+                                <div>
+                                    <button type="submit" id="btnUpdate" class="btn btn-success form-btn" style="width: 6rem; float: right">Update</button>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--User Update Modal -->
 
 
 

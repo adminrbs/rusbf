@@ -80,27 +80,27 @@ class UserController extends Controller
     }
 
 
-    public function get_user_data($id){
+    // public function get_user_data($id){
         
-        try{
+    //     try{
 
-            $data = DB::table("users")
-                        ->select('users.id','users.name','users.email','users.user_type','users.password')
-                        ->where('id', $id)
-                        ->first();
+    //         $data = DB::table("users")
+    //                     ->select('users.id','users.name','users.email','users.user_type','users.password')
+    //                     ->where('id', $id)
+    //                     ->first();
 
-            $role_name = DB::table('user_roles')
-                            ->select('roles.id','roles.name')
-                            ->join('roles', 'user_roles.role_id', '=', 'roles.id')
-                            ->where('user_roles.user_id', $id)
-                            ->first();
+    //         $role_name = DB::table('user_roles')
+    //                         ->select('roles.id','roles.name')
+    //                         ->join('roles', 'user_roles.role_id', '=', 'roles.id')
+    //                         ->where('user_roles.user_id', $id)
+    //                         ->first();
 
-            return [$data, $role_name];
+    //         return [$data, $role_name];
 
-        }catch(Exception $ex) {
-            return $ex->getMessage();
-        }
-    }
+    //     }catch(Exception $ex) {
+    //         return $ex->getMessage();
+    //     }
+    // }
 
     public function change_password(Request $request,$id){
 
@@ -126,6 +126,23 @@ class UserController extends Controller
 
         }catch(Exception $ex){
             return $ex;
+        }
+    }
+
+    public function get_user_data($id){
+        
+        try{
+
+            $user = User::find($id);
+            $userRoles = UserRole::where('user_id', $id)->get();
+
+            return response()->json([
+                'user' => $user,
+                'userRoles' => $userRoles,
+            ]);
+
+        }catch(Exception $ex) {
+            return $ex->getMessage();
         }
     }
 }

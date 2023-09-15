@@ -31,6 +31,15 @@ $(document).ready(function () {
         
     });
 
+    $('#user_update_form').submit(function (e) {
+        e.preventDefault();
+        
+        if($('#btnUpdate').text().trim()=='Update'){
+            update_user();
+        }
+        
+    });
+
     // Default initialization
     $('.select2').select2();
     // End of Default initialization
@@ -59,7 +68,7 @@ function loadusers(){
                         "themail":email,
                         "throle":role_name,
                         "thtype":user_type,
-                        "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"' + 'disabled><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
+                        "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
                         '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"' + 'disabled><i class="ph-trash" aria-hidden="true"></i></button>',
                      });
 
@@ -75,10 +84,11 @@ function add_user(){
     $('#add_modal').modal('show');
     $('.modal-title').text('Create User');
     $('#btnsave').text('Save');
+
     $('#add_modal').on('shown.bs.modal', function() {
         $('#username').focus();
     })
-    resetModal();
+    resetUserModal();
 
     // Fetch user types via AJAX and populate the select element
     $.ajax({
@@ -113,7 +123,7 @@ function add_user(){
 
 }
 
-function resetModal(){
+function resetUserModal(){
     $('#add_modal').find('input').val('');
     $('#add_modal').find('select').val('');
 }
@@ -173,10 +183,9 @@ function save_user(){
 
 function edit(id){
 
-    $('#add_modal').modal('show');
+    $('#update_modal').modal('show');
     $('.modal-title').text('Update User');
-    $('#btnsave').text('Update');
-    $('#hidden_id').val(id);
+    $('#hiddenuserid').val(id);
 
     $.ajax({
         type: "GET",
@@ -190,19 +199,37 @@ function edit(id){
         },
         success: function (response) {
 
-            var data = response[0];
-            var data2 = response[1];
-            console.log(response);
-            if (response) {
-                $('#hiddenuserid').val(data.id); 
-                $('#username').val(data.name); 
-                $('#email').val(data.email); 
-                $('#password').val(data.password); 
-                $('#confirmPassword').val(data.password); 
-                $('#userrole').val(data2.id).trigger('change');; 
-                $('#usertype').val(data.user_type); 
-            }else{
-                console.log('error');
+            var user = response.user;
+            var userRoles = response.userRoles;
+
+            console.log(userRoles);
+
+            if (user) {
+                $('#hiddenuserid').val(user.id); 
+                $('#edit_username').val(user.name); 
+                $('#edit_email').val(user.email); 
+
+                var userRoleSelect = $('#edit_userrole');
+                userRoleSelect.empty(); // Clear existing options
+
+                userRoleSelect.append($('<option>', {
+                    value: '',
+                    text: '-- Select --'
+                }));
+
+                $.each(userRoles, function (index, userRole) {
+                    userRoleSelect.append($('<option>', {
+                        value: userRole.role_id,
+                        text: userRole.role_name
+                    }));
+                });
+
+                // Set the selected user role
+                userRoleSelect.val(userRoles[0].role_id).trigger('change');
+
+                $('#edit_usertype').val(user.user_type).trigger('change');
+            } else {
+                console.log('User not found');
             }
 
         },
@@ -219,4 +246,8 @@ function edit(id){
 
     });
 
+}
+
+function update_user(){
+    alert("hello");
 }

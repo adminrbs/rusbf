@@ -15,6 +15,9 @@ and open the template in the editor.
     <link rel="icon" type="image/x-icon" href="images/icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/js/login.js" ?random=<?php echo uniqid(); ?>></script>
@@ -30,7 +33,7 @@ and open the template in the editor.
                     <img src="images/login_logo.png" class="img-w">
                 </div>
                 <div class="mb-4 mt-3" style="text-align: center;">
-                    <h4>EasywinBiz LMS</h4>
+                    <h4 class="login-title">EasywinBiz LMS</h4>
                 </div>
                 <div class="form-group-lg pb-3">
                     <label for="email">Email</label>
@@ -49,12 +52,10 @@ and open the template in the editor.
 
                 </div>
                 <label id="lblMessage" style="color: red;" class="danger"></label>
-                <input type="button" id="submitform" class="btn btn-primary" value="Login" style="background-color: #4b98cf; font-size:18px">
+                <input type="button" id="submitform" class="btn btn-primary" value="Login" style="background-color:rgb(36,116,187); font-size:18px">
                 {{-- <button type="button" class="btn btn-light border mt-3 w-100">Log in with Google</button> --}}
             </form>
         </div>
     </div>
-
 </body>
-
 </html>
