@@ -78,8 +78,8 @@
                     <input type="text" name="name_initials" id="name_initials" placeholder="Name with Initials" class="form-control form-control-sm" required autocomplete="off">
                 </div>
                 <div>
-                    <label class="col-form-label mb-0">Full Name (<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Sinhala</a>/<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Tamil</a>)<span class="text-danger">*</span></label>
-                    <input type="text" name="full_name_unicode" id="full_name_unicode" placeholder="Full Name" class="form-control form-control-sm" required autocomplete="off">
+                    <label class="col-form-label mb-0">Full Name (<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Sinhala</a>/<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Tamil</a>)</label>
+                    <input type="text" name="full_name_unicode" id="full_name_unicode" placeholder="Full Name" class="form-control form-control-sm" autocomplete="off">
                 </div>
                 <div>
                     <label class="col-form-label mb-0">Name with Initials(<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Sinhala</a>/<a href="https://www.eslims.gov.lk/eLand/lib/keyboard/t1.html" target="_blank">Tamil</a>)<span class="text-danger">*</span></label>
@@ -97,8 +97,8 @@
                         <input type="date" name="date_of_joining" id="date_of_joining" class="form-control form-control-sm" required>
                     </div>
                     <div>
-                        <label class="col-form-label mb-0">Cabinet No<span class="text-danger">*</span></label>
-                        <input type="text" name="cabinet_number" id="cabinet_number" placeholder="Cabinet No" class="form-control form-control-sm" required autocomplete="off">
+                        <label class="col-form-label mb-0">Cabinet No</label>
+                        <input type="text" name="cabinet_number" id="cabinet_number" placeholder="Cabinet No" class="form-control form-control-sm" autocomplete="off">
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Place of Work<span class="text-danger">*</span></label>
@@ -114,8 +114,8 @@
                 </div>
                 <div class="col-lg-3">
                     <div>
-                        <label class="col-form-label mb-0">Phone Number(Home) <span class="text-danger">*</span></label>
-                        <input type="number" name="home_phone_number" id="home_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required>
+                        <label class="col-form-label mb-0">Phone Number(Home)</label>
+                        <input type="number" name="home_phone_number" id="home_phone_number" placeholder="Phone Number" class="form-control form-control-sm">
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Official No<span class="text-danger">*</span></label>
@@ -128,8 +128,8 @@
                 </div>
                 <div class="col-lg-3">
                     <div>
-                        <label class="col-form-label mb-0">Phone Number(Mobile) <span class="text-danger">*</span></label>
-                        <input type="number" name="mobile_phone_number" id="mobile_phone_number" placeholder="Phone Number" class="form-control form-control-sm" required>
+                        <label class="col-form-label mb-0">Phone Number(Mobile)</label>
+                        <input type="number" name="mobile_phone_number" id="mobile_phone_number" placeholder="Phone Number" class="form-control form-control-sm">
                     </div>
                     <div>
                         <label class="col-form-label mb-0">Designation<span class="text-danger">*</span></label>
