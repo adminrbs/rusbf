@@ -12,10 +12,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LimitlessController;
+use App\Http\Controllers\loneManagementController;
 use App\Models\User;
 use App\Notifications\UserNotification;
-
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -161,3 +161,19 @@ Route::get('/get_user_data/{id}', [UserController::class, 'get_user_data']);
 
 // Change Password 
 Route::post('/change_password/{id}', [UserController::class, 'change_password']);
+
+// Lone Management
+Route::get('/loneManagement', function () {
+    return view('loanManagement');
+});
+Route::post('/loansave',[loneManagementController::class,'loansave']);
+Route::get('/loneallData',[loneManagementController::class,'loanallData']);
+Route::get('/getlone/{id}',[loneManagementController::class,'getloan']);
+Route::post('/getloneupdate/{id}',[loneManagementController::class,'getloneupdate']);
+Route::delete('/deletelone/{id}',[loneManagementController::class,'deletelone']);
+
+Route::post('/lonetermsave/{id}',[loneManagementController::class,'lonetermsave']);
+Route::get('/lonetermAllData/{id}',[loneManagementController::class,'lonetermAllData']);
+Route::get('/getloneterm/{id}',[loneManagementController::class,'getloneterm']);
+Route::post('/updateloneterm/{id}',[loneManagementController::class,'updateloneterm']);
+Route::delete('/deleteloneterm/{id}',[loneManagementController::class,'deleteloneterm']);

@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>EasywinBiz LMS</title>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('assets/images/favicon.svg')}}">
+    <link rel="stylesheet" href="../assets/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/master_styles.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{URL::asset('assets/js/toast.min.js')}}?random=<?php echo uniqid(); ?>"></script>
+    <link rel="stylesheet" href="../assets/font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- Theme JS files -->
     <script src="{{ URL::asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
     <!-- notification -->

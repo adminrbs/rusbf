@@ -68,6 +68,19 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>
+                                <span>Loan Management</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                             
+                                <li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
+                              
+                               
+                               
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
                                 <span>Settings</span>
                             </a>
                             <ul class="nav-group-sub collapse">
