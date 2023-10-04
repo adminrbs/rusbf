@@ -44,25 +44,22 @@ const DatatableFixedColumnsterm = function () {
                     targets: 0
                 },
                 {
-                    width: '100%',
+                    width: 50,
                     targets: 1
                 },
                 {
-                    width: 200,
+                    width: 100,
                     targets: [2]
                 }, {
                     width: 50,
                     targets: 3
                 }, {
-                    width: 50,
+                    width: '100%',
                     targets: 4
-                }, {
-                    width: 50,
-                    targets: 5
-                }, {
-                    width: 50,
-                    targets: 6
                 },
+    
+                
+
 
             ],
             scrollX: true,
@@ -72,11 +69,11 @@ const DatatableFixedColumnsterm = function () {
                 leftColumns: 0,
                 rightColumns: 1
             },
-            "pageLength": 100,
+            "pageLength": 300,
             "order": [],
             "columns": [
                 { "data": "loan_term_id" },
-                { "data": "lone_id" },
+                //{ "data": "lone_id" },
                 { "data": "nuofterm" },
                 { "data": "termamount" },
                 { "data": "terminterestamount" },
@@ -219,6 +216,7 @@ function lonetermsave(id) {
             success: function (response) {
 
                 $('#loneTermModel').modal('hide');
+                lonetermAllData(id)
                 //lonetermAllData()
                 if (response.status) {
 
@@ -275,7 +273,7 @@ function lonetermAllData(id) {
 
                 data.push({
                     "loan_term_id": dt[i].loan_term_id,
-                    "lone_id": dt[i].loan_id,
+                   // "lone_id": dt[i].loan_code,
                     "nuofterm": dt[i].no_of_terms,
                     "termamount": dt[i].term_amount,
                     "terminterestamount": dt[i].term_interest_amount,
@@ -385,7 +383,7 @@ function updateloneterm(id) {
         success: function (response) {
 
             $('#loneTermModel').modal('hide');
-            lonetermAllData()
+            lonetermAllData(id)
             
           
                 new Noty({
@@ -461,7 +459,7 @@ function deleteloneterm(id) {
                     text: 'Successfully deleted',
                     type: 'success',
                 }).show();
-                lonetermAllData()
+                lonetermAllData(id)
             } else {
                 new Noty({
                     text: 'Uneble to Delete',

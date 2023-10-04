@@ -24,11 +24,7 @@
             <div class="card">
 
                 <div class="card-body">
-                    <ul class="nav nav-tabs mb-0" id="tabs">
-                        <li class="nav-item rbs-nav-item">
-                            <a href="#general" class="nav-link active" aria-selected="true">General</a>
-                        </li>
-                    </ul>
+                    
                     <div>
 
                         <button id="btnlone" type="button" class="btn btn-primary mt-2" data-bs-toggle="modal"
@@ -64,11 +60,7 @@
             <div class="col-12">
 
                
-                    <ul class="nav nav-tabs mb-0" id="tabs">
-                        <li class="nav-item rbs-nav-item">
-                            <a href="#general" class="nav-link active" aria-selected="true">General</a>
-                        </li>
-                    </ul>
+                   
                     <div class="card-body">
                         <button id="btnaddTerm" type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#loneTermModel">
@@ -78,7 +70,6 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Lone</th>
                                     <th>No of Term</th>
                                     <th>Term Amount</th>
                                     <th>Term interest Amount</th>

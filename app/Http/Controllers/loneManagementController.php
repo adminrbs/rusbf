@@ -7,6 +7,7 @@ use App\Models\loan;
 use App\Models\loan_term;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class loneManagementController extends Controller
 {
@@ -121,7 +122,12 @@ class loneManagementController extends Controller
     {
 
         try {
-            $loan_term = loan_term::where('loan_id', $id)->get();
+            $qury = "SELECT loan_terms.*, loans.loan_code, loans.loan_name 
+            FROM loan_terms
+            INNER JOIN loans ON loan_terms.loan_id = loans.loan_id
+            WHERE loan_terms.loan_id =$id";
+
+            $loan_term = DB::select($qury);
 
             return response()->json((['success' => 'Data loaded', 'data' => $loan_term]));
         } catch (Exception $ex) {
