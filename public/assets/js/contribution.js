@@ -142,7 +142,10 @@ function save_contribution() {
 
     console.log(formData);
     if (formData.txtNamecontribution == '' && formData.txtContribute == '') {
-
+        new Noty({
+            text: 'Something went wrong',
+            type: 'error'
+        }).show();
         return false;
     } else {
 
@@ -276,7 +279,10 @@ function update_contribution(){
 
     console.log(formData);
     if (formData.txtNamecontribution == '' && formData.txtContribute == '') {
-
+        new Noty({
+            text: 'Something went wrong',
+            type: 'error'
+        }).show();
         return false;
     } else {
 
@@ -308,7 +314,7 @@ function update_contribution(){
             },
             error: function (error) {
                 //showErrorMessage('Something went wrong');
-                $('#modalcontribution').modal('hide');
+                //$('#modalcontribution').modal('hide');
                 console.log(error);
 
             },
@@ -433,6 +439,7 @@ function cbxcontribute(id) {
                 text: 'Successfully save',
                 type: 'success',
             }).show();
+
             //allcontributedata()
          console.log("data save");
         },

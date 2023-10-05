@@ -111,7 +111,7 @@
                                 <span class="text-danger font-weight-bold category2"></span>
 
                                 <label for="fname"><i class="fa fa-address-card-o fa-lg text-info"
-                                        aria-hidden="true">&#160</i>Name Of Loan</label>
+                                        aria-hidden="true">&#160</i>Name Of Loan<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="txtname">
 
                                 <label for="fname"><i class="fa fa-address-card-o fa-lg text-info"
@@ -119,12 +119,12 @@
                                 <input type="text" class="form-control" id="txtdescription">
 
                                 <label for="fname"><i class="fa fa-address-card-o fa-lg text-info"
-                                        aria-hidden="true">&#160</i>Amount</label>
+                                        aria-hidden="true">&#160</i>Amount<span class="text-danger">*</span></label>
                                 <input type="number" class="form-control" id="txtamount">
 
                                 <label for="fname"><i class="fa fa-address-card-o fa-lg text-info"
-                                        aria-hidden="true">&#160</i>Duration of Membership </label>
-                                <input type="text" class="form-control" id="txtdurationofmember">
+                                        aria-hidden="true">&#160</i>Duration of Membership <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="txtdurationofmember">
 
                                 <label for="fname"><i class="fa fa-address-card-o fa-lg text-info"
                                         aria-hidden="true">&#160</i>Remarks</label>

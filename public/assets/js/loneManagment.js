@@ -78,7 +78,7 @@ const DatatableFixedColumnss = function () {
                 { "data": "lone_id" },
                 { "data": "code" },
                 { "data": "name" },
-                { "data": "description"},
+                { "data": "description" },
                 { "data": "amount" },
                 { "data": "duration" },
                 { "data": "remark" },
@@ -178,57 +178,65 @@ function lonesave() {
     formData.append('txtremarks', $('#txtremarks').val());
     formData.append('txtAccount', $('#txtAccount').val());
 
+    if (formData.txtloneCode == '' && formData.txtname == '' && formData.txtamount == '' && formData.txtdurationofmember == '') {
+        new Noty({
+            text: 'Something went wrong',
+            type: 'error'
+        }).show();
+        return false;
+    } else {
 
-    console.log(formData);
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: '/loansave',
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        timeout: 800000,
-        beforeSend: function () {
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '/loansave',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 800000,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            timeout: 800000,
+            beforeSend: function () {
 
-        },
-        success: function (response) {
+            },
+            success: function (response) {
 
-            $('#loneModel').modal('hide');
-            loneAllData()
-            if (response.status) {
-                showSuccessMessage('Successfully saved');
-                new Noty({
-                    text: 'Successfully saved',
-                    type: 'success'
-                }).show();
-
-                console.log(response);
-            } else {
-                showErrorMessage('Something went wrong');
-                new Noty({
-                    text: 'Something went wrong',
-                    type: 'error'
-                }).show();
                 $('#loneModel').modal('hide');
+                loneAllData()
+                if (response.status) {
+                    showSuccessMessage('Successfully saved');
+                    new Noty({
+                        text: 'Successfully saved',
+                        type: 'success'
+                    }).show();
+
+                    console.log(response);
+                } else {
+                    showErrorMessage('Something went wrong');
+                    new Noty({
+                        text: 'Something went wrong',
+                        type: 'error'
+                    }).show();
+                    //$('#loneModel').modal('hide');
+                }
+
+            },
+            error: function (error) {
+                showErrorMessage('Something went wrong');
+                //$('#loneModel').modal('hide');
+                console.log(error);
+
+            },
+            complete: function () {
+
             }
 
-        },
-        error: function (error) {
-            showErrorMessage('Something went wrong');
-            $('#loneModel').modal('hide');
-            console.log(error);
-
-        },
-        complete: function () {
-
-        }
-
-    });
+        });
+    }
 
 }
 
@@ -318,46 +326,53 @@ function updatelone(id) {
     formData.append('txtremarks', $('#txtremarks').val());
     formData.append('txtAccount', $('#txtAccount').val());
 
+    if (formData.txtloneCode == '' && formData.txtname == '' && formData.txtamount == '' && formData.txtdurationofmember == '') {
+        new Noty({
+            text: 'Something went wrong',
+            type: 'error'
+        }).show();
+        return false;
+    } else {
+        console.log(formData);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '/getloneupdate/' + id,
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 800000,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            timeout: 800000,
+            beforeSend: function () {
 
-    console.log(formData);
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: '/getloneupdate/' + id,
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        timeout: 800000,
-        beforeSend: function () {
+            },
+            success: function (response) {
 
-        },
-        success: function (response) {
-
-            $('#loneModel').modal('hide');
-            loneAllData()
-            new Noty({
-                text: 'Successfully updated',
-                type: 'success',
-            }).show();
+                $('#loneModel').modal('hide');
+                loneAllData()
+                new Noty({
+                    text: 'Successfully updated',
+                    type: 'success',
+                }).show();
 
 
-        },
-        error: function (error) {
-            showErrorMessage('Something went wrong');
-            $('#loneModel').modal('hide');
-            console.log(error);
+            },
+            error: function (error) {
+                showErrorMessage('Something went wrong');
+                $('#loneModel').modal('hide');
+                console.log(error);
 
-        },
-        complete: function () {
+            },
+            complete: function () {
 
-        }
+            }
 
-    });
+        });
+    }
 
 }
 function getloneview(id) {
@@ -465,7 +480,7 @@ function cbxlonee(id) {
 
 
     $.ajax({
-        url: '/cbxlonee/'+id,
+        url: '/cbxlonee/' + id,
         type: 'POST',
         data: {
             '_token': $('meta[name="csrf-token"]').attr('content'),
@@ -477,7 +492,7 @@ function cbxlonee(id) {
                 type: 'success',
             }).show();
             //allcontributedata()
-         console.log("data save");
+            console.log("data save");
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);

@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle') Master Data @endslot
+@slot('subtitle')Lone Management  @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -15,7 +15,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">contribution</h5>
+            <h5 class="mb-0">Contribution</h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 

@@ -55,10 +55,14 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
-                                    <li class="nav-item"><a href="/members" class="nav-link"> <i class="ph-user-list"></i>Members</a></li>
-                                    
-                                   
-    
+                                    <li class="nav-item"><a href="/members" class="nav-link"> <i
+                                                class="ph-user-list"></i>Members</a></li>
+
+                                </ul>
+                                <ul class="nav-item-submenu">
+                                    <li class="nav-item"><a href="/member_contribution" class="nav-link"> <i
+                                                class="ph-user-list"></i>Member Contribution</a></li>
+
                                 </ul>
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
@@ -66,22 +70,23 @@
                                         <span>Master Data</span>
                                     </a>
                                     <ul class="nav-group-sub collapse">
-                                        <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
-                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a>
-                                </li>
-                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
-                                        Sub-Department</a></li>
-                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of
-                                        Payroll Preparation</a></li>
+                                        <li class="nav-item"><a href="/master_designation"
+                                                class="nav-link">Designation</a></li>
+                                        <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of
+                                                work</a>
+                                        </li>
+                                        <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
+                                                Sub-Department</a></li>
+                                        <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place
+                                                of
+                                                Payroll Preparation</a></li>
                                     </ul>
-                                    
+
                                 </ul>
-    
-    
 
                             </ul>
                         </li>
-                       <!-- <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="members" class="nav-link">
                                 <i class="ph-user-list"></i>
                                 <span>Members</span>
@@ -108,7 +113,7 @@
                                 <span>Loan Management</span>
                             </a>
                             <ul class="nav-group-sub collapse">
-                                
+
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
                                         <i class="ph-gear"></i>
@@ -116,12 +121,11 @@
                                     </a>
                                     <ul class="nav-group-sub collapse">
                                         <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
-                                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>
+                                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a>
+                                        </li>
                                     </ul>
-                                    
+
                                 </ul>
-    
-    
 
                             </ul>
                         </li>
@@ -142,9 +146,6 @@
                             </ul>
                         </li>
 
-
-                       
-                        
                     </ul>
                 </div>
                 <!-- /main navigation -->

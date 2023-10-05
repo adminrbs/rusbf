@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer("loan_id");
             $table->string("no_of_terms")->nullable();
             $table->decimal("term_amount")->nullable();
-            $table->decimal("term_interest_amount")->nullable();
-            $table->integer("term_interest_precentage")->nullable(); // Use 'integer' here
+            $table->decimal("term_interest_amount");
+            $table->integer("term_interest_precentage"); // Use 'integer' here
             $table->string("remarks")->nullable();
            
             $table->timestamps();

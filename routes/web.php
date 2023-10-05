@@ -14,6 +14,7 @@ use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LimitlessController;
 use App\Http\Controllers\loneManagementController;
+use App\Http\Controllers\member_contributionController;
 use App\Models\User;
 use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Auth;
@@ -191,3 +192,13 @@ Route::get('/getcontribute/{id}',[contributnController::class,'getcontribute']);
 Route::post('/update_contribution/{id}',[contributnController::class,'update_contribution']);
 Route::delete('deletecontribute/{id}',[contributnController::class,'deletecontribute']);
 Route::post('/cbxcontribute/{id}',[contributnController::class,'cbxcontribute']);
+
+
+//member_contribution
+Route::get('/member_contribution', function () {
+    return view('member_contribution');
+});
+
+Route::get('/memberNumber/{id}',[member_contributionController::class,'memberNumber']);
+Route::get('/fullName/{id}',[member_contributionController::class,'fullName']);
+Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
