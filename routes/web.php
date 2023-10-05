@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\contributnController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
@@ -171,9 +172,22 @@ Route::get('/loneallData',[loneManagementController::class,'loanallData']);
 Route::get('/getlone/{id}',[loneManagementController::class,'getloan']);
 Route::post('/getloneupdate/{id}',[loneManagementController::class,'getloneupdate']);
 Route::delete('/deletelone/{id}',[loneManagementController::class,'deletelone']);
+Route::post('/cbxlonee/{id}',[loneManagementController::class,'cbxlonee']);
 
 Route::post('/lonetermsave/{id}',[loneManagementController::class,'lonetermsave']);
 Route::get('/lonetermAllData/{id}',[loneManagementController::class,'lonetermAllData']);
 Route::get('/getloneterm/{id}',[loneManagementController::class,'getloneterm']);
 Route::post('/updateloneterm/{id}',[loneManagementController::class,'updateloneterm']);
 Route::delete('/deleteloneterm/{id}',[loneManagementController::class,'deleteloneterm']);
+
+// contribution
+Route::get('/contribution', function () {
+    return view('contribution');
+});
+
+Route::post('/save_contribution',[contributnController::class,'save_contribution']);
+Route::get('/allcontributedata',[contributnController::class,'allcontributedata']);
+Route::get('/getcontribute/{id}',[contributnController::class,'getcontribute']);
+Route::post('/update_contribution/{id}',[contributnController::class,'update_contribution']);
+Route::delete('deletecontribute/{id}',[contributnController::class,'deletecontribute']);
+Route::post('/cbxcontribute/{id}',[contributnController::class,'cbxcontribute']);

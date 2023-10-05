@@ -10,18 +10,19 @@
                         <h5 class="sidebar-resize-hide flex-grow-1 my-auto">Navigation</h5>
 
                         <div>
-                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                            <button type="button"
+                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                                 <i class="ph-arrows-left-right"></i>
                             </button>
 
-                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                            <button type="button"
+                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
                             </button>
                         </div>
                     </div>
                 </div>
                 <!-- /sidebar header -->
-
 
                 <!-- Main navigation -->
                 <div class="sidebar-section">
@@ -40,14 +41,47 @@
                                     {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                 </span>
                             </a>
-                        </li> 
+                        </li>
                         {{-- <li class="nav-item">
                             <a href="customer_form" class="nav-link">
                                 <i class="ph-list-numbers"></i>
                                 <span>Customer</span>
                             </a>
                         </li> --}}
-                        <li class="nav-item">
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
+                                <span>Setting</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <ul class="nav-item-submenu">
+                                    <li class="nav-item"><a href="/members" class="nav-link"> <i class="ph-user-list"></i>Members</a></li>
+                                    
+                                   
+    
+                                </ul>
+                                <ul class="nav-item-submenu">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-gear"></i>
+                                        <span>Master Data</span>
+                                    </a>
+                                    <ul class="nav-group-sub collapse">
+                                        <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
+                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a>
+                                </li>
+                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
+                                        Sub-Department</a></li>
+                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of
+                                        Payroll Preparation</a></li>
+                                    </ul>
+                                    
+                                </ul>
+    
+    
+
+                            </ul>
+                        </li>
+                       <!-- <li class="nav-item">
                             <a href="members" class="nav-link">
                                 <i class="ph-user-list"></i>
                                 <span>Members</span>
@@ -60,24 +94,39 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
-                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a></li>
-                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving Sub-Department</a></li>
-                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of Payroll Preparation</a></li>
+                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a>
+                                </li>
+                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
+                                        Sub-Department</a></li>
+                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of
+                                        Payroll Preparation</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
-                                <i class="ph-gear"></i>
+                                <i class="ph-files"></i>
                                 <span>Loan Management</span>
                             </a>
                             <ul class="nav-group-sub collapse">
-                             
-                                <li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
-                              
-                               
-                               
+                                
+                                <ul class="nav-item-submenu">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-gear"></i>
+                                        <span>Setting</span>
+                                    </a>
+                                    <ul class="nav-group-sub collapse">
+                                        <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
+                                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>
+                                    </ul>
+                                    
+                                </ul>
+    
+    
+
                             </ul>
                         </li>
+                        <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
+                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>
@@ -92,6 +141,10 @@
                                 @endif
                             </ul>
                         </li>
+
+
+                       
+                        
                     </ul>
                 </div>
                 <!-- /main navigation -->
@@ -101,3 +154,41 @@
 
         </div>
         <!-- /main sidebar -->
+
+        <!--
+<ul class="nav-item-submenu">
+                                <a href="/members" class="nav-link">
+                                    <i class="ph-gear"></i>
+                                    <span>Members</span>
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="ph-gear"></i>
+                                    <span>Master Data</span>
+                                </a>
+
+                                <ul class="nav-group-sub collapse">
+                                    <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
+                                    <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>
+                                </ul>
+                            </ul>
+                            <ul class="nav-item-submenu">
+                                <a href="#" class="nav-link">
+                                    <i class="ph-gear"></i>
+                                    <span>Master Data</span>
+                                </a>
+                                <ul class="nav-group-sub collapse">
+                                    <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
+                                    <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>
+                                </ul>
+                                <a href="#" class="nav-link">
+                                    <i class="ph-gear"></i>
+                                    <span>Master Data</span>
+                                </a>
+
+                                <ul class="nav-group-sub collapse">
+                                    <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
+                                    <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>
+                                </ul>
+                            </ul>
+
+-->

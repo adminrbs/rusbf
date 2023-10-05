@@ -78,10 +78,11 @@ const DatatableFixedColumnss = function () {
                 { "data": "lone_id" },
                 { "data": "code" },
                 { "data": "name" },
-                { "data": "description" },
+                { "data": "description"},
                 { "data": "amount" },
                 { "data": "duration" },
                 { "data": "remark" },
+                { "data": "status" },
                 { "data": "action" },
 
 
@@ -137,6 +138,7 @@ $(document).ready(function () {
         $("#txtamount").val('');
         $("#txtdurationofmember").val('');
         $("#txtremarks").val('');
+        $('#txtAccount').val('');
 
 
 
@@ -150,18 +152,18 @@ $(document).ready(function () {
         loan_id = $(this).attr('id');
 
         getlone(loan_id);
-       
+
     });
     $(document).on('click', '.loneview', function (e) {
         loan_id = $(this).attr('id');
 
         getloneview(loan_id);
-       
-    });
- $('#btnUpdatelone').on('click', function (e) {
 
-            updatelone(loan_id);
-        });
+    });
+    $('#btnUpdatelone').on('click', function (e) {
+
+        updatelone(loan_id);
+    });
 });
 
 
@@ -174,6 +176,7 @@ function lonesave() {
     formData.append('txtamount', $('#txtamount').val());
     formData.append('txtdurationofmember', $('#txtdurationofmember').val());
     formData.append('txtremarks', $('#txtremarks').val());
+    formData.append('txtAccount', $('#txtAccount').val());
 
 
     console.log(formData);
@@ -203,7 +206,7 @@ function lonesave() {
                     text: 'Successfully saved',
                     type: 'success'
                 }).show();
-    
+
                 console.log(response);
             } else {
                 showErrorMessage('Something went wrong');
@@ -246,7 +249,7 @@ function loneAllData() {
 
             var data = [];
             for (var i = 1; i < dt.length; i++) {
-
+                var isChecked = dt[i].status === 1 ? "checked" : "";
 
 
                 data.push({
@@ -257,6 +260,7 @@ function loneAllData() {
                     "amount": dt[i].amount,
                     "duration": dt[i].duration_of_membership,
                     "remark": dt[i].remarks,
+                    "status": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxlone" value="1" onclick="cbxlonee(' + dt[i].loan_id + ')" required ' + isChecked + '></label>',
                     "action": '<button class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].loan_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                 });
             }
@@ -296,6 +300,7 @@ function getlone(id) {
             $('#txtamount').val(response.amount);
             $('#txtdurationofmember').val(response.duration_of_membership);
             $('#txtremarks').val(response.remarks);
+            $('#txtAccount').val(response.gl_account_no);
 
 
         }
@@ -311,6 +316,7 @@ function updatelone(id) {
     formData.append('txtamount', $('#txtamount').val());
     formData.append('txtdurationofmember', $('#txtdurationofmember').val());
     formData.append('txtremarks', $('#txtremarks').val());
+    formData.append('txtAccount', $('#txtAccount').val());
 
 
     console.log(formData);
@@ -335,10 +341,10 @@ function updatelone(id) {
             $('#loneModel').modal('hide');
             loneAllData()
             new Noty({
-                text: 'Successfully saved',
+                text: 'Successfully updated',
                 type: 'success',
             }).show();
-           
+
 
         },
         error: function (error) {
@@ -377,6 +383,7 @@ function getloneview(id) {
             $('#txtamount').val(response.amount);
             $('#txtdurationofmember').val(response.duration_of_membership);
             $('#txtremarks').val(response.remarks);
+            $('#txtAccount').val(response.gl_account_no);
 
 
         }
@@ -430,14 +437,14 @@ function deletelone(id) {
 
             if (response.success) {
                 $('#loneModel').modal('hide');
-               
+
                 new Noty({
                     text: 'Successfully deleted',
                     type: 'success',
                 }).show();
                 loneAllData()
             } else {
-                
+
                 new Noty({
                     text: 'Uneble to Delete',
                     type: 'error'
@@ -451,3 +458,29 @@ function deletelone(id) {
     });
 }
 
+
+
+function cbxlonee(id) {
+    var status = $('#cbxlone').is(':checked') ? 1 : 0;
+
+
+    $.ajax({
+        url: '/cbxlonee/'+id,
+        type: 'POST',
+        data: {
+            '_token': $('meta[name="csrf-token"]').attr('content'),
+            'status': status
+        },
+        success: function (response) {
+            new Noty({
+                text: 'Successfully save',
+                type: 'success',
+            }).show();
+            //allcontributedata()
+         console.log("data save");
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr.responseText);
+        }
+    });
+}

@@ -23,6 +23,7 @@ class loneManagementController extends Controller
             $loan->amount = $request->get('txtamount');
             $loan->duration_of_membership = $request->get('txtdurationofmember');
             $loan->remarks = $request->get('txtremarks');
+            $loan->gl_account_no = $request->get('txtAccount');
 
             if ($loan->save()) {
 
@@ -72,6 +73,7 @@ class loneManagementController extends Controller
             $loan->amount = $request->get('txtamount');
             $loan->duration_of_membership = $request->get('txtdurationofmember');
             $loan->remarks = $request->get('txtremarks');
+            $loan->gl_account_no = $request->get('txtAccount');
             $loan->update();
             return response()->json($loan);
         } catch (Exception $ex) {
@@ -174,4 +176,18 @@ class loneManagementController extends Controller
             return response()->json($ex);
         }
     }
+
+public function cbxlonee(Request $request,$id){
+    try {
+
+        $supplygroup = loan::findOrFail($id);
+        $supplygroup->status = $request->status;
+        $supplygroup->save();
+
+        return response()->json(' status updated successfully');
+    } catch (Exception $ex) {
+        return response()->json($ex);
+    }
+
+}
 }

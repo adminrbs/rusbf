@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('loans', function (Blueprint $table) {
             $table->id("loan_id");
-            $table->string("loan_code",20)->nullable();
-            $table->string("loan_name",100)->nullable();
-            $table->string("description",255)->nullable();
-            $table->decimal("amount",10,2)->nullable();
-            $table->decimal("duration_of_membership",10,2)->nullable();
-            $table->string("remarks",255)->nullable();
+            $table->string("loan_code", 20)->unique();
+            $table->string("loan_name", 100);
+            $table->string("description", 255)->nullable();
+            $table->decimal("amount", 10, 2);
+            $table->decimal("duration_of_membership", 10, 2);
+            $table->string("remarks", 255)->nullable();
+            $table->string('gl_account_no')->nullable();
+            $table->integer('status')->default('1');
 
             $table->timestamps();
         });
