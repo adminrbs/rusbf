@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle')Lone Management  @endslot
+@slot('subtitle')Loan Management  @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -65,7 +65,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Contribution</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -109,7 +109,7 @@
 <!-- /content area -->
 
 @endsection
-<link rel="stylesheet" href="assets/css/master.css">
+
 @section('center-scripts')
 <!-- Javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

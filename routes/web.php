@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LimitlessController;
 use App\Http\Controllers\loneManagementController;
 use App\Http\Controllers\member_contributionController;
+use App\Http\Controllers\MembersLoanRequestController;
+use App\Models\member_contribution;
 use App\Models\User;
 use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Auth;
@@ -198,7 +200,39 @@ Route::post('/cbxcontribute/{id}',[contributnController::class,'cbxcontribute'])
 Route::get('/member_contribution', function () {
     return view('member_contribution');
 });
-
+Route::get('/membercontributedata/{id}',[member_contributionController::class,'membercontributedata']);
 Route::get('/memberNumber/{id}',[member_contributionController::class,'memberNumber']);
 Route::get('/fullName/{id}',[member_contributionController::class,'fullName']);
 Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
+
+Route::post('/save_memberContribution/{id}',[member_contributionController::class,'save_memberContribution']);
+Route::post('/deleteMembercontribution/{id}',[member_contributionController::class,'deleteMembercontribution']);
+
+
+// members_loan_request
+
+Route::get('/members_loan_request', function () {
+    return view('members_loan_request');
+});
+Route::get('/members_loan_form', function () {
+    return view('members_loan_requestform');
+});
+Route::get('/members_loan_request_Approvel', function () {
+    return view('members_loan_requestform_ApprovelList');
+});
+Route::get('/memberShip',[MembersLoanRequestController::class,'memberShip']);
+Route::get('/getalldetails/{id}',[MembersLoanRequestController::class,'getalldetails']);
+Route::post('/save_memberlonrequest',[MembersLoanRequestController::class,'save_memberlonrequest']);
+Route::get('/allmemberlonrequest',[MembersLoanRequestController::class,'allmemberlonrequest']);
+Route::get('/getmemberlone/{id}',[MembersLoanRequestController::class,'getmemberlone']);
+Route::post('/update_memberlonrequest/{id}',[MembersLoanRequestController::class,'update_memberlonrequest']);
+Route::delete('deletememberlone/{id}',[MembersLoanRequestController::class,'deletememberlone']);
+Route::post('/rejectRequest/{id}',[MembersLoanRequestController::class,'rejectRequest']);
+Route::post('/approveRequest/{id}',[MembersLoanRequestController::class,'approveRequest']);
+Route::post('/saveattachment/{id}',[MembersLoanRequestController::class,'saveattachment']);
+Route::get('/getAttachment/{id}',[MembersLoanRequestController::class,'getAttachment']);
+Route::get('/viewAttachment/{id}',[MembersLoanRequestController::class,'viewAttachment']);
+Route::delete('deletattachment/{id}',[MembersLoanRequestController::class,'deletattachment']);
+
+//approval
+Route::get('allmemberlonrequestapprovel',[MembersLoanRequestController::class,'allmemberlonrequestapprovel']);

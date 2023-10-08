@@ -45,7 +45,7 @@ $(document).ready(function () {
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 2, // MB
         maxFiles: 1,
-        acceptedFiles: ".jpeg,.jpg,.png",
+        acceptedFiles: ".jpeg,.jpg,.png,",
         dictDefaultMessage: 'Drop file to upload <span>or CLICK</span> (File formats: jpeg,jpg,png)',
         autoProcessQueue: false,
         addRemoveLinks: true,

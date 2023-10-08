@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle')Lone Management @endslot
+@slot('subtitle')Loan Management @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -15,7 +15,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">Lone Management</h5>
+            <h5 class="mb-0">Loan</h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 
@@ -29,7 +29,7 @@
 
                             <button id="btnlone" type="button" class="btn btn-primary mt-2" data-bs-toggle="modal"
                                 data-bs-target="#loneModel">
-                                Add Lone
+                                Add Loan
                             </button>
 
                         </div>
@@ -94,7 +94,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Lone</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Loan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -156,7 +156,7 @@
     <div class="modal-dialog">
         <div class="modal-content bg-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Lone</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Term</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

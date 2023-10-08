@@ -51,7 +51,7 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>
-                                <span>Setting</span>
+                                <span>Member Information</span>
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
@@ -59,15 +59,15 @@
                                                 class="ph-user-list"></i>Members</a></li>
 
                                 </ul>
-                                <ul class="nav-item-submenu">
+                                <!--<ul class="nav-item-submenu">
                                     <li class="nav-item"><a href="/member_contribution" class="nav-link"> <i
                                                 class="ph-user-list"></i>Member Contribution</a></li>
 
-                                </ul>
+                                </ul>-->
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
                                         <i class="ph-gear"></i>
-                                        <span>Master Data</span>
+                                        <span>Setting</span>
                                     </a>
                                     <ul class="nav-group-sub collapse">
                                         <li class="nav-item"><a href="/master_designation"
@@ -86,33 +86,20 @@
 
                             </ul>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a href="members" class="nav-link">
-                                <i class="ph-user-list"></i>
-                                <span>Members</span>
-                            </a>
-                        </li>
-                        <li class="nav-item nav-item-submenu">
-                            <a href="#" class="nav-link">
-                                <i class="ph-files"></i>
-                                <span>Master Data</span>
-                            </a>
-                            <ul class="nav-group-sub collapse">
-                                <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
-                                <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of work</a>
-                                </li>
-                                <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
-                                        Sub-Department</a></li>
-                                <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of
-                                        Payroll Preparation</a></li>
-                            </ul>
-                        </li>-->
+
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-files"></i>
                                 <span>Loan Management</span>
                             </a>
                             <ul class="nav-group-sub collapse">
+                                <ul class="nav-item-submenu">
+                                    <li class="nav-item"><a href="/members_loan_request" class="nav-link"> <i
+                                                class="ph-user-list"></i>Loan Request</a></li>
+                                    <li class="nav-item"><a href="/members_loan_request_Approvel" class="nav-link"> <i
+                                                class="ph-user-list"></i>Loan Request Approval</a></li>
+
+                                </ul>
 
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
@@ -120,8 +107,10 @@
                                         <span>Setting</span>
                                     </a>
                                     <ul class="nav-group-sub collapse">
-                                        <li class="nav-item"><a href="/loneManagement" class="nav-link">Lone</a></li>
+                                        <li class="nav-item"><a href="/loneManagement" class="nav-link">Loan</a></li>
                                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a>
+                                        <li class="nav-item"><a href="/member_contribution" class="nav-link">Member
+                                                Contribution</a>
                                         </li>
                                     </ul>
 
