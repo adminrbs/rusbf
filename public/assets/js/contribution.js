@@ -265,6 +265,7 @@ function edit(id) {
             $('#txtDescription').val(response.description);
             $('#txtContribute').val(response.contribute_on_every);
             $('#txtglaccount').val(response.gl_account_no);
+            $('#txtAmount').val(response.amount);
 
 
 
