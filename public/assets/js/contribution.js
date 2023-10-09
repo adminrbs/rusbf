@@ -67,15 +67,16 @@ const DatatableFixedColumnss = function () {
                 { "data": "id" },
                 { "data": "code" },
                 { "data": "name" },
+                { "data": "amount" },
                 { "data": "contribute" },
                 { "data": "acount" },
                 { "data": "status" },
                 { "data": "action" },
-               
+
 
 
             ], "stripeClasses": ['odd-row', 'even-row'],
-        });table.column(0).visible(false);
+        }); table.column(0).visible(false);
 
 
         //
@@ -173,7 +174,7 @@ function save_contribution() {
                     text: 'Successfully saved',
                     type: 'success'
                 }).show();
-    
+
 
             },
             error: function (error) {
@@ -194,45 +195,46 @@ function save_contribution() {
 
 }
 
-function allcontributedata(){
+function allcontributedata() {
     $.ajax({
         type: 'GET',
         url: '/allcontributedata',
-        success: function(response){
+        success: function (response) {
 
             var dt = response.data;
             console.log(dt);
             var data = [];
-                for (i = 0; i < response.data.length; i++) {
+            for (i = 0; i < response.data.length; i++) {
 
-                    var dt = response.data;
-                   
-                   
-      
-                    var data = [];
-                    for (var i = 1; i < dt.length; i++) {
-                       
+                var dt = response.data;
 
-                        var isChecked = dt[i].status==1? "checked" : "";
-                        var contribute = dt[i].contribute_on_every == 1 ? "Annualy" : "Monthly";
 
-                        data.push({
-                            "id": dt[i].contribution_id ,
-                            "code": dt[i].contribution_code   ,
-                            "name": dt[i].contribution_title,
-                            "contribute": contribute,
-                            "acount": dt[i].gl_account_no,
-                            "status": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="contribute" value="1" onclick="cbxcontribute(' + dt[i].contribution_id + ')" required ' + isChecked + '></label>',
-                            "action": '<button class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#modalcontribution" onclick="edit(' + dt[i].contribution_id  + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#modalcontribution"  onclick="getcontributeview(' + dt[i].contribution_id  + ')"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].contribution_id  + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
-                        });
-                    }
 
-                    
-                   
+                var data = [];
+                for (var i = 0; i < dt.length; i++) {
+
+
+                    var isChecked = dt[i].status == 1 ? "checked" : "";
+                    var contribute = dt[i].contribute_on_every == 1 ? "Annualy" : "Monthly";
+
+                    data.push({
+                        "id": dt[i].contribution_id,
+                        "code": dt[i].contribution_code,
+                        "name": dt[i].contribution_title,
+                        "amount":dt[i].amount,
+                        "contribute": contribute,
+                        "acount": dt[i].gl_account_no,
+                        "status": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="contribute" value="1" onclick="cbxcontribute(' + dt[i].contribution_id + ')" required ' + isChecked + '></label>',
+                        "action": '<button class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#modalcontribution" onclick="edit(' + dt[i].contribution_id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#modalcontribution"  onclick="getcontributeview(' + dt[i].contribution_id + ')"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].contribution_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                    });
                 }
-                var table = $('#tbl_create_contribution').DataTable();
-                table.clear();
-                table.rows.add(data).draw();
+
+
+
+            }
+            var table = $('#tbl_create_contribution').DataTable();
+            table.clear();
+            table.rows.add(data).draw();
 
         },
         error: function (data) {
@@ -242,7 +244,7 @@ function allcontributedata(){
         }
     });
 }
-function edit(id){
+function edit(id) {
     $('#btnsave').text('Update');
     $.ajax({
         url: '/getcontribute/' + id,
@@ -254,22 +256,22 @@ function edit(id){
 
         success: function (response) {
             console.log(response);
-           
+
 
             $('#id').val(response.contribution_id);
-            $("#code").val(response.contribution_code );
+            $("#code").val(response.contribution_code);
             $('#txtNamecontribution').val(response.contribution_title);
             $('#txtDescription').val(response.description);
             $('#txtContribute').val(response.contribute_on_every);
             $('#txtglaccount').val(response.gl_account_no);
-          
+
 
 
         }
     });
 }
 
-function update_contribution(){
+function update_contribution() {
     var id = $('#id').val();
     formData.append('code', $('#code').val());
     formData.append('txtNamecontribution', $('#txtNamecontribution').val());
@@ -289,7 +291,7 @@ function update_contribution(){
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: '/update_contribution/'+ id,
+            url: '/update_contribution/' + id,
             data: formData,
             processData: false,
             contentType: false,
@@ -305,7 +307,7 @@ function update_contribution(){
             success: function (response) {
                 //suplyGroupAllData();
                 $('#modalcontribution').modal('hide');
-              
+
                 allcontributedata()
                 new Noty({
                     text: 'Successfully updated',
@@ -339,15 +341,15 @@ function getcontributeview(id) {
 
         success: function (response) {
             console.log(response);
-           
+
 
             $('#id').val(response.contribution_id);
-            $("#code").val(response.contribution_code );
+            $("#code").val(response.contribution_code);
             $('#txtNamecontribution').val(response.contribution_title);
             $('#txtDescription').val(response.description);
             $('#txtContribute').val(response.contribute_on_every);
             $('#txtglaccount').val(response.gl_account_no);
-          
+
 
 
         }
@@ -401,14 +403,14 @@ function deletecontribute(id) {
 
             if (response.success) {
                 $('#modalcontribution').modal('hide');
-               
+
                 new Noty({
                     text: 'Successfully deleted',
                     type: 'success',
                 }).show();
                 allcontributedata()
             } else {
-                
+
                 new Noty({
                     text: 'Uneble to Delete',
                     type: 'error'
@@ -428,7 +430,7 @@ function cbxcontribute(id) {
 
 
     $.ajax({
-        url: '/cbxcontribute/'+id,
+        url: '/cbxcontribute/' + id,
         type: 'POST',
         data: {
             '_token': $('meta[name="csrf-token"]').attr('content'),
@@ -441,7 +443,7 @@ function cbxcontribute(id) {
             }).show();
 
             //allcontributedata()
-         console.log("data save");
+            console.log("data save");
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);

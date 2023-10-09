@@ -68,6 +68,7 @@ const DatatableFixedColumnsterm = function () {
                 { "data": "id" },
                 { "data": "code" },
                 { "data": "name" },
+
                 { "data": "select" },
 
 
@@ -120,13 +121,14 @@ $(document).ready(function () {
     Fullname(0)
     memberNumber(0)
     imageloard(0);
-    
+    $('input[type="number"]').val('');
 
     $('#cmbmember').change(function () {
         memberid = $(this).val();
         Fullname(memberid)
         imageloard(memberid);
         allcontributedata(memberid)
+        amountset(memberid)
     })
 
     $('#cmbName').change(function () {
@@ -135,15 +137,16 @@ $(document).ready(function () {
         memberNumber(nameid)
         imageloard(nameid)
         allcontributedata(memberid)
+        amountset(memberid)
     });
-    $('input[type="checkbox"]').on('change', function() {
+    $('input[type="checkbox"]').on('change', function () {
         if ($(this).is(':checked')) {
             var checkbox_id = $(this).attr('id');
             //cbxcontribution(checkbox_id)
-alert()
+
         } else {
             var checkboxd_id = $(this).attr('id');
-           // deleteMembercontribution(checkboxd_id)
+            // deleteMembercontribution(checkboxd_id)
         }
     });
     //allcontributedata(memberid);
@@ -241,14 +244,14 @@ function allcontributedata(id) {
 
     $.ajax({
         type: "GET",
-        url: "/membercontributedata/"+ id,
+        url: "/membercontributedata/" + id,
         cache: false,
         timeout: 800000,
         beforeSend: function () { },
         success: function (response) {
 
             var dt = response.data;
-            console.log("table",dt);
+            console.log("table", dt);
             disabled = "disabled";
 
             var data = [];
@@ -256,9 +259,9 @@ function allcontributedata(id) {
                 //var memberidch = dt[i].member_id;
 
                 // Check the condition and set the checkbox status accordingly
-               
-                var isChecked = dt[i].member_id >0 ? "checked" : "";
-var checkboxId = "contributionmember_" + dt[i].contribution_id;
+
+                var isChecked = dt[i].member_id > 0 ? "checked" : "";
+                var checkboxId = "contributionmember_" + dt[i].contribution_id;
                 data.push({
                     "id": dt[i].contribution_id,
                     "code": dt[i].contribution_code,
@@ -286,48 +289,59 @@ var checkboxId = "contributionmember_" + dt[i].contribution_id;
 
 function cbxcontribution(id) {
 
+    var txtamount = $('#txtamount').val();
     var memberid = $('#cmbmember').val();
+    formData.append('txtamount', $('#txtamount').val());
     formData.append('cmbmember', $('#cmbmember').val());
 
 
     if (memberid > 0) {
+        if (txtamount == "") {
+            $('input[type="checkbox"]').prop('checked', false);
+            new Noty({
+                text: 'Enter Amount',
+                type: 'warning'
+            }).show();
+        } else {
 
-        $.ajax({
-            type: "POST",
-            url: "/save_memberContribution/"+id,
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 800000,
-            beforeSend: function () {
-    
-            },
-            success: function (response) {
-                //suplyGroupAllData();
-             
-             
-                new Noty({
-                    text: 'Successfully saved',
-                    type: 'success'
-                }).show();
-    
 
-            },
-            error: function (error) {
-                //showErrorMessage('Something went wrong');
-                new Noty({
-                    text: 'Something went wrong',
-                    type: 'error'
-                }).show();
-                console.log(error);
+            $.ajax({
+                type: "POST",
+                url: "/save_memberContribution/" + id,
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 800000,
+                beforeSend: function () {
 
-            },
-            
-        });
+                },
+                success: function (response) {
+                    //suplyGroupAllData();
+
+
+                    new Noty({
+                        text: 'Successfully saved',
+                        type: 'success'
+                    }).show();
+
+
+                },
+                error: function (error) {
+                    //showErrorMessage('Something went wrong');
+                    new Noty({
+                        text: 'Something went wrong',
+                        type: 'error'
+                    }).show();
+                    console.log(error);
+
+                },
+
+            });
+        }
     } else {
         //$('input[type="checkbox"]').prop('checked', false);
         new Noty({
@@ -341,7 +355,7 @@ function cbxcontribution(id) {
 
 
 function deleteMembercontribution(id) {
- var member_id=memberid
+    var member_id = memberid
     $.ajax({
         type: 'post',
         url: '/deleteMembercontribution/' + id,
@@ -356,21 +370,21 @@ function deleteMembercontribution(id) {
 
         }, success: function (response) {
 
-       
+
             if (response.success) {
-               
-               
+
+
                 new Noty({
                     text: 'Successfully deleted',
                     type: 'success',
                 }).show();
-               
+
             } else {
                 new Noty({
                     text: 'Uneble to Delete',
                     type: 'error'
                 }).show();
-                
+
             }
 
 
@@ -380,17 +394,55 @@ function deleteMembercontribution(id) {
     });
 }
 
-function contribution(id,event){
+function contribution(id, event) {
 
-   
+
     var status = $(event).is(':checked') ? 1 : 0;
 
-if(status == 1){
-//alert("save")
-    cbxcontribution(id);
-}else{
-   deleteMembercontribution(id);
-//alert("0kk")
+    if (status == 1) {
+        //alert("save")
+        cbxcontribution(id);
+    } else {
+        deleteMembercontribution(id);
+        //alert("0kk")
+    }
+
 }
 
+function amountset(id) {
+
+    $.ajax({
+        url: '/amountset/' + id,
+        method: 'get',
+
+        success: function (response) {
+            if (response.length <= 0) {
+                $('#txtamount').prop('disabled', false);
+                $('#txtamount').val('');
+            } else {
+
+
+
+                if (Array.isArray(response) && response.length > 0) {
+                    var firstObject = response[0];
+
+                    if ('amount' in firstObject) {
+                        var amountValue = firstObject.amount;
+
+                        $('#txtamount').val(amountValue);
+                        $('#txtamount').prop('disabled', true);
+
+
+
+
+
+
+                        console.log(amountValue);
+                    }
+                }
+            }
+
+
+        }
+    });
 }

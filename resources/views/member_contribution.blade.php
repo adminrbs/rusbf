@@ -31,6 +31,11 @@
                         <label class="col-form-label mb-0">Full Name</label>
                         <select class="form-control validate select2" id="cmbName"></select>
                     </div>
+                    <div>
+                        <label class="col-form-label mb-0">Amount</label>
+                        <input type="number" class="form-control " id="txtamount"
+                                    name="Manageofrepayment" />
+                    </div>
 
                 </div>
 
@@ -62,6 +67,7 @@
                                 <th>ID</th>
                                 <th>Code</th>
                                 <th>Name </th>
+
                                 <th>Select</th>
                                 
                             </tr>
@@ -103,7 +109,7 @@
 <script src="{{URL::asset('assets/js/vendor/notifications/noty.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/tables/datatables/datatables.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/tables/datatables/extensions/fixed_columns.min.js')}}"></script>
-
+<script src="{{ URL::asset('assets/js/web-rd-fromValidation.js') }}"></script>
 @endsection
 @section('scripts')
 <script src="{{URL::asset('assets/demo/pages/form_validation_library.js')}}"></script>

@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle')Loan Management  @endslot
+@slot('subtitle')Loan Management @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -43,6 +43,7 @@
                                             <th>id</th>
                                             <th>Code</th>
                                             <th>Name of contribution</th>
+                                            <th>Amount</th>
                                             <th>Contribute on Every</th>
                                             <th>Gl Account No</th>
                                             <th>status</th>

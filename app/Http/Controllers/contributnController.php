@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\contribution;
+use Illuminate\Support\Facades\DB;
 
 class contributnController extends Controller
 {
@@ -42,7 +43,9 @@ class contributnController extends Controller
     public function allcontributedata()
     {
         try {
-            $contribution = contribution::all();
+            $query = "SELECT *, l.amount FROM contributions
+            INNER JOIN loans l ON contributions.gl_account_no=l.gl_account_no";
+$contribution =DB::select($query);
             if ($contribution) {
                 return response()->json((['success' => 'Data loaded', 'data' => $contribution]));
             } else {

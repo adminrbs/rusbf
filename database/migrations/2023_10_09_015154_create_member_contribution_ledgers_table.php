@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('member_contributions', function (Blueprint $table) {
-            $table->id('member_contributions_id');
+        Schema::create('member_contribution_ledgers', function (Blueprint $table) {
+            $table->id('member_contribution_ledger_id');
+            $table->integer('contribution_id');
             $table->integer('member_id');
-            $table->integer('contributions_id');
-$table->integer('amount');
+            $table->integer('year');
+            $table->integer('month');
+            $table->double('amount');
+            $table->date('processed_date');
+            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ $table->integer('amount');
      */
     public function down()
     {
-        Schema::dropIfExists('member_contributions');
+        Schema::dropIfExists('member_contribution_ledgers');
     }
 };

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LimitlessController;
 use App\Http\Controllers\loneManagementController;
 use App\Http\Controllers\member_contributionController;
+use App\Http\Controllers\MemberContributionLedgerProcessController;
+use App\Http\Controllers\MemberContributionLedgerProcessListController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Models\member_contribution;
 use App\Models\User;
@@ -204,6 +206,7 @@ Route::get('/membercontributedata/{id}',[member_contributionController::class,'m
 Route::get('/memberNumber/{id}',[member_contributionController::class,'memberNumber']);
 Route::get('/fullName/{id}',[member_contributionController::class,'fullName']);
 Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
+Route::get('/amountset/{id}',[member_contributionController::class,'amountset']);
 
 Route::post('/save_memberContribution/{id}',[member_contributionController::class,'save_memberContribution']);
 Route::post('/deleteMembercontribution/{id}',[member_contributionController::class,'deleteMembercontribution']);
@@ -236,3 +239,19 @@ Route::delete('deletattachment/{id}',[MembersLoanRequestController::class,'delet
 
 //approval
 Route::get('allmemberlonrequestapprovel',[MembersLoanRequestController::class,'allmemberlonrequestapprovel']);
+
+
+
+//Member Contribution ledger process
+Route::get('/member_contribution_ledger_process', function () {
+    return view('member_contribution_ledger_process');
+});
+Route::get('/getCurrentYearMonth',[MemberContributionLedgerProcessController::class,'getCurrentYearMonth']);
+Route::post('/member_contribution_ledger_process',[MemberContributionLedgerProcessController::class,'member_contribution_ledger_process']);
+
+//Member Contribution ledger process list
+Route::get('/member_contribution_ledger_process_list', function () {
+    return view('member_contribution_ledger_process_list');
+});
+Route::get('/getMemberContributions/{filters}',[MemberContributionLedgerProcessListController::class,'getMemberContributions']);
+Route::get('/getMembers',[MemberContributionLedgerProcessListController::class,'getMembers']);

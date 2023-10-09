@@ -10,13 +10,11 @@
                         <h5 class="sidebar-resize-hide flex-grow-1 my-auto">Navigation</h5>
 
                         <div>
-                            <button type="button"
-                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
+                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-control sidebar-main-resize d-none d-lg-inline-flex">
                                 <i class="ph-arrows-left-right"></i>
                             </button>
 
-                            <button type="button"
-                                class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
+                            <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-lg-none">
                                 <i class="ph-x"></i>
                             </button>
                         </div>
@@ -55,8 +53,7 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
-                                    <li class="nav-item"><a href="/members" class="nav-link"> <i
-                                                class="ph-user-list"></i>Members</a></li>
+                                    <li class="nav-item"><a href="/members" class="nav-link"> <i class="ph-user-list"></i>Members</a></li>
 
                                 </ul>
                                 <!--<ul class="nav-item-submenu">
@@ -70,8 +67,7 @@
                                         <span>Setting</span>
                                     </a>
                                     <ul class="nav-group-sub collapse">
-                                        <li class="nav-item"><a href="/master_designation"
-                                                class="nav-link">Designation</a></li>
+                                        <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
                                         <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of
                                                 work</a>
                                         </li>
@@ -94,10 +90,8 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
-                                    <li class="nav-item"><a href="/members_loan_request" class="nav-link"> <i
-                                                class="ph-user-list"></i>Loan Request</a></li>
-                                    <li class="nav-item"><a href="/members_loan_request_Approvel" class="nav-link"> <i
-                                                class="ph-user-list"></i>Loan Request Approval</a></li>
+                                    <li class="nav-item"><a href="/members_loan_request" class="nav-link"> <i class="ph-user-list"></i>Loan Request</a></li>
+                                    <li class="nav-item"><a href="/members_loan_request_Approvel" class="nav-link"> <i class="ph-user-list"></i>Loan Request Approval</a></li>
 
                                 </ul>
 
@@ -120,6 +114,27 @@
                         </li>
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
+
+                        <li class="nav-item">
+                            <a href="/member_contribution_ledger_process_list" class="nav-link">
+                                <i class="ph-house"></i>
+                                <span>
+                                    Contribution ledger
+                                    {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
+                                <span>Process</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item"><a href="#" class="nav-link">Loan</a></li>
+                                <li class="nav-item"><a href="/member_contribution_ledger_process" class="nav-link">Contribution</a></li>
+
+                            </ul>
+                        </li>
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>

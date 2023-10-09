@@ -121,6 +121,7 @@ class member_contributionController extends Controller
 
             $contribution = new member_contribution();
             $contribution->member_id  = $request->get('cmbmember');
+            $contribution->amount  = $request->get('txtamount');
             $contribution->contributions_id = $id;
 
 
@@ -174,4 +175,14 @@ class member_contributionController extends Controller
             return response()->json($ex);
         }
     }
+public function amountset($id){
+    try {
+        $Member = member_contribution::where('member_id', '=', $id)->get();
+        return response()->json($Member);
+    } catch (Exception $ex) {
+        return $ex;
+    }
+
+}
+
 }
