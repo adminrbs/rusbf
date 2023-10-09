@@ -93,6 +93,9 @@
 
                             <label class="col-form-label">G/L Account</label>
                             <input type="text" class="form-control" id="txtglaccount" name="glaccount" />
+
+                            <label class="col-form-label">Amount</label>
+                            <input type="text" class="form-control" id="txtAmount" name="amount" />
                         </div>
 
                         <div>

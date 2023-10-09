@@ -62,6 +62,6 @@
 <script src="{{URL::asset('assets/demo/pages/datatables_basic.js')}}"></script>
 
 
-<script src="{{URL::asset('assets/js/member_contribution_ledger_process.js')}}"></script>
+<script src="{{URL::asset('assets/js/member_contribution_ledger_process.js')}}?random=<?php echo uniqid(); ?>"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 @endsection

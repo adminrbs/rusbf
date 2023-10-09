@@ -140,6 +140,7 @@ function save_contribution() {
     formData.append('txtDescription', $('#txtDescription').val());
     formData.append('txtContribute', $('#txtContribute').val());
     formData.append('txtglaccount', $('#txtglaccount').val());
+    formData.append('txtAmount', $('#txtAmount').val());
 
     console.log(formData);
     if (formData.txtNamecontribution == '' && formData.txtContribute == '') {
@@ -278,6 +279,7 @@ function update_contribution() {
     formData.append('txtDescription', $('#txtDescription').val());
     formData.append('txtContribute', $('#txtContribute').val());
     formData.append('txtglaccount', $('#txtglaccount').val());
+    formData.append('txtAmount', $('#txtAmount').val());
 
     console.log(formData);
     if (formData.txtNamecontribution == '' && formData.txtContribute == '') {
@@ -349,6 +351,7 @@ function getcontributeview(id) {
             $('#txtDescription').val(response.description);
             $('#txtContribute').val(response.contribute_on_every);
             $('#txtglaccount').val(response.gl_account_no);
+            $('#txtAmount').val(response.amount);
 
 
 

@@ -26,6 +26,7 @@ class contributnController extends Controller
             $contribution->description = $request->get('txtDescription');
             $contribution->contribute_on_every = $request->get('txtContribute');
             $contribution->gl_account_no = $request->get('txtglaccount');
+            $contribution->amount = $request->get('txtAmount');
 
 
             if ($contribution->save()) {
@@ -43,9 +44,7 @@ class contributnController extends Controller
     public function allcontributedata()
     {
         try {
-            $query = "SELECT *, l.amount FROM contributions
-            INNER JOIN loans l ON contributions.gl_account_no=l.gl_account_no";
-$contribution =DB::select($query);
+            $contribution = contribution::all();
             if ($contribution) {
                 return response()->json((['success' => 'Data loaded', 'data' => $contribution]));
             } else {
@@ -82,6 +81,7 @@ $contribution =DB::select($query);
             $contribution->description = $request->get('txtDescription');
             $contribution->contribute_on_every = $request->get('txtContribute');
             $contribution->gl_account_no = $request->get('txtglaccount');
+            $contribution->amount = $request->get('txtAmount');
 
 
             if ($contribution->update()) {

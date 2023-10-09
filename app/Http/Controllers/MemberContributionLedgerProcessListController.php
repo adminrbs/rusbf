@@ -20,7 +20,7 @@ class MemberContributionLedgerProcessListController extends Controller
             members.full_name,
             member_contribution_ledgers.`year`,
             MONTHNAME(STR_TO_DATE(member_contribution_ledgers.`month`, '%m')) AS month,
-            FORMAT(member_contribution_ledgers.amount, 0) AS amount
+            FORMAT(member_contribution_ledgers.amount, 2) AS amount
             FROM member_contribution_ledgers
             INNER JOIN members ON member_contribution_ledgers.member_id = members.id WHERE ";
 
