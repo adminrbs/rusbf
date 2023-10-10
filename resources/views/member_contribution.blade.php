@@ -31,11 +31,7 @@
                         <label class="col-form-label mb-0">Full Name</label>
                         <select class="form-control validate select2" id="cmbName"></select>
                     </div>
-                    <div>
-                        <label class="col-form-label mb-0">Amount</label>
-                        <input type="number" class="form-control " id="txtamount"
-                                    name="Manageofrepayment" />
-                    </div>
+
 
                 </div>
 
