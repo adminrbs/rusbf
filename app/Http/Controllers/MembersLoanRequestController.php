@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\loan;
+use App\Models\loan_term;
 use App\Models\Member;
+use App\Models\member_loan;
 use App\Models\members_loan_request;
 use App\Models\members_loan_request_attachment;
 use Exception;
@@ -25,15 +28,50 @@ class MembersLoanRequestController extends Controller
             return $ex;
         }
     }
+    public function getlone()
+    {
+        try {
+            $loan = loan::all();
+            if ($loan) {
+                return response()->json((['success' => 'Data loaded', 'data' => $loan]));
+            } else {
+                return response()->json((['error' => 'Data is not loaded']));
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+    public function getterm($id)
+    {
+        try {
+            $query = "SELECT loan_terms.loan_term_id,loan_terms.no_of_terms FROM loan_terms WHERE loan_terms.loan_id=$id";
+            $term = DB::select($query);
+
+
+            if ($term) {
+                return response()->json($term);
+            } else {
+                return response()->json((['error' => 'Data is not loaded']));
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 
     public function save_memberlonrequest(Request $request)
     {
 
         try {
+            $member = $request->get('txtmembershipno');
+$memberno = Member::find($member);
+
+
+
             $approvedBy = Auth::user()->id;
             $memberlon = new members_loan_request();
             $memberlon->prepared_by = $approvedBy;
-            $memberlon->membership_no  = $request->get('txtmembershipno');
+            $memberlon->member_id  = $request->get('txtmembershipno');
+            $memberlon->membership_no = $memberno->member_number;
             $memberlon->contact_no  = $request->get('txtcontactno');
             $memberlon->service_period  = $request->get('txtpriodofservice');
 
@@ -48,9 +86,8 @@ class MembersLoanRequestController extends Controller
             $memberlon->private_address  = $request->get('txtprivetAddress');
             $memberlon->date  = $request->get('txtdate');
 
-
-
-
+            $memberlon->loan_id  = $request->get('cbxlone');
+            $memberlon->term_id  = $request->get('cbxloneterm');
 
             if ($memberlon->save()) {
 
@@ -67,15 +104,15 @@ class MembersLoanRequestController extends Controller
     public function allmemberlonrequest()
     {
         try {
-            $members_loan = 'SELECT * FROM members_loan_requests mlr WHERE mlr.approval_status="Rejected" ||  mlr.approval_status="Approved"';
-            
-               
-                $result = DB::select($members_loan);
-                if ($result) {
-                    return response()->json((['success' => 'Data loaded', 'data' => $result]));
-                } else {
-                    return response()->json((['error' => 'Data is not loaded','data' => []]));
-                }
+            $members_loan = 'SELECT * FROM members_loan_requests mlr ORDER BY approval_status ASC';
+
+
+            $result = DB::select($members_loan);
+            if ($result) {
+                return response()->json((['success' => 'Data loaded', 'data' => $result]));
+            } else {
+                return response()->json((['error' => 'Data is not loaded', 'data' => []]));
+            }
         } catch (Exception $ex) {
             return $ex;
         }
@@ -96,10 +133,13 @@ class MembersLoanRequestController extends Controller
     public function update_memberlonrequest(Request $request, $id)
     {
         try {
+            $member = $request->get('txtmembershipno');
+            $memberno = Member::find($member);
 
             $memberlon = members_loan_request::find($id);
-            $memberlon->membership_no  = $request->get('txtmembershipno');
+            $memberlon->member_id  = $request->get('txtmembershipno');
             $memberlon->contact_no  = $request->get('txtcontactno');
+            $memberlon->membership_no = $memberno->member_number;
             $memberlon->service_period  = $request->get('txtpriodofservice');
 
             $memberlon->date_of_enlistment  = $request->get('txtdateofenlistment');
@@ -112,6 +152,8 @@ class MembersLoanRequestController extends Controller
 
             $memberlon->private_address  = $request->get('txtprivetAddress');
             $memberlon->date  = $request->get('txtdate');
+            $memberlon->loan_id  = $request->get('cbxlone');
+            $memberlon->term_id  = $request->get('cbxloneterm');
 
 
             if ($memberlon->update()) {
@@ -220,15 +262,44 @@ class MembersLoanRequestController extends Controller
     }
 
     //approve request
-    public function approveRequest($id)
+    public function approveRequest(Request $request, $id)
     {
 
         try {
-            $request = members_loan_request::find($id);
-            $request->approval_status = "Approved";
+            $memberterm = $request->get('cbxloneterm');
+
+
+            $memberlonrequest = members_loan_request::find($id);
+            $memberlonrequest->approval_status = 1;
             //$request->approved_by = $approvedBy;
-            if ($request->update()) {
-                return response()->json((['status' => true]));
+            if ($memberlonrequest->update()) {
+                if ($memberterm) {
+                    $loanandterm = "SELECT *,loans.amount FROM loan_terms lt 
+                    INNER JOIN loans ON loans.loan_id=lt.loan_id
+                    WHERE lt.loan_term_id=  $memberterm";
+                    $loneterm = DB::select($loanandterm);
+
+
+                    if (!empty($loneterm)) {
+                        $loneterm = $loneterm[0];
+
+                        $memberlon = new member_loan();
+                        $memberlon->member_id  = $request->get('txtmembershipno');
+                        $memberlon->loan_id  = $request->get('cbxlone');
+                        $memberlon->loan_term_id  = $request->get('cbxloneterm');
+
+                        $memberlon->no_of_terms = $loneterm->no_of_terms;
+                        $memberlon->term_amount = $loneterm->term_amount;
+                        $memberlon->term_interest_amount = $loneterm->term_interest_amount;
+                        $memberlon->term_interest_precentage = $loneterm->term_interest_precentage;
+                        $memberlon->loan_amount = $loneterm->amount;
+                        if ($memberlon->save()) {
+                            return response()->json((['status' => true]));
+                        } else {
+                            return response()->json((['status' => false]));
+                        }
+                    }
+                }
             } else {
                 return response()->json((['status' => false]));
             }
@@ -243,7 +314,7 @@ class MembersLoanRequestController extends Controller
 
         try {
             $request = members_loan_request::find($id);
-            $request->approval_status = "Rejected";
+            $request->approval_status = 2;
             //$request->approved_by = $approvedBy;
             if ($request->update()) {
                 return response()->json((['status' => true]));
@@ -270,40 +341,41 @@ class MembersLoanRequestController extends Controller
         }
     }
 
-public function viewAttachment($id){
-try{
-    $request = members_loan_request_attachment::find($id);
-    return response()->json($request);
-}catch(Exception $ex){
-    return $ex;
-}
-
-}
-
-public function deletattachment($id)
-{
-    try {
-        $request = members_loan_request_attachment::find($id);
-    
-        $request->delete();
-        return response()->json(['success' => 'Record has been Delete']);
-    } catch (Exception $ex) {
-        return response()->json($ex);
-    }
-}
-
-public function allmemberlonrequestapprovel(){
-    try {
-        $query = 'SELECT * FROM members_loan_requests mlr WHERE mlr.approval_status="pending"';
-        /* $pendingApprovals = purchase_request::where("approval_status","=","Pending")->get(); */
-        $pendingApprovals = DB::select($query);
-        if ($pendingApprovals) {
-            return response()->json((['success' => 'Data loaded', 'data' => $pendingApprovals]));
-        } else {
-            return response()->json((['error' => 'Data not loaded', 'data' => []]));
+    public function viewAttachment($id)
+    {
+        try {
+            $request = members_loan_request_attachment::find($id);
+            return response()->json($request);
+        } catch (Exception $ex) {
+            return $ex;
         }
-    } catch (Exception $ex) {
-        return $ex;
     }
-}
+
+    public function deletattachment($id)
+    {
+        try {
+            $request = members_loan_request_attachment::find($id);
+
+            $request->delete();
+            return response()->json(['success' => 'Record has been Delete']);
+        } catch (Exception $ex) {
+            return response()->json($ex);
+        }
+    }
+
+    public function allmemberlonrequestapprovel()
+    {
+        try {
+            $query = 'SELECT * FROM members_loan_requests mlr WHERE mlr.approval_status="0"';
+            /* $pendingApprovals = purchase_request::where("approval_status","=","Pending")->get(); */
+            $pendingApprovals = DB::select($query);
+            if ($pendingApprovals) {
+                return response()->json((['success' => 'Data loaded', 'data' => $pendingApprovals]));
+            } else {
+                return response()->json((['error' => 'Data not loaded', 'data' => []]));
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 }

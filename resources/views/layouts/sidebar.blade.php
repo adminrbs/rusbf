@@ -89,11 +89,43 @@
                                 <span>Loan Management</span>
                             </a>
                             <ul class="nav-group-sub collapse">
-                                <ul class="nav-item-submenu">
-                                    <li class="nav-item"><a href="/members_loan_request" class="nav-link"> <i class="ph-user-list"></i>Loan Request</a></li>
-                                    <li class="nav-item"><a href="/members_loan_request_Approvel" class="nav-link"> <i class="ph-user-list"></i>Loan Request Approval</a></li>
-
-                                </ul>
+                                <li class="nav-item">
+                                    <a href="/members_loan_request" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Loan Request
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/members_loan_request_Approvel" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Loan Request Approval
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/member_loan" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Member Loan
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/member_contribution_ledger_process_list" class="nav-link">
+                                        <i class="ph-house"></i>
+                                        <span>
+                                            Contribution ledger
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                
 
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
@@ -109,21 +141,14 @@
                                     </ul>
 
                                 </ul>
+                               
 
                             </ul>
                         </li>
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
 
-                        <li class="nav-item">
-                            <a href="/member_contribution_ledger_process_list" class="nav-link">
-                                <i class="ph-house"></i>
-                                <span>
-                                    Contribution ledger
-                                    {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
-                                </span>
-                            </a>
-                        </li>
+                       
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>

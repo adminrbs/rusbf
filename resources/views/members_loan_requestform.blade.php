@@ -42,7 +42,7 @@
                             <div class="col-3">
 
                                 <label class="col-form-label">Computer no</label>
-                                <input type="text" class="form-control " id="txtcomputerno" name="computerno"
+                                <input type="text" class="form-control " id="txtcomputerno" name="compute"
                                     disabled />
                             </div>
                             <div class="col-3">
@@ -115,6 +115,25 @@
                                 <label class="col-form-label">Date</label>
                                 <input type="date" class="form-control " id="txtdate" name="date" />
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+
+                                <label class="col-form-label">Loan</label>
+
+                                <select id="cbxlone" class="form-select select2">
+
+                                </select>
+                            </div>
+                            <div class="col-3">
+
+                                <label class="col-form-label">Term</label>
+
+                                <select id="cbxloneterm" class="form-select select2">
+
+                                </select>
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-12">

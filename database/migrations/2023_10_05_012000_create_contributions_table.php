@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('contribute_on_every');
             $table->string('gl_account_no')->nullable();
+            $table->integer('amount');
             $table->string('status')->default('1');
             $table->timestamps();
         });

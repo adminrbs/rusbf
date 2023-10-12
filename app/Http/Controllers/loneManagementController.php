@@ -7,6 +7,7 @@ use App\Models\loan;
 use App\Models\loan_term;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class loneManagementController extends Controller
@@ -14,9 +15,9 @@ class loneManagementController extends Controller
     public function loansave(Request $request)
     {
         try {
-
+            $approvedBy = Auth::user()->id;
             $loan = new loan();
-
+            $loan->prepared_by = $approvedBy;
             $loan->loan_code = $request->get('txtloneCode');
             $loan->loan_name = $request->get('txtname');
             $loan->description = $request->get('txtdescription');

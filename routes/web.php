@@ -17,6 +17,7 @@ use App\Http\Controllers\loneManagementController;
 use App\Http\Controllers\member_contributionController;
 use App\Http\Controllers\MemberContributionLedgerProcessController;
 use App\Http\Controllers\MemberContributionLedgerProcessListController;
+use App\Http\Controllers\MemberLoanController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Models\member_contribution;
 use App\Models\User;
@@ -197,19 +198,21 @@ Route::post('/update_contribution/{id}',[contributnController::class,'update_con
 Route::delete('deletecontribute/{id}',[contributnController::class,'deletecontribute']);
 Route::post('/cbxcontribute/{id}',[contributnController::class,'cbxcontribute']);
 
-
 //member_contribution
 Route::get('/member_contribution', function () {
     return view('member_contribution');
 });
 Route::get('/membercontributedata/{id}',[member_contributionController::class,'membercontributedata']);
 Route::get('/memberNumber/{id}',[member_contributionController::class,'memberNumber']);
+Route::get('/computerNumber/{id}',[member_contributionController::class,'computerNumber']);
 Route::get('/fullName/{id}',[member_contributionController::class,'fullName']);
 Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
 Route::get('/amountset/{id}',[member_contributionController::class,'amountset']);
 
-Route::post('/save_memberContribution/{id}',[member_contributionController::class,'save_memberContribution']);
+Route::post('/save_memberContribution',[member_contributionController::class,'save_memberContribution']);
 Route::post('/deleteMembercontribution/{id}',[member_contributionController::class,'deleteMembercontribution']);
+
+
 
 
 // members_loan_request
@@ -236,6 +239,8 @@ Route::post('/saveattachment/{id}',[MembersLoanRequestController::class,'saveatt
 Route::get('/getAttachment/{id}',[MembersLoanRequestController::class,'getAttachment']);
 Route::get('/viewAttachment/{id}',[MembersLoanRequestController::class,'viewAttachment']);
 Route::delete('deletattachment/{id}',[MembersLoanRequestController::class,'deletattachment']);
+Route::get('/getlone',[MembersLoanRequestController::class,'getlone']);
+Route::get('/getterm/{id}',[MembersLoanRequestController::class,'getterm']);
 
 //approval
 Route::get('allmemberlonrequestapprovel',[MembersLoanRequestController::class,'allmemberlonrequestapprovel']);
@@ -255,3 +260,11 @@ Route::get('/member_contribution_ledger_process_list', function () {
 });
 Route::get('/getMemberContributions/{filters}',[MemberContributionLedgerProcessListController::class,'getMemberContributions']);
 Route::get('/getMembers',[MemberContributionLedgerProcessListController::class,'getMembers']);
+
+// member_loan
+
+Route::get('/member_loan',function(){
+return view('member_loan');
+});
+Route::get('/memberloandata/{id}',[MemberLoanController::class,'memberloandata']);
+Route::post('/memberlonestatus/{id}',[MemberLoanController::class,'memberlonestatus']);

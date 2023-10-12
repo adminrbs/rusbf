@@ -27,9 +27,9 @@ class member_contributionController extends Controller
                     return response()->json((['error' => 'Data is not loaded']));
                 }
             } else {
-                $query = "SELECT c.contribution_id, c.contribution_code, c.contribution_title, mc.member_id
+                $query = "SELECT c.contribution_id, c.contribution_code, c.contribution_title,IF(ISNULL(mc.amount),c.amount,mc.amount)AS amount, mc.member_id
                 FROM contributions c
-                LEFT JOIN member_contributions mc ON c.contribution_id = mc.contributions_id AND mc.member_id = $id";
+                LEFT JOIN member_contributions mc ON c.contribution_id = mc.contributions_id AND mc.member_id= $id";
 
                 $contribution = DB::select($query);
                 //dd($contribution);
@@ -56,6 +56,39 @@ class member_contributionController extends Controller
                 return response()->json($Member);
             } else {
                 $query = 'SELECT id, member_number, full_name
+                FROM members
+                WHERE id= ' . $id . '';
+
+                $Member = DB::select($query);
+                if ($Member) {
+
+                    return response()->json($Member);
+                } else {
+                    return response()->json(['status' => false]);
+                }
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+
+
+
+    public function computerNumber($id)
+    {
+        try {
+            if ($id == 0) {
+                $query = "
+                (SELECT id, computer_number, full_name FROM members)
+                UNION ALL
+                (SELECT 0 AS id, 'Select Computer Number' AS computer_number, NULL AS full_name)
+                ORDER BY computer_number DESC";
+
+                $Member = DB::select($query);
+                return response()->json($Member);
+            } else {
+                $query = 'SELECT id, computer_number, full_name
                 FROM members
                 WHERE id= ' . $id . '';
 
@@ -114,25 +147,28 @@ class member_contributionController extends Controller
         }
     }
 
-    public function save_memberContribution(Request $request, $id)
+    public function save_memberContribution(Request $request)
     {
 
         try {
+            $collection = json_decode($request->get('data'));
 
-            $contribution = new member_contribution();
-            $contribution->member_id  = $request->get('cmbmember');
-            $contribution->amount  = $request->get('txtamount');
-            $contribution->contributions_id = $id;
+            member_contribution::where([['member_id', '=', $request->get('cmbmember')]])->delete();
 
-
-
-            if ($contribution->save()) {
-
-                return response()->json(['status' => true]);
-            } else {
-
-                return response()->json(['status' => false]);
+            foreach ($collection as $data) {
+                $array = json_decode($data);
+                $contribution = new member_contribution();
+                $contribution->member_id  = $request->get('cmbmember');
+                if ($array->amount) {
+                    $contribution->amount  = $array->amount;
+                } else {
+                    $contribution->amount  = 0;
+                }
+                $contribution->contributions_id =  $array->contribution_id;
+                $contribution->save();
             }
+
+            return response()->json(['status' => true]);
         } catch (Exception $ex) {
             return  $ex;
         }
@@ -144,7 +180,7 @@ class member_contributionController extends Controller
         try {
 
             $member_id = $request->input('member_id');
-           /* if ($member_id != null  && $id != null) {
+            /* if ($member_id != null  && $id != null) {
                 $deletedRows = member_contribution::where('contributions_id', $id && 'member_id', $member_id);
                 $deletedRows->delete();
                 return response()->json(['success' => 'Record has been deleted']);
@@ -157,13 +193,13 @@ class member_contributionController extends Controller
                 'member_id' => $member_id,
             ]);
 
-        if ($deletedRows > 0) {
-            // Successfully deleted at least one record
-            return response()->json(['success' => 'Member contribution deleted successfully']);
-        } else {
-            // No matching records found for deletion
-            return response()->json(['error' => 'No matching records found for deletion']);
-        }
+            if ($deletedRows > 0) {
+                // Successfully deleted at least one record
+                return response()->json(['success' => 'Member contribution deleted successfully']);
+            } else {
+                // No matching records found for deletion
+                return response()->json(['error' => 'No matching records found for deletion']);
+            }
 
 
 
@@ -175,14 +211,13 @@ class member_contributionController extends Controller
             return response()->json($ex);
         }
     }
-public function amountset($id){
-    try {
-        $Member = member_contribution::where('member_id', '=', $id)->get();
-        return response()->json($Member);
-    } catch (Exception $ex) {
-        return $ex;
+    public function amountset($id)
+    {
+        try {
+            $Member = member_contribution::where('member_id', '=', $id)->get();
+            return response()->json($Member);
+        } catch (Exception $ex) {
+            return $ex;
+        }
     }
-
-}
-
 }

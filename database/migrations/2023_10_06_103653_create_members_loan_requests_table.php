@@ -29,7 +29,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->integer('prepared_by')->nullable();
             $table->integer('corrected_by')->nullable();
-            $table->string('approval_status')->default('Pending');
+            $table->integer('approval_status')->default(0);
 
 
             $table->timestamps();

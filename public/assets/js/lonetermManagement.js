@@ -173,7 +173,26 @@ $(document).ready(function () {
 
         updateloneterm(loanterm_id);
     });
+
+$('#txttermAmount').on('focus',function(){
+    var typedAmount = $(this).val();
+
 });
+
+
+$('#txtinteresttermAmount').on('focus',function(){
+    var typedInterestAmount = $(this).val();
+
+});
+
+
+$('#txtrempresenttage').on('focus',function(){
+    var typedInterestpresentage = $(this).val();
+
+});
+
+});
+
 
 
 

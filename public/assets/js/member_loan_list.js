@@ -43,13 +43,14 @@ const DatatableFixedColumnsterm = function () {
                     targets: 1
                 },
                 {
-                    width: '100%',
+                    width: 200,
                     targets: 2
                 },
                 {
-                    width: 200,
+                    width: '100%',
                     targets: 3
                 }
+
 
 
 
@@ -66,9 +67,11 @@ const DatatableFixedColumnsterm = function () {
             "order": [],
             "columns": [
                 { "data": "id" },
-                { "data": "code" },
                 { "data": "name" },
-                { "data": "amount", className: "editable right-align right-align", },
+                { "data": "terms" },
+                //{ "data": "amount", className: "editable right-align right-align", },
+                { "data": "amount"},
+                { "data": "percetage"},
                 { "data": "select" },
 
 
@@ -130,7 +133,7 @@ $(document).ready(function () {
         computerNumber(nameid);
         imageloard(memberid);
         allcontributedata(memberid)
-        amountset(memberid)
+       // amountset(memberid)
     })
 
     $('#cmbName').change(function () {
@@ -140,7 +143,7 @@ $(document).ready(function () {
         computerNumber(nameid);
         imageloard(nameid);
         allcontributedata(memberid);
-        amountset(memberid);
+        //amountset(memberid);
     });
     $('#cmbcomputer').change(function () {
         nameid = $(this).val();
@@ -149,24 +152,9 @@ $(document).ready(function () {
         Fullname(memberid);
         imageloard(nameid);
         allcontributedata(memberid);
-        amountset(memberid);
+        //amountset(memberid);
     });
-    $('input[type="checkbox"]').on('change', function () {
-        if ($(this).is(':checked')) {
-            var checkbox_id = $(this).attr('id');
-            //cbxcontribution(checkbox_id)
-
-        } else {
-            var checkboxd_id = $(this).attr('id');
-            // deleteMembercontribution(checkboxd_id)
-        }
-    });
-    //allcontributedata(memberid);
-
-
-    $('#btnSave').on('click', function () {
-        updateContribution();
-    });
+    
 
     $('.datatable-header').hide();
     $('.datatable-footer').hide();
@@ -291,7 +279,7 @@ function allcontributedata(id) {
 
     $.ajax({
         type: "GET",
-        url: "/membercontributedata/" + $('#cmbmember').val(),
+        url: "/memberloandata/"+ $('#cmbmember').val(),
         cache: false,
         timeout: 800000,
         beforeSend: function () { },
@@ -307,19 +295,18 @@ function allcontributedata(id) {
 
                 // Check the condition and set the checkbox status accordingly
 
-                var isChecked = dt[i].member_id > 0 ? "checked" : "";
-                var checkboxId = "contributionmember_" + dt[i].contribution_id;
+                var isChecked = dt[i].status == 1 ? "checked" : "";
                 data.push({
-                    "id": dt[i].contribution_id,
-                    "code": dt[i].contribution_code,
-                    "name": dt[i].contribution_title,
+                    "id": dt[i].member_loan_id ,
+                    "name": dt[i].loan_name,
+                    "terms": dt[i].no_of_terms,
                     "amount": dt[i].amount,
-                    "select": '<label class=""><input data-id="' + dt[i].contribution_id + '" type="checkbox" id="contributionmember" required ' + isChecked + '></label>',
+                    "percetage": dt[i].term_interest_precentage,
+                    "select": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxmemberloan" value="1" onclick="memberlonecbx(' + dt[i].member_loan_id  + ')" required ' + isChecked + '></label>',
 
                 });
             }
-
-
+        
             var table = $('#memberTable').DataTable();
             table.clear();
             table.rows.add(data).draw();
@@ -335,173 +322,29 @@ function allcontributedata(id) {
 
 }
 
-function updateContribution() {
 
-    var collection = [];
-    var table = document.getElementById("tbl_member_contribution"),
-        rows = table.getElementsByTagName('tr'),
-        i, j, cells, id;
-
-
-    for (i = 0, j = rows.length; i < j; ++i) {
-        cells = rows[i].getElementsByTagName('td');
-        if (!cells.length) {
-            continue;
-        }
-
-        var checkBox = $($($(cells[3]).children()[0]).children()[0]);
-
-        var status = checkBox.is(':checked') ? 1 : 0;
-        if (status == 1) {
-            var contribution_id = checkBox.attr('data-id');
-            collection.push(JSON.stringify({ "contribution_id": contribution_id, "amount": $(cells[2]).html() }));
-        }
-    }
-
-    var member = $('#cmbmember option:selected').text();
-
-    if (member == "Select Member Number") {
-        new Noty({
-            text: 'Select Member',
-            type: 'error'
-        }).show();
-        return;
-    }
-    formData.append('data', JSON.stringify(collection));
-    formData.append('cmbmember', $('#cmbmember').val());
-
+function memberlonecbx(id) {
+    var status = $('#cbxmemberloan').is(':checked') ? 1 : 0;
 
 
     $.ajax({
-        type: "POST",
-        url: "/save_memberContribution",
-        data: formData,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        beforeSend: function () {
-
-        },
-        success: function (response) {
-            //suplyGroupAllData();
-
-
-            new Noty({
-                text: 'Successfully saved',
-                type: 'success'
-            }).show();
-
-
-        },
-        error: function (error) {
-            //showErrorMessage('Something went wrong');
-            new Noty({
-                text: 'Something went wrong',
-                type: 'error'
-            }).show();
-            console.log(error);
-
-        },
-
-    });
-
-
-
-}
-
-
-function deleteMembercontribution(id) {
-    var member_id = memberid
-    $.ajax({
-        type: 'post',
-        url: '/deleteMembercontribution/' + id,
+        url: '/memberlonestatus/' + id,
+        type: 'POST',
         data: {
-            _token: $('input[name=_token]').val(),
-            member_id: member_id
+            '_token': $('meta[name="csrf-token"]').attr('content'),
+            'status': status
         },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        beforeSend: function () {
-
-        }, success: function (response) {
-
-
-            if (response.success) {
-
-
-                new Noty({
-                    text: 'Successfully deleted',
-                    type: 'success',
-                }).show();
-
-            } else {
-                new Noty({
-                    text: 'Uneble to Delete',
-                    type: 'error'
-                }).show();
-
-            }
-
-
-        }, error: function (xhr, status, error) {
-            console.log(xhr.responseText);
-        }
-    });
-}
-
-function contribution(id, event) {
-
-    var status = $(event).is(':checked') ? 1 : 0;
-
-    if (status == 1) {
-        //alert("save")
-        cbxcontribution(id);
-    } else {
-        deleteMembercontribution(id);
-        //alert("0kk")
-    }
-
-}
-
-function amountset(id) {
-
-    $.ajax({
-        url: '/amountset/' + id,
-        method: 'get',
-
         success: function (response) {
-            if (response.length <= 0) {
-                $('#txtamount').prop('disabled', false);
-                $('#txtamount').val('');
-            } else {
+            new Noty({
+                text: 'Successfully save',
+                type: 'success',
+            }).show();
 
-
-
-                if (Array.isArray(response) && response.length > 0) {
-                    var firstObject = response[0];
-
-                    if ('amount' in firstObject) {
-                        var amountValue = firstObject.amount;
-
-                        $('#txtamount').val(amountValue);
-                        $('#txtamount').prop('disabled', true);
-
-
-
-
-
-
-                        console.log(amountValue);
-                    }
-                }
-            }
-
-
+            //allcontributedata()
+            console.log("data save");
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr.responseText);
         }
     });
 }

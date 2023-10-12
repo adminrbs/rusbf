@@ -141,11 +141,8 @@ function allmemberlonrequest() {
 
                     //var isChecked = dt[i].status==1? "checked" : "";
                     //var label_approval = '<label class="badge badge-pill bg-warning">' + dt[i].approval_status + '</label>';
-                    var label_approval = '<label class="badge badge-pill bg-warning">' + dt[i].approval_status + '</label>';
-                    if (dt[i].approval_status == "Approved") {
-                        label_approval = '<label class="badge badge-pill bg-success">' + dt[i].approval_status + '</label>';
-                    } else if (dt[i].approval_status == "Rejected")
-                        label_approval = '<label class="badge badge-pill bg-danger">' + dt[i].approval_status + '</label>';
+                    if (dt[i].approval_status == 0)
+                        label_approval = '<label class="badge badge-pill bg-warning">Pending</label>';
     
 
                     data.push({

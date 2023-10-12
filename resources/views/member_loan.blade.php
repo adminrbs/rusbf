@@ -20,7 +20,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">Member Contribution</h5>
+            <h5 class="mb-0">Member Loan</h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 
@@ -74,10 +74,12 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Code</th>
-                                <th>Name </th>
-                                <th>Amount</th>
-                                <th>Select</th>
+                                <th>Loan Name </th>
+                                <th>Loan Terms</th>
+                                <th> Amount</th>
+                                <th>Interest Percentahe</th>
+                                
+                                <th>Status</th>
 
                             </tr>
                         </thead>
@@ -89,11 +91,7 @@
                 </div>
 
             </div>
-            <die class="row">
-                <div class="col-md-12 mt-3" style="text-align: right;">
-                    <button class="btn btn-primary" id="btnSave">Save</button>
-                </div>
-            </die>
+           
 
         </div>
 
@@ -129,6 +127,6 @@
 <script src="{{URL::asset('assets/demo/pages/form_validation_library.js')}}"></script>
 <script src="{{URL::asset('assets/demo/pages/extra_noty.js')}}"></script>
 
-<script src="{{URL::asset('assets/js/member_contribution.js')}}"></script>
+<script src="{{URL::asset('assets/js/member_loan_list.js')}}"></script>
 
 @endsection

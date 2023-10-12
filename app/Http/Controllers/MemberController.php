@@ -6,6 +6,7 @@ use App\Models\Member;
 use App\Models\MemberAttachment;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 
@@ -46,9 +47,10 @@ class MemberController extends Controller
             
             $file =  $request->file('file');
             $image_icon =  $request->get('imageIcon');
-
+            $approvedBy = Auth::user()->id;
             $member = new Member();
-
+           
+            $member->prepared_by = $approvedBy;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');

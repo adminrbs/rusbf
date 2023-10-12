@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 let dropzoneSingle = undefined;
 var ACTION = undefined;
+var memberid;
+
 
 var formData = new FormData();
 $(document).ready(function () {
@@ -171,11 +173,6 @@ $(document).ready(function () {
     });
 
 
-
-
-
-
-
     $('#btnApprove').hide();
     $('#btnReject').hide();
     $('#btnattach').hide();
@@ -184,6 +181,12 @@ $(document).ready(function () {
 
     $('.select2').select2();
     memberShip();
+    lone();
+
+    $('#cbxlone').on('change', function () {
+        var lonId = $(this).val();
+        term(lonId);
+    });
     $('#btncontribution').on('click', function () {
         $('input[type="text"]').val('');
         $('input[type="number"]').val('');
@@ -194,10 +197,10 @@ $(document).ready(function () {
     });
 
 
-
-    $('#txtmembershipno').change(function () {
-        var id = $(this).val();
-        getalldetails(id);
+   
+    $('#txtmembershipno').on('change',function() {
+       memberid = $(this).val();
+        getalldetails(memberid);
     })
     $('#btnReset').on('click', function () {
         resetForm();
@@ -234,7 +237,7 @@ $(document).ready(function () {
             $('#btnattach').show();
             $('#tbl_attachment').show();
             $('.table-responsive').show();
-           
+
 
         }
         else if (action == 'edit') {
@@ -247,7 +250,7 @@ $(document).ready(function () {
         } else if (action == 'view') {
             $('#btnSave').hide();
             getcontributeview(mid);
-          
+
 
         }
 
@@ -374,82 +377,92 @@ $(document).ready(function () {
 
 function save_memberlonrequest() {
 
+    var loan = $('#cbxlone').val();
+    if (loan > 0) {
 
 
-    formData.append('txtmembershipno', $('#txtmembershipno').val());
-    console.log($('#txtmembershipno').val());
-    // formData.append('name', $('#name').val());
-    //formData.append('txtDesignation', $('#txtDesignation').val());
 
-    //formData.append('txtStaffno', $('#txtStaffno').val());
-    //formData.append('txtmembershipno', $('#txtmembershipno').val());
-    //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
+        formData.append('txtmembershipno', $('#txtmembershipno').val());
+        
+        // formData.append('name', $('#name').val());
+        //formData.append('txtDesignation', $('#txtDesignation').val());
 
-    // formData.append('txtStaffno', $('#txtbirthday').val());
-    //.append('txtnic', $('#txtnic').val());
-    //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
+        //formData.append('txtStaffno', $('#txtStaffno').val());
+        //formData.append('txtmembershipno', $('#txtmembershipno').val());
+        //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
 
-    formData.append('txtcontactno', $('#txtcontactno').val());
-    //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
-    formData.append('txtpriodofservice', $('#txtpriodofservice').val());
+        // formData.append('txtStaffno', $('#txtbirthday').val());
+        //.append('txtnic', $('#txtnic').val());
+        //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
 
-    formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
-    formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
-    //formData.append('txtcomputerno', $('#txtcomputerno').val());
+        formData.append('txtcontactno', $('#txtcontactno').val());
+        //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
+        formData.append('txtpriodofservice', $('#txtpriodofservice').val());
 
-    //formData.append('txtnicNo2', $('#txtnicNo2').val());
-    formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
-    formData.append('txtresontoobtain', $('#txtresontoobtain').val());
+        formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
+        formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
+        //formData.append('txtcomputerno', $('#txtcomputerno').val());
 
-    formData.append('txtprivetAddress', $('#txtprivetAddress').val());
-    formData.append('txtdate', $('#txtdate').val());
+        //formData.append('txtnicNo2', $('#txtnicNo2').val());
+        formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
+        formData.append('txtresontoobtain', $('#txtresontoobtain').val());
 
-
-    console.log(formData);
-
-
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: '/save_memberlonrequest',
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        timeout: 800000,
-        beforeSend: function () {
-
-        },
-        success: function (response) {
-            //suplyGroupAllData();
-            // $('#modalmemberlonrequest').modal('hide');
-            // allmemberlonrequest()
-            resetForm();
-            new Noty({
-                text: 'Successfully saved',
-                type: 'success'
-            }).show();
+        formData.append('txtprivetAddress', $('#txtprivetAddress').val());
+        formData.append('txtdate', $('#txtdate').val());
+        formData.append('cbxlone', $('#cbxlone').val());
+        formData.append('cbxloneterm', $('#cbxloneterm').val());
 
 
-        },
-        error: function (error) {
-            //showErrorMessage('Something went wrong');
-            new Noty({
-                text: 'Something went wrong',
-                type: 'error'
-            }).show();
-            console.log(error);
+        console.log(formData);
 
-        },
-        complete: function () {
 
-        }
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '/save_memberlonrequest',
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 800000,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            timeout: 800000,
+            beforeSend: function () {
 
-    });
+            },
+            success: function (response) {
+              
+                resetForm();
+                new Noty({
+                    text: 'Successfully saved',
+                    type: 'success'
+                }).show();
+
+
+            },
+            error: function (error) {
+                //showErrorMessage('Something went wrong');
+                new Noty({
+                    text: 'Something went wrong',
+                    type: 'error'
+                }).show();
+                //console.log(error);
+
+            },
+            complete: function () {
+
+            }
+
+        });
+    } else {
+        new Noty({
+            text: 'Select loan',
+            type: 'warning'
+        }).show();
+        console.log(error);
+    }
 
 
 }
@@ -462,11 +475,11 @@ function getmemberlone(id) {
         method: 'get',
 
         success: function (response) {
-            console.log(response);
-
+            console.log("lon", response);
+            term(response.loan_id);
 
             $('#id').val(response.members_loan_request_id);
-            $("#txtmembershipno").val(response.membership_no).trigger('change');
+            $("#txtmembershipno").val(response.member_id).trigger('change');
             $('#txtcontactno').val(response.contact_no);
             $('#txtpriodofservice').val(response.service_period);
 
@@ -482,7 +495,11 @@ function getmemberlone(id) {
 
             $('#txtprivetAddress').val(response.private_address);
             $('#txtdate').val(response.date);
-            // $('#txtcomputerno').val(response.description);
+           // $('#txtcomputerno').val(response.description);
+            $('#cbxloneterm').val(response.term_id).trigger('change');
+            $('#cbxlone').val(response.loan_id).trigger('change');
+
+
 
 
 
@@ -495,75 +512,86 @@ function update_memberlonrequest() {
     var id = $('#id').val();
 
 
+    var loan = $('#cbxlone').val();
+    if (loan > 0) {
 
-    formData.append('txtmembershipno', $('#txtmembershipno').val());
-    console.log($('#txtmembershipno').val());
-    // formData.append('name', $('#name').val());
-    //formData.append('txtDesignation', $('#txtDesignation').val());
 
-    //formData.append('txtStaffno', $('#txtStaffno').val());
-    //formData.append('txtmembershipno', $('#txtmembershipno').val());
-    //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
 
-    // formData.append('txtStaffno', $('#txtbirthday').val());
-    //.append('txtnic', $('#txtnic').val());
-    //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
 
-    formData.append('txtcontactno', $('#txtcontactno').val());
-    //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
-    formData.append('txtpriodofservice', $('#txtpriodofservice').val());
+         formData.append('txtmembershipno', $('#txtmembershipno').val());
+        //formData.append('txtDesignation', $('#txtDesignation').val());
 
-    formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
-    formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
-    //formData.append('txtcomputerno', $('#txtcomputerno').val());
+        //formData.append('txtStaffno', $('#txtStaffno').val());
+        //formData.append('txtmembershipno', $('#txtmembershipno').val());
+        //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
 
-    //formData.append('txtnicNo2', $('#txtnicNo2').val());
-    formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
-    formData.append('txtresontoobtain', $('#txtresontoobtain').val());
+        // formData.append('txtStaffno', $('#txtbirthday').val());
+        //.append('txtnic', $('#txtnic').val());
+        //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
 
-    formData.append('txtprivetAddress', $('#txtprivetAddress').val());
-    formData.append('txtdate', $('#txtdate').val());
+        formData.append('txtcontactno', $('#txtcontactno').val());
+        //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
+        formData.append('txtpriodofservice', $('#txtpriodofservice').val());
 
-    $.ajax({
-        type: "POST",
-        enctype: 'multipart/form-data',
-        url: '/update_memberlonrequest/' + id,
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        timeout: 800000,
-        beforeSend: function () {
+        formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
+        formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
+        //formData.append('txtcomputerno', $('#txtcomputerno').val());
 
-        },
-        success: function (response) {
-            //suplyGroupAllData();
-            // $('#modalmemberlonrequest').modal('hide');
+        //formData.append('txtnicNo2', $('#txtnicNo2').val());
+        formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
+        formData.append('txtresontoobtain', $('#txtresontoobtain').val());
 
-            //allmemberlonrequest()
-            closeCurrentTab()
-            window.opener.location.reload();
-            new Noty({
-                text: 'Successfully updated',
-                type: 'success',
-            }).show();
-        },
-        error: function (error) {
-            //showErrorMessage('Something went wrong');
-            //$('#modalmemberlonrequest').modal('hide');
-            console.log(error);
+        formData.append('txtprivetAddress', $('#txtprivetAddress').val());
+        formData.append('txtdate', $('#txtdate').val());
+        formData.append('cbxlone', $('#cbxlone').val());
+        formData.append('cbxloneterm', $('#cbxloneterm').val());
 
-        },
-        complete: function () {
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '/update_memberlonrequest/' + id,
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 800000,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            timeout: 800000,
+            beforeSend: function () {
 
-        }
+            },
+            success: function (response) {
+                //suplyGroupAllData();
+                // $('#modalmemberlonrequest').modal('hide');
 
-    });
+                //allmemberlonrequest()
+                closeCurrentTab()
+                window.opener.location.reload();
+                new Noty({
+                    text: 'Successfully updated',
+                    type: 'success',
+                }).show();
+            },
+            error: function (error) {
+                //showErrorMessage('Something went wrong');
+                //$('#modalmemberlonrequest').modal('hide');
+                console.log(error);
 
+            },
+            complete: function () {
+
+            }
+
+        });
+    } else {
+        new Noty({
+            text: 'Select loan',
+            type: 'warning'
+        }).show();
+        console.log(error);
+    }
 }
 
 // save Attachment 
@@ -648,13 +676,16 @@ function getAttachment() {
 
                 var data = [];
                 for (var i = 0; i < dt.length; i++) {
-
+                    var attachment = dt[i].attachment;
+                    var parts = attachment.split('.');
+                    var Attachment =  parts[1];
+                  
 
 
                     data.push({
                         "id": dt[i].members_loan_request_attachment_id,
                         "description": dt[i].description,
-                        "attachment": dt[i].attachment,
+                        "attachment": Attachment,
                         "action": '<button class="btn btn-success btn-sm" type="button"  onclick="view(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>&#160<button type="button" class="btn btn-danger btn-sm" id="attachmentdelete" onclick="_delete(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>&#160<button type="button" class="btn btn-primary btn-sm" onclick="download(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-download" aria-hidden="true"></i></button>',
                     });
                 }
@@ -676,8 +707,8 @@ function getAttachment() {
 }
 
 function getcontributeview(id) {
-   
-    
+
+
 
     $('#btnsave').hide();
     $('#btnReset').hide();
@@ -689,7 +720,7 @@ function getcontributeview(id) {
     $('#txtmembershipno').removeClass('form-select select2').addClass('form-control  select2');
     $('#tbl_attachment').show();
     $('.table-responsive').show();
-   
+
     $.ajax({
         url: '/getmemberlone/' + id,
         method: 'get',
@@ -697,9 +728,9 @@ function getcontributeview(id) {
 
         success: function (response) {
             console.log(response);
-           
+
             $('#id').val(response.members_loan_request_id);
-            $("#txtmembershipno").val(response.membership_no).trigger('change');
+            $("#txtmembershipno").val(response.member_id).trigger('change');
             $('#txtcontactno').val(response.contact_no);
             $('#txtpriodofservice').val(response.service_period);
 
@@ -712,6 +743,9 @@ function getcontributeview(id) {
 
             $('#txtprivetAddress').val(response.private_address);
             $('#txtdate').val(response.date);
+            $('#cbxloneterm').val(response.term_id).trigger('change');
+            $('#cbxlone').val(response.loan_id).trigger('change');
+
 
 
 
@@ -775,11 +809,12 @@ function memberShip() {
 
 }
 function getalldetails(id) {
+
     $.ajax({
         url: '/getalldetails/' + id,
         type: 'get',
         dataType: 'json',
-        // async: false,
+         async: false,
 
 
         success: function (response) {
@@ -820,6 +855,13 @@ function closeCurrentTab() {
 
 //approve
 function approveRequest(id) {
+
+
+
+    formData.append('txtmembershipno',memberid);
+
+    formData.append('cbxlone', $('#cbxlone').val());
+    formData.append('cbxloneterm', $('#cbxloneterm').val());
     $.ajax({
         url: '/approveRequest/' + id,
         type: 'post',
@@ -838,14 +880,14 @@ function approveRequest(id) {
         }, success: function (response) {
             /*   $('#btnSave').prop('disabled', false);*/
             var status = response.status
-            console.log(status);
+           // console.log(status);
             if (status) {
                 showSuccessMessage("Request approved");
 
                 $('#btnApprove').prop('disabled', true);
                 $('#btnReject').prop('disabled', true);
 
-                window.opener.location.reload();
+                //window.opener.location.reload();
 
             } else {
 
@@ -888,7 +930,7 @@ function rejectRequest(id) {
                 $('#btnApprove').prop('disabled', true);
                 $('#btnReject').prop('disabled', true);
 
-               
+
 
             } else {
 
@@ -916,7 +958,7 @@ function view(id) {
             console.log(response);
             window.open(response.attachment, '_blank');
 
-          
+
             console.log(data)
         }
 
@@ -927,37 +969,37 @@ function view(id) {
 
 
 function _delete(id) {
-    if (action == 'view'){
+    if (action == 'view') {
 
-}else{
-
-
+    } else {
 
 
-    bootbox.confirm({
-        title: 'Delete confirmation',
-        message: '<div class="d-flex justify-content-center align-items-center mb-3"><i class="fa fa-times fa-5x text-danger" ></i></div><div class="d-flex justify-content-center align-items-center "><p class="h2">Are you sure?</p></div>',
-        buttons: {
-            confirm: {
-                label: '<i class="fa fa-check"></i>&nbsp;Yes',
-                className: 'btn-Danger'
+
+
+        bootbox.confirm({
+            title: 'Delete confirmation',
+            message: '<div class="d-flex justify-content-center align-items-center mb-3"><i class="fa fa-times fa-5x text-danger" ></i></div><div class="d-flex justify-content-center align-items-center "><p class="h2">Are you sure?</p></div>',
+            buttons: {
+                confirm: {
+                    label: '<i class="fa fa-check"></i>&nbsp;Yes',
+                    className: 'btn-Danger'
+                },
+                cancel: {
+                    label: '<i class="fa fa-times"></i>&nbsp;No',
+                    className: 'btn-info'
+                }
             },
-            cancel: {
-                label: '<i class="fa fa-times"></i>&nbsp;No',
-                className: 'btn-info'
-            }
-        },
-        callback: function (result) {
-            console.log(result);
-            if (result) {
-                deletattachment(id);
-            } else {
+            callback: function (result) {
+                console.log(result);
+                if (result) {
+                    deletattachment(id);
+                } else {
 
+                }
             }
-        }
-    });
-    $('.bootbox').find('.modal-header').addClass('bg-danger text-white');
-}
+        });
+        $('.bootbox').find('.modal-header').addClass('bg-danger text-white');
+    }
 
 }
 
@@ -1008,10 +1050,10 @@ function download(attachmentId) {
 
 
         success: function (response) {
-           // var fileName = response.attachment;
+            // var fileName = response.attachment;
 
             var attachmentData = response.attachment;
-           // var fileName = response.filename;
+            // var fileName = response.filename;
 
             // Create a Blob object from the attachment data
             var blob = new Blob([attachmentData], { type: 'pdf' });
@@ -1028,7 +1070,7 @@ function download(attachmentId) {
             // Trigger a click event on the anchor element to initiate the download
             document.body.appendChild(a);
             a.click();
-            
+
             // Clean up the temporary URL
             //window.URL.revokeObjectURL(url);
         },
@@ -1038,3 +1080,84 @@ function download(attachmentId) {
 
     })
 }
+
+
+function lone() {
+
+    $.ajax({
+        url: '/getlone',
+        type: 'get',
+        dataType: 'json',
+        // async: false,
+
+
+        success: function (data) {
+            var dt = data.data
+            var htmlContent;
+            htmlContent += "<option value='0'>Select Loan</option>";
+            for (var i = 0; i < dt.length; i++) {
+                htmlContent += "<option value='" + dt[i].loan_id + "'>" + dt[i].loan_name + "</option>";
+            }
+
+            // Set the HTML content of the select element after the loop
+            $('#cbxlone').html(htmlContent);
+
+        }, error: function (data) {
+            console.log(data)
+        }
+
+    })
+
+}
+/*
+function term(id) {
+    $('#cbxloneterm').empty();
+    $.ajax({
+        url: '/getterm/' + id,
+        type: 'get',
+        dataType: 'json',
+        // async: false,
+
+
+        success: function (data) {
+
+            var dt = data.data
+            var htmlContent = "";
+            // htmlContent += "<option value='0'>Select Loan</option>";
+            for (var i = 0; i < dt.length; i++) {
+                htmlContent += "<option value='" + dt[i].loan_term_id + "'>" + dt[i].no_of_terms + "</option>";
+            }
+
+            // Set the HTML content of the select element after the loop
+            $('#cbxloneterm').html(htmlContent);
+
+        }, error: function (data) {
+            console.log(data)
+        }
+
+    })
+
+}*/
+
+
+function term(id) {
+    $('#cbxloneterm').empty();
+    $.ajax({
+        url: '/getterm/' + id,
+        type: 'get',
+        //dataType: 'json',
+        async: false,
+        success: function (response) {
+            $.each(response, function (index, value) {
+                $('#cbxloneterm').append('<option value="' + value.no_of_terms + '">' + value.no_of_terms + '</option>');
+
+            })
+           
+        }, error: function (response) {
+            console.log(response)
+        }
+
+    })
+
+}
+

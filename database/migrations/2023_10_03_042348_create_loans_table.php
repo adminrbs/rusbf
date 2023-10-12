@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string("remarks", 255)->nullable();
             $table->string('gl_account_no')->nullable();
             $table->integer('status')->default('1');
-
+            $table->integer('prepared_by');
             $table->timestamps();
         });
     }
