@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-class MemberContributionLedger extends Model
+
+class MemberLoanLedger extends Model
 {
     use HasFactory, LogsActivity;
     protected $fillable = [];
-    protected $primaryKey ="member_contribution_ledger_id";
+    protected $primaryKey ="member_loan_ledger_id";
 
     protected static $logOnlyDirty = true;
     public function tapActivity(Activity $activity, string $eventName)
     {
-        $activity->log_name = "member_contribution_ledgers";
+        $activity->log_name = "member_loan_ledgers";
         $activity->description = $eventName;
         $activity->causer_id =  Auth::user()->id;
     }
@@ -27,4 +28,5 @@ class MemberContributionLedger extends Model
             ->logOnly(['*']);
         // Chain fluent methods for configuration options
     }
+
 }
