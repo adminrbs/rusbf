@@ -164,6 +164,8 @@ $(document).ready(function () {
 
         updatelone(loan_id);
     });
+
+
 });
 
 
@@ -254,6 +256,7 @@ function loneAllData() {
             var dt = response.data;
             console.log(dt);
             disabled = "disabled";
+
 
             var data = [];
             for (var i = 1; i < dt.length; i++) {

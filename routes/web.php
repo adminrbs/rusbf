@@ -18,7 +18,6 @@ use App\Http\Controllers\member_contributionController;
 use App\Http\Controllers\MemberContributionLedgerProcessController;
 use App\Http\Controllers\MemberContributionLedgerProcessListController;
 use App\Http\Controllers\MemberLoanController;
-use App\Http\Controllers\MemberLoanLedgerController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Models\member_contribution;
 use App\Models\User;
@@ -186,6 +185,7 @@ Route::get('/lonetermAllData/{id}',[loneManagementController::class,'lonetermAll
 Route::get('/getloneterm/{id}',[loneManagementController::class,'getloneterm']);
 Route::post('/updateloneterm/{id}',[loneManagementController::class,'updateloneterm']);
 Route::delete('/deleteloneterm/{id}',[loneManagementController::class,'deleteloneterm']);
+Route::get('/getloneAllData/{id}',[loneManagementController::class,'getloneAllData']);
 
 // contribution
 Route::get('/contribution', function () {
@@ -228,7 +228,7 @@ Route::get('/members_loan_request_Approvel', function () {
     return view('members_loan_requestform_ApprovelList');
 });
 Route::get('/memberShip',[MembersLoanRequestController::class,'memberShip']);
-Route::get('/getalldetails/{id}',[MembersLoanRequestController::class,'getalldetails']);
+Route::get('/getalldetails/{memberid}/{id}',[MembersLoanRequestController::class,'getalldetails']);
 Route::post('/save_memberlonrequest',[MembersLoanRequestController::class,'save_memberlonrequest']);
 Route::get('/allmemberlonrequest',[MembersLoanRequestController::class,'allmemberlonrequest']);
 Route::get('/getmemberlone/{id}',[MembersLoanRequestController::class,'getmemberlone']);
@@ -262,14 +262,8 @@ Route::get('/member_contribution_ledger_process_list', function () {
 Route::get('/getMemberContributions/{filters}',[MemberContributionLedgerProcessListController::class,'getMemberContributions']);
 Route::get('/getMembers',[MemberContributionLedgerProcessListController::class,'getMembers']);
 
-//Loan Process
-Route::get('/loan_process', function () {
-    return view('loan_process');
-});
-Route::post('/member_loan_ledger_process',[MemberLoanLedgerController::class,'member_loan_ledger_process']);
-
-
 // member_loan
+
 Route::get('/member_loan',function(){
 return view('member_loan');
 });

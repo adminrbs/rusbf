@@ -172,6 +172,11 @@ $(document).ready(function () {
         }
     });
 
+    $('input[type="text"]').val('');
+    $('input[type="number"]').val('');
+    $('input[type="date"]').val('');
+    $('input[type="textarea"]').val('');
+    $('input.select2').val('');
 
     $('#btnApprove').hide();
     $('#btnReject').hide();
@@ -192,6 +197,7 @@ $(document).ready(function () {
         $('input[type="number"]').val('');
         $('input[type="date"]').val('');
         $('input[type="textarea"]').val('');
+        $('input.select2').val('');
 
 
     });
@@ -200,8 +206,28 @@ $(document).ready(function () {
    
     $('#txtmembershipno').on('change',function() {
        memberid = $(this).val();
-        getalldetails(memberid);
+
+        getalldetails(memberid ,1);
     })
+    $('#txtnic').on('change',function() {
+        memberid = $(this).val();
+    
+         getalldetails(memberid ,2);
+     })
+     $('#txtcomputerno').on('change',function() {
+        memberid = $(this).val();
+      
+         getalldetails(memberid ,3);
+     })
+     $('#txtmembershipyear').on('change',function() {
+        memberid = $(this).val();
+       
+         getalldetails(memberid ,4);
+     })
+
+
+
+
     $('#btnReset').on('click', function () {
         resetForm();
     });
@@ -791,15 +817,25 @@ function memberShip() {
 
 
         success: function (data) {
-            var dt = data.data
-            var htmlContent;
-            htmlContent += "<option value='0'>Select Membership No</option>";
+            var dt = data.data;
+            var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
+            var htmlNicOptions = "<option value='0'>Select National ID</option>";
+           var htmlComputercode = "<option value='0'>Select Computer Code</option>";
+           var htmlmemberyear = "<option value='0'>Select Membership (Year)</option>";
+
+            
             for (var i = 0; i < dt.length; i++) {
-                htmlContent += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+                htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+                htmlNicOptions += "<option value='" + dt[i].national_id_number + "'>" + dt[i].national_id_number + "</option>";
+                htmlComputercode += "<option value='" + dt[i].computer_number + "'>" + dt[i].computer_number + "</option>";
+                htmlmemberyear += "<option value='" + dt[i].date_of_joining + "'>" + dt[i].date_of_joining + "</option>";
             }
 
-            // Set the HTML content of the select element after the loop
-            $('#txtmembershipno').html(htmlContent);
+            // Set the HTML content of the select elements after the loop
+            $('#txtmembershipno').html(htmlMembershipOptions);
+            $('#txtnic').html(htmlNicOptions);
+            $('#txtcomputerno').html(htmlComputercode);
+            $('#txtmembershipyear').html(htmlmemberyear);
 
         }, error: function (data) {
             console.log(data)
@@ -808,30 +844,48 @@ function memberShip() {
     })
 
 }
-function getalldetails(id) {
+
+function getalldetails(memberid ,id) {
 
     $.ajax({
-        url: '/getalldetails/' + id,
+        url: '/getalldetails/' + memberid + '/' + id,
         type: 'get',
         dataType: 'json',
          async: false,
 
 
         success: function (response) {
-            console.log(response);
-
-
+            console.log("lll",response);
+            $('#txtnic').html('');
+            $('#txtcomputerno').html('');
+            $('#txtmembershipyear').html('');
+            //$('#txtmembershipno').html('');
+            var dt = response; 
+            for (var i = 0; i < dt.length; i++) {
+                
+                $('#txtmembershipno').append("<option value='" + dt[i].member_number + "'>" + dt[i].member_number + "</option>");
+                $('#txtnic').append("<option value='" + dt[i].national_id_number + "'>" + dt[i].national_id_number + "</option>");
+                $('#txtcomputerno').append("<option value='" + dt[i].computer_number + "'>" + dt[i].computer_number + "</option>");
+                $('#txtmembershipyear').append("<option value='" + dt[i].date_of_joining + "'>" + dt[i].date_of_joining + "</option>");
+            
+}
+       
+            // Set the values of the input fields as you were doing
+            $('#txtmembershipno').val(response[0].member_number);
             $('#txtcomputerno').val(response[0].computer_number);
+            $('#txtnic').val(response[0].national_id_number);
+            $('#txtmembershipyear').val(response[0].date_of_joining);
+
             $('#name').val(response[0].name_initials);
-            $('#txtDesignation').val(response[0].name);
+            $('#txtDesignation').val(response[0].designation);
             $('#txtStaffno').val(response[0].payroll_number);
 
-            $("#txtplaseemployment").val(response[0].plase);
+            $("#txtplaseemployment").val(response[0].work_location);
             $('#txtbirthday').val(response[0].date_of_birth);
-            $('#txtnic').val(response[0].national_id_number);
+           
 
             $("#txtpaysheetno").val(response[0].payroll_number);
-            $('#txtmembershipyear').val(response[0].date_of_joining);
+          
 
 
 

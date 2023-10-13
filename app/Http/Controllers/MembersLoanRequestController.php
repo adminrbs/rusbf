@@ -63,7 +63,7 @@ class MembersLoanRequestController extends Controller
 
         try {
             $member = $request->get('txtmembershipno');
-$memberno = Member::find($member);
+            $memberno = Member::find($member);
 
 
 
@@ -242,20 +242,36 @@ $memberno = Member::find($member);
         }
     }
 
-    public function getalldetails($id)
+    public function getalldetails($memberid, $id)
     {
 
         try {
-            $query = 'SELECT *,md.name,mpw.name AS plase FROM members
-       INNER JOIN master_designations md ON md.id=members.designation_id
-       INNER JOIN master_place_works mpw ON mpw.id=members.work_location_id
-       WHERE members.id= "' . $id . '"';
+            $query = 'SELECT members.*, md.name AS designation, mpw.name AS work_location
+            FROM members
+            INNER JOIN master_designations md ON md.id = members.designation_id
+            INNER JOIN master_place_works mpw ON mpw.id = members.work_location_id';
 
+            switch ($id) {
+                case 1:
+                    $query .= ' WHERE members.id = ' . $memberid;
+                    break;
+                case 2:
+                    $query .= ' WHERE members.national_id_number = ' . $memberid;
+                    break;
+                case 3:
+                    $query .= ' WHERE members.computer_number = ' . $memberid;
+                    break;
+                case 4:
+                    $query .= " WHERE members.date_of_joining = '$memberid'";
+                    break;
+                default:
+                    // Handle invalid $id if necessary
+                    break;
+            }
 
-
-            $Member = DB::select($query);
-
-            return response()->json($Member);
+            $result = DB::select($query);
+            //dd($result);
+            return response()->json($result);
         } catch (Exception $ex) {
             return $ex;
         }

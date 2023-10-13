@@ -37,19 +37,26 @@
                             <div class="col-3">
 
                                 <label class="col-form-label">Nic no</label>
-                                <input type="text" class="form-control " id="txtnic" name="nic" disabled />
+                                <select id="txtnic" class="form-select select2">
+
+                                </select>
+                               
                             </div>
                             <div class="col-3">
 
                                 <label class="col-form-label">Computer no</label>
-                                <input type="text" class="form-control " id="txtcomputerno" name="compute"
-                                    disabled />
+                                <select id="txtcomputerno" class="form-select select2">
+
+                                </select>
+                               
                             </div>
                             <div class="col-3">
 
                                 <label class="col-form-label">Membership (Year)</label>
-                                <input type="text" class="form-control " id="txtmembershipyear" name="membershipyear"
-                                    disabled />
+                                <select id="txtmembershipyear" class="form-select select2">
+
+                                </select>
+                              
                             </div>
 
                         </div>

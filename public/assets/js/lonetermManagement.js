@@ -57,8 +57,8 @@ const DatatableFixedColumnsterm = function () {
                     width: '100%',
                     targets: 4
                 },
-    
-                
+
+
 
 
             ],
@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var formData = new FormData();
 let loanterm_id;
 var lontr = undefined;
+var loneamount;
 $(document).ready(function () {
     //lonetermAllData();
     $('#btnaddTerm').on('click', function () {
@@ -145,6 +146,8 @@ $(document).ready(function () {
 
             lontr = $(this).attr('data-id');
             lonetermAllData(lontr);
+            getloneAllData(lontr);
+
 
 
 
@@ -174,22 +177,66 @@ $(document).ready(function () {
         updateloneterm(loanterm_id);
     });
 
-$('#txttermAmount').on('focus',function(){
-    var typedAmount = $(this).val();
-
-});
 
 
-$('#txtinteresttermAmount').on('focus',function(){
-    var typedInterestAmount = $(this).val();
 
-});
+    $('#txttermAmount').on('input', function () {
+
+        var typedAmount = $(this).val();
+        //Term_Interest_amount/loan_amount) * 100
+        // var interestpresent = (typedAmount / loneamount) * 100
 
 
-$('#txtrempresenttage').on('focus',function(){
-    var typedInterestpresentage = $(this).val();
+        var interespresent = (typedAmount / loneamount) * 100
+        var present = interespresent.toFixed(2);
+        //$('#txtinteresttermAmount').val(interestamount);
+        // $('#txtrempresenttage').val(present);
 
-});
+    });
+
+    $('#txtinteresttermAmount').on('input', function () {
+        if (loneamount == undefined) {
+            new Noty({
+                text: 'Select loan',
+                type: 'warning'
+            }).show();
+            $('#txtinteresttermAmount').val('');
+        } else {
+            var typedInterestAmount = $(this).val();
+            var interespresent = (typedInterestAmount / loneamount) * 100
+            var present = interespresent.toFixed(2);
+            //$('#txtinteresttermAmount').val(interestamount);
+            $('#txtrempresenttage').val(present);
+        }
+
+
+        /*var amount = ( typedInterestAmount/loneamount)*100
+  
+        var inerespresent = (amount / loneamount) * 100
+        var present =inerespresent.toFixed(2);
+        $('#txttermAmount').val(amount);
+        $('#txtrempresenttage').val(present);*/
+
+    });
+
+
+    $('#txtrempresenttage').on('input', function () {
+        if (loneamount == undefined) {
+            new Noty({
+                text: 'Select loan',
+                type: 'warning'
+            }).show();
+            $('#txtinteresttermAmount').val('');
+        } else {
+            var typedInterestpresentage = $(this).val();
+            //(loan_amount/100)*Interest_percentage
+            var interestamounv = (loneamount / 100) * typedInterestpresentage
+            var inerestAmount = interestamounv.toFixed(2);
+            $('#txtinteresttermAmount').val(inerestAmount);
+        }
+
+
+    });
 
 });
 
@@ -271,6 +318,29 @@ function lonetermsave(id) {
 }
 
 
+function getloneAllData(id) {
+
+    $.ajax({
+        type: "GET",
+        url: "/getloneAllData/" + id,
+        cache: false,
+        timeout: 800000,
+        beforeSend: function () { },
+        success: function (response) {
+
+            loneamount = response.amount
+
+
+
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        complete: function () { }
+    })
+
+
+}
 function lonetermAllData(id) {
 
     $.ajax({
@@ -292,7 +362,7 @@ function lonetermAllData(id) {
 
                 data.push({
                     "loan_term_id": dt[i].loan_term_id,
-                   // "lone_id": dt[i].loan_code,
+                    // "lone_id": dt[i].loan_code,
                     "nuofterm": dt[i].no_of_terms,
                     "termamount": dt[i].term_amount,
                     "terminterestamount": dt[i].term_interest_amount,
@@ -403,18 +473,18 @@ function updateloneterm(id) {
 
             $('#loneTermModel').modal('hide');
             lonetermAllData(id)
-            
-          
-                new Noty({
-                    text: 'Successfully saved',
-                    type: 'success',
-                }).show();
-            
+
+
+            new Noty({
+                text: 'Successfully saved',
+                type: 'success',
+            }).show();
+
 
         },
         error: function (error) {
             showErrorMessage('Something went wrong');
-            
+
             console.log(error);
 
         },
@@ -473,7 +543,7 @@ function deleteloneterm(id) {
 
             if (response.success) {
                 $('#loneTermModel').modal('hide');
-               
+
                 new Noty({
                     text: 'Successfully deleted',
                     type: 'success',
@@ -484,7 +554,7 @@ function deleteloneterm(id) {
                     text: 'Uneble to Delete',
                     type: 'error'
                 }).show();
-                
+
             }
 
 

@@ -178,17 +178,29 @@ class loneManagementController extends Controller
         }
     }
 
-public function cbxlonee(Request $request,$id){
+    public function cbxlonee(Request $request, $id)
+    {
+        try {
+
+            $supplygroup = loan::findOrFail($id);
+            $supplygroup->status = $request->status;
+            $supplygroup->save();
+
+            return response()->json(' status updated successfully');
+        } catch (Exception $ex) {
+            return response()->json($ex);
+        }
+    }
+
+public function getloneAllData($id){
     try {
 
-        $supplygroup = loan::findOrFail($id);
-        $supplygroup->status = $request->status;
-        $supplygroup->save();
+        $lone = loan::findOrFail($id);
+       
 
-        return response()->json(' status updated successfully');
+        return response()->json($lone);
     } catch (Exception $ex) {
         return response()->json($ex);
     }
-
 }
 }
