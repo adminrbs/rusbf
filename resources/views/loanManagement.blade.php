@@ -196,7 +196,7 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="id">
-                <button type="button" id="btnBankclose" class="btn btn-secondary">Close</button>
+                <button type="button" id="btnlontermclose" class="btn btn-secondary">Close</button>
                 <button type="button" id="btnSavetermlone" class="btn btn-primary btnSaveBank">Save</button>
                 <button type="button" id="btnUpdatetermlone" class="btn btn-primary ">Update</button>
             </div>

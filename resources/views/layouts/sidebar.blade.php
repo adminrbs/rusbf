@@ -155,7 +155,7 @@
                                 <span>Process</span>
                             </a>
                             <ul class="nav-group-sub collapse">
-                                <li class="nav-item"><a href="#" class="nav-link">Loan</a></li>
+                                <li class="nav-item"><a href="/loan_process" class="nav-link">Loan</a></li>
                                 <li class="nav-item"><a href="/member_contribution_ledger_process" class="nav-link">Contribution</a></li>
 
                             </ul>

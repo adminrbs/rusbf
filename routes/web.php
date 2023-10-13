@@ -18,6 +18,7 @@ use App\Http\Controllers\member_contributionController;
 use App\Http\Controllers\MemberContributionLedgerProcessController;
 use App\Http\Controllers\MemberContributionLedgerProcessListController;
 use App\Http\Controllers\MemberLoanController;
+use App\Http\Controllers\MemberLoanLedgerController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Models\member_contribution;
 use App\Models\User;
@@ -269,3 +270,10 @@ return view('member_loan');
 });
 Route::get('/memberloandata/{id}',[MemberLoanController::class,'memberloandata']);
 Route::post('/memberlonestatus/{id}',[MemberLoanController::class,'memberlonestatus']);
+
+
+//Loan Process
+Route::get('/loan_process', function () {
+    return view('loan_process');
+});
+Route::post('/member_loan_ledger_process',[MemberLoanLedgerController::class,'member_loan_ledger_process']);

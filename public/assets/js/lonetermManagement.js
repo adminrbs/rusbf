@@ -176,6 +176,14 @@ $(document).ready(function () {
 
         updateloneterm(loanterm_id);
     });
+    $('#btnlontermclose').on('click', function (e) {
+        $('#loneTermModel').modal('hide');
+
+    });
+    $('#btnclose').on('click', function (e) {
+        $('#loneModel').modal('hide');
+
+    });
 
 
 
@@ -226,7 +234,7 @@ $(document).ready(function () {
                 text: 'Select loan',
                 type: 'warning'
             }).show();
-            $('#txtinteresttermAmount').val('');
+            $('#txtrempresenttage').val('');
         } else {
             var typedInterestpresentage = $(this).val();
             //(loan_amount/100)*Interest_percentage
