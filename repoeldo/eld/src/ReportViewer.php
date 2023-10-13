@@ -11,6 +11,7 @@ class ReportViewer
     protected $parameters = [];
     protected $group_grand_total = 0;
 
+
     public function viewReport($report)
     {
         return $this->createPage($report);
@@ -714,14 +715,13 @@ class ReportViewer
 
 
         $sum = "";
-        $sub_total = 0;
         if (isset($obj['sum'])) {
             $sum = $obj['sum'];
         }
 
 
 
-
+        $group_sub_total = array();
         $table = '<table width="100%" style="' . $style . '">';
         $table .= '<thead>';
         $table .= '<tr>';
@@ -740,10 +740,14 @@ class ReportViewer
             $table .= '<td ' . $style . '>';
             $table .= $header[$i][0]['text'];
             $table .= '</td>';
-            if ($header[$i][0]['text'] == $sum) {
-                $sum = $i;
+            array_push($group_sub_total, array("" => 0));
+            for ($sum_index = 0; $sum_index < count($sum); $sum_index++) {
+                if ($header[$i][0]['text'] == $sum[$sum_index]) {
+                    $group_sub_total[$i] = array("sum" => 0);
+                }
             }
         }
+
         $table .= '</tr>';
         $table .= '</thead>';
         $table .= '<tbody>';
@@ -760,12 +764,12 @@ class ReportViewer
                         $display .= 'display:none;';
                     }
                 }
-                if ($sum == $i2) {
-
+                if (isset($group_sub_total[$i2]["sum"])) {
                     $table .= '<td style=" text-align :' . $header[$i2][0]['align'] . ';' . $display . '">';
                     $table .= number_format($body[$i][array_keys($body[0])[$i2]], 2);
                     $table .= '</td>';
-                    $sub_total += $body[$i][array_keys($body[0])[$i2]];
+                    $group_sub_total[$i2]["sum"] += $body[$i][array_keys($body[0])[$i2]];
+                    //$group_sub_total[$i2]["sum"] = $group_sub_total[$i2]["sum"];
                 } else {
                     $table .= '<td style=" text-align :' . $header[$i2][0]['align'] . ';' . $display . '">';
                     if ($header[$i2][0]['format'] == 'text') {
@@ -781,15 +785,24 @@ class ReportViewer
         if ($sum != null) {
             $table .= '<tr>';
             for ($i = 0; $i < count($header); $i++) {
-                $table .= '<td style="border:0px;">';
-
-                if ($sum == $i) {
-                    $table .= '<table style="width:100%;border:0px;"><tr><td style="border:0px;">Total</td>';
-                    //$table .=  number_format($sub_total, 2);
-                    $table .= '<td  style="border:0px;text-align:' . $header[$i][0]['align'] . '">' . number_format($sub_total, 2) . '</td></tr></table>';
-                    $this->group_grand_total += $sub_total;
+                $display = "";
+                if (isset($header[$i][0]['visible'])) {
+                    if (!$header[$i][0]['visible']) {
+                        $display .= 'display:none;';
+                    }
                 }
-                $table .= '</td>';
+                if (array_key_exists("sum", $group_sub_total[$i])) {
+                    $table .= '<td style="border:0px solid black;' . $display . '">';
+                    $table .= '<table style="width:100%;border:0px;' . $display . '"><tr><td style="border:0px;">Total</td>';
+                    $table .= '<td  style="border:0px;text-align:' . $header[$i][0]['align'] . '">' . number_format($group_sub_total[$i]["sum"], 2) . '</td></tr></table>';
+                    $this->group_grand_total += $group_sub_total[$i]["sum"];
+                    $table .= '</td>';
+                } else {
+                    $table .= '<td style="border:0px solid black;' . $display . '">';
+                    $table .= '<table style="width:100%;border:0px;' . $display . '"><tr><td style="border:0px;"></td>';
+                    $table .= '<td></td></tr></table>';
+                    $table .= '</td>';
+                }
                 if ($header[$i][0]['text'] == $sum) {
                     $sum = $i;
                 }

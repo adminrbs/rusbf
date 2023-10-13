@@ -53,6 +53,15 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
+                                    <li class="nav-item">
+                                        <a href="/members" class="nav-link">
+                                            <i class="ph-user-list"></i>
+                                            <span>
+                                                Member Loan
+                                                {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                            </span>
+                                        </a>
+                                    </li>
                                     <li class="nav-item"><a href="/members" class="nav-link"> <i class="ph-user-list"></i>Members</a></li>
 
                                 </ul>
