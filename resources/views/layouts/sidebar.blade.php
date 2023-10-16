@@ -53,7 +53,7 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <ul class="nav-item-submenu">
-                                    <li class="nav-item">
+                                   <!-- <li class="nav-item">
                                         <a href="/members" class="nav-link">
                                             <i class="ph-user-list"></i>
                                             <span>
@@ -61,7 +61,8 @@
                                                 {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                             </span>
                                         </a>
-                                    </li>
+                                    </li>-->
+
                                     <li class="nav-item"><a href="/members" class="nav-link"> <i class="ph-user-list"></i>Members</a></li>
 
                                 </ul>
@@ -156,7 +157,14 @@
                         </li>
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
+                        <li class="nav-item nav-item-submenu">
+                         
+                                <li class="nav-item"><a href="/memberReport" class="nav-link"> <i class="ph-file-text"></i>Report</a></li>
+                               
 
+                           
+                            
+                        </li>
                        
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">

@@ -207,22 +207,23 @@ $(document).ready(function () {
     $('#txtmembershipno').on('change',function() {
        memberid = $(this).val();
 
+
         getalldetails(memberid ,1);
     })
     $('#txtnic').on('change',function() {
-        memberid = $(this).val();
+      var   nicid = $(this).val();
     
-         getalldetails(memberid ,2);
+         getalldetails(nicid ,2);
      })
      $('#txtcomputerno').on('change',function() {
-        memberid = $(this).val();
+        var computer = $(this).val();
       
-         getalldetails(memberid ,3);
+         getalldetails(computer ,3);
      })
      $('#txtmembershipyear').on('change',function() {
-        memberid = $(this).val();
+        var membership = $(this).val();
        
-         getalldetails(memberid ,4);
+         getalldetails(membership ,4);
      })
 
 
@@ -845,6 +846,44 @@ function memberShip() {
 
 }
 
+function memberShip() {
+
+    $.ajax({
+        url: '/memberShip',
+        type: 'get',
+        dataType: 'json',
+        // async: false,
+
+
+        success: function (data) {
+            var dt = data.data;
+            var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
+            var htmlNicOptions = "<option value='0'>Select National ID</option>";
+           var htmlComputercode = "<option value='0'>Select Computer Code</option>";
+           var htmlmemberyear = "<option value='0'>Select Membership (Year)</option>";
+
+            
+            for (var i = 0; i < dt.length; i++) {
+                htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+                htmlNicOptions += "<option value='" + dt[i].national_id_number + "'>" + dt[i].national_id_number + "</option>";
+                htmlComputercode += "<option value='" + dt[i].computer_number + "'>" + dt[i].computer_number + "</option>";
+                htmlmemberyear += "<option value='" + dt[i].date_of_joining + "'>" + dt[i].date_of_joining + "</option>";
+            }
+
+            // Set the HTML content of the select elements after the loop
+            $('#txtmembershipno').html(htmlMembershipOptions);
+            $('#txtnic').html(htmlNicOptions);
+            $('#txtcomputerno').html(htmlComputercode);
+            $('#txtmembershipyear').html(htmlmemberyear);
+
+        }, error: function (data) {
+            console.log(data)
+        }
+
+    })
+
+}
+
 function getalldetails(memberid ,id) {
 
     $.ajax({
@@ -859,7 +898,7 @@ function getalldetails(memberid ,id) {
             $('#txtnic').html('');
             $('#txtcomputerno').html('');
             $('#txtmembershipyear').html('');
-            //$('#txtmembershipno').html('');
+            $('#txtmembershipno').html('');
             var dt = response; 
             for (var i = 0; i < dt.length; i++) {
                 

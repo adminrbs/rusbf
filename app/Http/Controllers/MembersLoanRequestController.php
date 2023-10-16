@@ -62,16 +62,20 @@ class MembersLoanRequestController extends Controller
     {
 
         try {
+           // dd($request);
+
             $member = $request->get('txtmembershipno');
-            $memberno = Member::find($member);
+            $memberno = Member::where('member_number', $member)->first();
+
+           
 
 
 
             $approvedBy = Auth::user()->id;
             $memberlon = new members_loan_request();
             $memberlon->prepared_by = $approvedBy;
-            $memberlon->member_id  = $request->get('txtmembershipno');
-            $memberlon->membership_no = $memberno->member_number;
+            $memberlon->member_id  = $memberno->id;
+            $memberlon->membership_no = $request->get('txtmembershipno');
             $memberlon->contact_no  = $request->get('txtcontactno');
             $memberlon->service_period  = $request->get('txtpriodofservice');
 

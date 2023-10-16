@@ -20,6 +20,7 @@ use App\Http\Controllers\MemberContributionLedgerProcessController;
 use App\Http\Controllers\MemberContributionLedgerProcessListController;
 use App\Http\Controllers\MemberLoanController;
 use App\Http\Controllers\MemberLoanLedgerController;
+use App\Http\Controllers\memberLoanLedgerListController;
 use App\Http\Controllers\memberreportController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Models\member_contribution;
@@ -285,4 +286,12 @@ Route::get('/memberReport',function(){
 return view('memberreport');
 });
 Route::get('/getmembersreport',[memberreportController::class,'getmembersreport']);
-Route::get('/loanReport',[loanreportController::class,'loanReport']);
+Route::get('/loanReport/{search}',[loanreportController::class,'loanReport']);
+Route::post('/filterhidden/{id}',[loanreportController::class,'filterhidden']);
+
+// lone ledger
+Route::get('/member_loan_ledger_list', function () {
+    return view('member_loan_ledger_list');
+});
+Route::get('getMemberloan',[memberLoanLedgerListController::class,'getMemberloan']);
+Route::post('/allmemberloanledgerdata',[memberLoanLedgerListController::class,'allmemberloanledgerdata']);

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('reason')->nullable();
             $table->string('private_address', 255)->nullable();
             $table->date('date')->nullable();
+            $table->integer('loan_id');
+            $table->integer('term_id');
             $table->integer('prepared_by')->nullable();
             $table->integer('corrected_by')->nullable();
             $table->integer('approval_status')->default(0);
