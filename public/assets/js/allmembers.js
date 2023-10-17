@@ -135,9 +135,9 @@ function loadmembers() {
                     "com_num": com_no,
                     "phone": mobile_no,
                     "action":
-                        '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' +
-                        '<button class="btn btn-success btn-icon" onclick="view(' + id + ')"><i class="ph-eye" aria-hidden="true"></i></button> ' +
-                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                        '<button title="Edit" class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' +
+                        '<button title="View" class="btn btn-success btn-icon" onclick="view(' + id + ')"><i class="ph-eye" aria-hidden="true"></i></button> ' +
+                        '<button title="Delete" class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                 });
             }
             var table = $('#tableMembers').DataTable();

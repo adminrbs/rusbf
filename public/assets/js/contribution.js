@@ -226,7 +226,7 @@ function allcontributedata() {
                         "contribute": contribute,
                         "acount": dt[i].gl_account_no,
                         "status": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="contribute" value="1" onclick="cbxcontribute(' + dt[i].contribution_id + ')" required ' + isChecked + '></label>',
-                        "action": '<button class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#modalcontribution" onclick="edit(' + dt[i].contribution_id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#modalcontribution"  onclick="getcontributeview(' + dt[i].contribution_id + ')"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].contribution_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                        "action": '<button title="Edit" class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#modalcontribution" onclick="edit(' + dt[i].contribution_id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#modalcontribution"  onclick="getcontributeview(' + dt[i].contribution_id + ')" title="View"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].contribution_id + ')" title="Delete"><i class="ph-trash" aria-hidden="true"></i></button>',
                     });
                 }
 

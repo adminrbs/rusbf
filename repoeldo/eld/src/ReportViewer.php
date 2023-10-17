@@ -163,6 +163,7 @@ class ReportViewer
         $paper = $this->getPaper($json);
 
 
+        ini_set('memory_limit', '256M');
         $pdf = App::make('dompdf.wrapper');
         $page = view('eldo_report::eldo_report', compact('title_top', 'header_top', 'footer_bottom', 'title_height', 'header_height', 'footer_height', 'column_header_height', 'column_header_top', 'page_top', 'title_content', 'header_content', 'footer_content', 'detail_content', 'column_header_content'));
         $pdf->loadHTML($page)->setPaper($paper, $oriantation);

@@ -20,6 +20,7 @@
     <script src="{{ URL::asset('assets/demo/pages/extra_noty.js') }}"></script>
 
     <script src="{{ URL::asset('assets/js/navbar.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/tooltip.js') }}"></script>
    @include('layouts.head-css')
 
 </head>

@@ -68,8 +68,8 @@ function loadusers(){
                         "themail":email,
                         "throle":role_name,
                         "thtype":user_type,
-                        "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
-                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"' + 'disabled><i class="ph-trash" aria-hidden="true"></i></button>',
+                        "thactions": '<button title="Edit" class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
+                        '<button title="Delete" class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"' + 'disabled><i class="ph-trash" aria-hidden="true"></i></button>',
                      });
 
                 }

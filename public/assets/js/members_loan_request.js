@@ -713,7 +713,7 @@ function getAttachment() {
                         "id": dt[i].members_loan_request_attachment_id,
                         "description": dt[i].description,
                         "attachment": Attachment,
-                        "action": '<button class="btn btn-success btn-sm" type="button"  onclick="view(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>&#160<button type="button" class="btn btn-danger btn-sm" id="attachmentdelete" onclick="_delete(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>&#160<button type="button" class="btn btn-primary btn-sm" onclick="download(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-download" aria-hidden="true"></i></button>',
+                        "action": '<button title="View" class="btn btn-success btn-sm" type="button"  onclick="view(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>&#160<button title="Delete" type="button" class="btn btn-danger btn-sm" id="attachmentdelete" onclick="_delete(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>&#160<button title="Download" type="button" class="btn btn-primary btn-sm" onclick="download(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-download" aria-hidden="true"></i></button>',
                     });
                 }
 

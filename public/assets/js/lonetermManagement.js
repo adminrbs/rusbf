@@ -376,7 +376,7 @@ function lonetermAllData(id) {
                     "terminterestamount": dt[i].term_interest_amount,
                     "terminterestpresantage": dt[i].term_interest_precentage,
                     "remark": dt[i].remarks,
-                    "action": '<button class="btn btn-primary  btn-sm lonmtermodel" data-bs-toggle="modal" data-bs-target="#loneTermModel" id="' + dt[i].loan_term_id + '"><i class="ph-pencil" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm lontermviewe" data-bs-toggle="modal" data-bs-target="#loneTermModel" id="' + dt[i].loan_term_id + '"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_deleteterm(' + dt[i].loan_term_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                    "action": '<button title="Edit" class="btn btn-primary  btn-sm lonmtermodel" data-bs-toggle="modal" data-bs-target="#loneTermModel" id="' + dt[i].loan_term_id + '"><i class="ph-pencil" aria-hidden="true"></i></button>&#160<button title="View" class="btn btn-success btn-sm lontermviewe" data-bs-toggle="modal" data-bs-target="#loneTermModel" id="' + dt[i].loan_term_id + '"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button title="Delete" class="btn btn-danger btn-sm" onclick="_deleteterm(' + dt[i].loan_term_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                 });
             }
 

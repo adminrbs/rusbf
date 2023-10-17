@@ -272,7 +272,7 @@ function loneAllData() {
                     "duration": dt[i].duration_of_membership,
                     "remark": dt[i].remarks,
                     "status": '<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxlone" value="1" onclick="cbxlonee(' + dt[i].loan_id + ')" required ' + isChecked + '></label>',
-                    "action": '<button class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].loan_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                    "action": '<button title="Edit"  class="btn btn-primary  btn-sm lonmodel" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-pencil-simple" aria-hidden="true"></i></button>&#160<button title="View" class="btn btn-success btn-sm loneview" data-bs-toggle="modal" data-bs-target="#loneModel" id="' + dt[i].loan_id + '"><i class="ph-eye" aria-hidden="true"></i></button>&#160<button title="Delete" class="btn btn-danger btn-sm" onclick="_delete(' + dt[i].loan_id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                 });
             }
 

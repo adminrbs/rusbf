@@ -132,9 +132,9 @@ function loadPayrolls(){
 
                     data.push({
                         "thname":name,
-                        "thactions": '<button class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
-                        '<button class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
-                        "thstatus":'<label class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxPayrollStatus" value="1"  onclick="cbxPayrollStatus('+ stringId + ',this)" required '+isChecked+'></lable>',
+                        "thactions": '<button title="Edit" class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' + 
+                        '<button title="Delete" class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
+                        "thstatus":'<label title="Status" class="form-check form-switch"><input type="checkbox"  class="form-check-input" name="switch_single" id="cbxPayrollStatus" value="1"  onclick="cbxPayrollStatus('+ stringId + ',this)" required '+isChecked+'></lable>',
                      });
 
                 }
