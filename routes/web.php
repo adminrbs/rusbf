@@ -169,6 +169,8 @@ Route::post('/save_user', [UserController::class, 'save_user']);
 Route::get('/view_users_list', [UserController::class, 'view_users_list']);
 Route::get('/load_users_list', [UserController::class, 'load_users_list']);
 Route::get('/get_user_data/{id}', [UserController::class, 'get_user_data']);
+Route::post('/update_user/{id}',[UserController::class,'update_user']);
+Route::delete('/deleteusers/{id}',[UserController::class,'deleteusers']);
 
 // Change Password 
 Route::post('/change_password/{id}', [UserController::class, 'change_password']);

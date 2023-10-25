@@ -135,6 +135,15 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="/member_loan_ledger_list" class="nav-link">
+                                        <i class="ph-house"></i>
+                                        <span>
+                                            Loan Ledger
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
                                 
 
                                 <ul class="nav-item-submenu">

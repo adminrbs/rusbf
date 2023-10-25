@@ -288,7 +288,7 @@ class MembersLoanRequestController extends Controller
         try {
             $memberterm = $request->get('cbxloneterm');
 
-
+//dd( $memberterm );
             $memberlonrequest = members_loan_request::find($id);
             $memberlonrequest->approval_status = 1;
             //$request->approved_by = $approvedBy;

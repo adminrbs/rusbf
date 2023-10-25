@@ -28,9 +28,12 @@ class MemberLoanLedgerController extends Controller
     public function member_loan_ledger_process(Request $request)
     {
         try {
+
             $members = Member::all();
+
             foreach ($members as $member) {
                 $member_loan  = member_loan::where('member_id', '=', $member->id)->first();
+
                 if ($member_loan) {
                     if ($member_loan->no_of_terms > $member_loan->current_term) {
                         $interest_amount = 0;
@@ -54,6 +57,7 @@ class MemberLoanLedgerController extends Controller
                         $memberLoanLedger->processed_date = Carbon::now()->format('Y-m-d');
                         $memberLoanLedger->user_id = Auth::user()->id;
                         $memberLoanLedger->status = 1;
+
                         $status = $memberLoanLedger->save();
                         if ($status) {
                             $member_loan->current_term += 1;

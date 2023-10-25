@@ -1242,7 +1242,7 @@ function term(id) {
         async: false,
         success: function (response) {
             $.each(response, function (index, value) {
-                $('#cbxloneterm').append('<option value="' + value.no_of_terms + '">' + value.no_of_terms + '</option>');
+                $('#cbxloneterm').append('<option value="' + value.loan_term_id + '">' + value.no_of_terms + '</option>');
 
             })
            
