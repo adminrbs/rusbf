@@ -44,7 +44,7 @@ class MemberController extends Controller
 
     public function save(Request $request){
         try {
-            
+            //dd($request);
             $file =  $request->file('file');
             $image_icon =  $request->get('imageIcon');
             $approvedBy = Auth::user()->id;
@@ -88,6 +88,7 @@ class MemberController extends Controller
                     
                     if($image_icon){
                         $this->uploadImageIcon($image_icon, $member->id);
+
                     }
 
                     return response()->json(["status" => "success", "file" => $file]);
@@ -111,7 +112,6 @@ class MemberController extends Controller
         $image_base64 = base64_decode($image_parts[1]);
         $file = $folderPath;
         file_put_contents($file, $image_base64);
-
         return $file;
     }
 

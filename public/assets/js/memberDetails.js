@@ -250,10 +250,11 @@ function saveMember() {
         cache: false,
         timeout: 800000,
         beforeSend: function () {
-
+            $('#btnsave').prop('disabled', true);
         },
         success: function (response) {
             console.log(response);
+            $('#btnsave').prop('disabled', false);
             if (response.status == "success") {
 
                 new Noty({
@@ -262,7 +263,7 @@ function saveMember() {
                 }).show();
 
                 resetForm();
-
+                $('#btnsave').prop('disabled', false);
             } else if(response.status == "without_img") {
 
                 new Noty({
@@ -271,7 +272,7 @@ function saveMember() {
                 }).show();
 
                 resetForm();
-
+                $('#btnsave').prop('disabled', false);
             }else if(response.status == "failed"){
 
                 new Noty({
@@ -343,7 +344,7 @@ function updateMember(){
         cache: false,
         timeout: 800000,
         beforeSend: function () {
-
+            $('#btnsave').prop('disabled', true);
         },
         success: function (response) {
 
@@ -358,7 +359,7 @@ function updateMember(){
                 setTimeout(function () {
                     window.location.reload();
                 }, 2300);
-
+                $('#btnsave').prop('disabled', false);
             } else if(response.status == "without_img") {
 
                 new Noty({
@@ -369,20 +370,21 @@ function updateMember(){
                 setTimeout(function () {
                     window.location.reload();
                 }, 2300);
-
+                $('#btnsave').prop('disabled', false);
             }else if(response.status == "failed"){
 
                 new Noty({
                     text: 'Updating process error!',
                     type: 'error'
                 }).show();
-
+                $('#btnsave').prop('disabled', false);
             }else{
 
                 new Noty({
                     text: 'Something went wrong.',
                     type: 'error'
                 }).show();
+                $('#btnsave').prop('disabled', false);
 
             }
         }

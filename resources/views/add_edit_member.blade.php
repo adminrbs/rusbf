@@ -259,6 +259,7 @@
 <script src="{{URL::asset('assets/js/vendor/uploaders/fileinput/fileinput.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/uploaders/fileinput/plugins/sortable.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/vendor/notifications/noty.min.js')}}"></script>
+<script src="{{URL::asset('assets/js/vendor/notifications/bootbox.min.js')}}"></script>
 
 @endsection
 @section('scripts')

@@ -14,7 +14,7 @@ const MemberTable = (function () {
                 {
                     orderable: false,
                     width: 100,
-                    targets: [5],
+                    targets: [2],
                 },
             ],
             dom: '<"datatable-header"fl><"datatable-scroll datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -43,24 +43,33 @@ const MemberTable = (function () {
                     targets: 1
                 },
                 {
-                    width: 300,
+                    width: 250,
                     targets: 2
                 },
                 {
-                    width: 150,
+                    width: 200,
                     targets: 3
                 },
                 {
-                    width: 100,
+                    width: 150,
                     targets: 4
                 },
+                {
+                    width: 100,
+                    targets: 5
+                }
+                ,
+                {
+                    width: "100%",
+                    targets: 5
+                }
             ],
-            scrollX: true,
-            scrollY: 500,
-            scrollCollapse: true,
+            scrollX: false,
+            //scrollY: 500,
+            scrollCollapse: false,
             fixedColumns: {
-                leftColumns: 1,
-                rightColumns: 1,
+                leftColumns: 0,
+                rightColumns: 0,
             },
             pageLength: 100,
             order: [],

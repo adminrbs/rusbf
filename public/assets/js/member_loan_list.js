@@ -145,7 +145,7 @@ $(document).ready(function () {
         allcontributedata(memberid);
         //amountset(memberid);
     });
-    $('#cmbcomputer').change(function () {
+    $('#cmbcomputernum').change(function () {
         nameid = $(this).val();
 
         memberNumber(nameid);
@@ -158,6 +158,7 @@ $(document).ready(function () {
 
     $('.datatable-header').hide();
     $('.datatable-footer').hide();
+
 
 });
 

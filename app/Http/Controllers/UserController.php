@@ -255,9 +255,8 @@ WHERE U.id =$id";
 
             $user->delete();
     
-            $userRole = UserRole::where('user_id', $id)->first();
-
-            $userRole->delete();
+           $quary="DELETE FROM user_roles WHERE user_roles.user_id=$id";
+           $result = \DB::statement($quary);
     
             return response()->json(['success' => 'Record has been deleted']);
         } catch (Exception $ex) {

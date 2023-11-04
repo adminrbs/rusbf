@@ -64,7 +64,7 @@ const DatatableFixedColumnss = function () {
 
             ],
             scrollX: true,
-            /* scrollY: 350, */
+            //  scrollY: 350, 
             scrollCollapse: true,
             fixedColumns: {
                 leftColumns: 0,

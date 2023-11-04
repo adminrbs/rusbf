@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\contributionandLoanFilterController;
 use App\Http\Controllers\contributnController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
@@ -297,3 +298,12 @@ Route::get('/member_loan_ledger_list', function () {
 });
 Route::get('getMemberloan',[memberLoanLedgerListController::class,'getMemberloan']);
 Route::post('/allmemberloanledgerdata',[memberLoanLedgerListController::class,'allmemberloanledgerdata']);
+
+Route::get('/contributionAndloanFilter',function(){
+return view('contributionAndloanFilter');
+});
+Route::get('/getmember',[contributionandLoanFilterController::class,'getmember']);
+Route::post('/getcontribution/{id}',[contributionandLoanFilterController::class,'getcontribution']);
+Route::post('/getLoan/{id}',[contributionandLoanFilterController::class,'getmemberloandata']);
+Route::get('/subdepartment/{id}',[contributionandLoanFilterController::class,'subdepartment']);
+Route::get('/subserveDepartmentmember/{id}',[contributionandLoanFilterController::class,'subserveDepartmentmember']);
