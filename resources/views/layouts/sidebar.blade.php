@@ -144,6 +144,15 @@
                                         </span>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="/contributionAndloanFilter" class="nav-link">
+                                        <i class="ph-house"></i>
+                                        <span>
+                                            Payment
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
                                 
 
                                 <ul class="nav-item-submenu">

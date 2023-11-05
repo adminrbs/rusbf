@@ -1189,7 +1189,7 @@ function lone() {
             var htmlContent;
             htmlContent += "<option value='0'>Select Loan</option>";
             for (var i = 0; i < dt.length; i++) {
-                htmlContent += "<option value='" + dt[i].loan_id + "'>" + dt[i].loan_name + "</option>";
+                htmlContent += "<option value='" + dt[i].loan_id + "'>" + dt[i].concatenated_name_code + "</option>";
             }
 
             // Set the HTML content of the select element after the loop

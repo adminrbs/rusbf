@@ -31,7 +31,10 @@ class MembersLoanRequestController extends Controller
     public function getlone()
     {
         try {
-            $loan = loan::all();
+$query = "SELECT loan_id, loan_code, loan_name, CONCAT(loan_name,  ' - ', loan_code) AS concatenated_name_code
+FROM loans";
+$loan = DB::select($query);
+          
             if ($loan) {
                 return response()->json((['success' => 'Data loaded', 'data' => $loan]));
             } else {

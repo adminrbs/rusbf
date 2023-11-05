@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-6">
 
                                 <label class="col-form-label">Loan</label>
 
@@ -132,7 +132,7 @@
 
                                 </select>
                             </div>
-                            <div class="col-3">
+                            <div class="col-6">
 
                                 <label class="col-form-label">Term</label>
 
@@ -169,7 +169,7 @@
                             </div>
                             <div class="col-3">
 
-                                <label class="col-form-label">Preset monthly basic salary Rs.</label>
+                                <label class="col-form-label">Monthly basic salary Rs.</label>
                                 <input type="number" class="form-control " id="txtpresetmonthlybSalary"
                                     name="presetmonthlybSalary" />
                             </div>
