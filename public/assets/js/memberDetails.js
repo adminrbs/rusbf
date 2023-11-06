@@ -5,7 +5,8 @@ var ACTION = undefined;
 var ID = undefined;
 
 $(document).ready(function () {
-
+    $("#divcreate").hide();
+    $("#divupdate").hide();
     // Single files
     // dropzoneSingle = new Dropzone("#dropzone_single", {
     //     paramName: "file", // The name that will be used to transfer the file
@@ -188,8 +189,12 @@ $(document).ready(function () {
             $("#member_reg_frm :input").prop("disabled", true);
             $("#btnsave").hide();
             $("#btnReset").hide();
+           /// $("#divcreate").show();
+            //$("#divupdate").show();
         }else if(action == 'edit'){
             $('#btnsave').text('Update');
+            $("#divcreate").hide();
+            $("#divupdate").hide();
         }
     // call your "getdata(id)" function here
 
@@ -426,39 +431,40 @@ function loadMemberData(id){
         success: function (response) {
             console.log(response);
             var data = response[0];
+console.log("jjj",data);
             var pathData = response[1];
 
             if (response) {
-                $('#hiddenmemberid').val(data.id);
-                $('#member_number').val(data.member_number);
-                $('#national_id_number').val(data.national_id_number);
-                $('#date_of_birth').val(data.date_of_birth);
-                $('#language_id').val(data.language_id);
-                $('#full_name').val(data.full_name);
-                $('#name_initials').val(data.name_initials);
-                $('#full_name_unicode').val(data.full_name_unicode);
-                $('#name_initials_unicode').val(data.name_initials_unicode);
-                $('#personal_address').val(data.personal_address);
-                $('#date_of_joining').val(data.date_of_joining);
-                $('#home_phone_number').val(data.home_phone_number);
-                $('#mobile_phone_number').val(data.mobile_phone_number);
-                $('#serving_sub_department_id').val(data.serving_sub_department_id).trigger('change');
-                $('#cabinet_number').val(data.cabinet_number);
-                $('#official_number').val(data.official_number);
-                $('#designation_id').val(data.designation_id).trigger('change');
-                $('#computer_number').val(data.computer_number);
-                $('#work_location_id').val(data.work_location_id).trigger('change');
-                $('#payroll_number').val(data.payroll_number);
-                $('#payroll_preparation_location_id').val(data.payroll_preparation_location_id).trigger('change');
-                $('#monthly_payment_amount').val(data.monthly_payment_amount);
-                $('#beneficiary_full_name').val(data.beneficiary_full_name);
-                $('#beneficiary_relationship').val(data.beneficiary_relationship);
-                $('#beneficiary_private_address').val(data.beneficiary_private_address);
-                $('#beneficiary_email').val(data.beneficiary_email);
-                $('#beneficiary_nic').val(data.beneficiary_nic);
-                $('#member_email').val(data.member_email);
-                $('#member_whatsapp').val(data.member_whatsapp);
-                $('#ref_by').val(data.ref_by).trigger('change');
+                $('#hiddenmemberid').val(data[0].id);
+                $('#member_number').val(data[0].member_number);
+                $('#national_id_number').val(data[0].national_id_number);
+                $('#date_of_birth').val(data[0].date_of_birth);
+                $('#language_id').val(data[0].language_id);
+                $('#full_name').val(data[0].full_name);
+                $('#name_initials').val(data[0].name_initials);
+                $('#full_name_unicode').val(data[0].full_name_unicode);
+                $('#name_initials_unicode').val(data[0].name_initials_unicode);
+                $('#personal_address').val(data[0].personal_address);
+                $('#date_of_joining').val(data[0].date_of_joining);
+                $('#home_phone_number').val(data[0].home_phone_number);
+                $('#mobile_phone_number').val(data[0].mobile_phone_number);
+                $('#serving_sub_department_id').val(data[0].serving_sub_department_id).trigger('change');
+                $('#cabinet_number').val(data[0].cabinet_number);
+                $('#official_number').val(data[0].official_number);
+                $('#designation_id').val(data[0].designation_id).trigger('change');
+                $('#computer_number').val(data[0].computer_number);
+                $('#work_location_id').val(data[0].work_location_id).trigger('change');
+                $('#payroll_number').val(data[0].payroll_number);
+                $('#payroll_preparation_location_id').val(data[0].payroll_preparation_location_id).trigger('change');
+                $('#monthly_payment_amount').val(data[0].monthly_payment_amount);
+                $('#beneficiary_full_name').val(data[0].beneficiary_full_name);
+                $('#beneficiary_relationship').val(data[0].beneficiary_relationship);
+                $('#beneficiary_private_address').val(data[0].beneficiary_private_address);
+                $('#beneficiary_email').val(data[0].beneficiary_email);
+                $('#beneficiary_nic').val(data[0].beneficiary_nic);
+                $('#member_email').val(data[0].member_email);
+                $('#member_whatsapp').val(data[0].member_whatsapp);
+                $('#ref_by').val(data[0].ref_by).trigger('change');
 
                 if(pathData != "not_available"){
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };
@@ -466,6 +472,26 @@ function loadMemberData(id){
                     dropzoneSingle.emit("success", mockFile);
                     dropzoneSingle.emit("thumbnail", mockFile, pathData)
                 }
+var creatby = data[0].create_by;
+var updteby = data[0].update_by;
+
+
+
+if (ACTION == "view"){
+if(updteby == null){
+    $("#divcreate").show();
+    $("#divupdate").hide();
+    $('#createby').val(data[0].createname);
+    //$('#updateby').val(data[0].updatename);
+}else if(updteby != null && creatby != null) {
+    $("#divcreate").show();
+    $("#divupdate").show();
+    $('#createby').val(data[0].createname);
+    $('#updateby').val(data[0].updatename);
+}
+
+    
+}
                 
             }
 

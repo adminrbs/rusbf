@@ -250,6 +250,8 @@ Route::delete('deletattachment/{id}',[MembersLoanRequestController::class,'delet
 Route::get('/getlone',[MembersLoanRequestController::class,'getlone']);
 Route::get('/getterm/{id}',[MembersLoanRequestController::class,'getterm']);
 
+Route::get('/membershipno/{id}',[MembersLoanRequestController::class,'membershipno']);
+
 //approval
 Route::get('allmemberlonrequestapprovel',[MembersLoanRequestController::class,'allmemberlonrequestapprovel']);
 

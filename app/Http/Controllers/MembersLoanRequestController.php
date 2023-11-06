@@ -401,4 +401,6 @@ $loan = DB::select($query);
             return $ex;
         }
     }
+
+
 }

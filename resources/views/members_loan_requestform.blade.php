@@ -52,10 +52,8 @@
                             </div>
                             <div class="col-3">
 
-                                <label class="col-form-label">Membership (Year)</label>
-                                <select id="txtmembershipyear" class="form-select select2">
-
-                                </select>
+                                <label class="col-form-label">Membership (Age)</label>
+                                <input type="text" class="form-control " id="memberage" name="memberage" disabled />
                               
                             </div>
 

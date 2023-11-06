@@ -13,43 +13,45 @@ use Illuminate\Support\Facades\DB;
 class MemberController extends Controller
 {
 
-    public function view_member_form(){
+    public function view_member_form()
+    {
 
-        $designation_data = DB::table('master_designations') 
-                                    ->select('id','name')
-                                    ->where('status',1)
-								    ->get();
+        $designation_data = DB::table('master_designations')
+            ->select('id', 'name')
+            ->where('status', 1)
+            ->get();
 
-        $works_data = DB::table('master_place_works') 
-                                    ->select('id','name')
-                                    ->where('status',1)
-                                    ->get();
-                                          
-        $department_data = DB::table('master_sub_departments') 
-                                ->select('id','name')
-                                ->where('status',1)
-                                ->get();
-                                
-        $payroll_data = DB::table('master_payrolls') 
-                            ->select('id','name')
-                            ->where('status',1)
-                            ->get();
+        $works_data = DB::table('master_place_works')
+            ->select('id', 'name')
+            ->where('status', 1)
+            ->get();
 
-        $members = DB::table('members') 
-                            ->select('id','name_initials','member_number')
-                            ->get();
-                
-        return view('add_edit_member',compact('designation_data', 'works_data', 'department_data', 'payroll_data', 'members'));
+        $department_data = DB::table('master_sub_departments')
+            ->select('id', 'name')
+            ->where('status', 1)
+            ->get();
+
+        $payroll_data = DB::table('master_payrolls')
+            ->select('id', 'name')
+            ->where('status', 1)
+            ->get();
+
+        $members = DB::table('members')
+            ->select('id', 'name_initials', 'member_number')
+            ->get();
+
+        return view('add_edit_member', compact('designation_data', 'works_data', 'department_data', 'payroll_data', 'members'));
     }
 
-    public function save(Request $request){
+    public function save(Request $request)
+    {
         try {
             //dd($request);
             $file =  $request->file('file');
             $image_icon =  $request->get('imageIcon');
             $approvedBy = Auth::user()->id;
             $member = new Member();
-           
+
             $member->prepared_by = $approvedBy;
             $member->create_by = $approvedBy;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -84,26 +86,23 @@ class MemberController extends Controller
 
             if ($member->save()) {
 
-                if($file){
+                if ($file) {
                     $this->uploadAttachment($file, $member->id);
-                    
-                    if($image_icon){
-                        $this->uploadImageIcon($image_icon, $member->id);
 
+                    if ($image_icon) {
+                        $this->uploadImageIcon($image_icon, $member->id);
                     }
 
                     return response()->json(["status" => "success", "file" => $file]);
-                }else{
+                } else {
                     return response()->json(["status" => "without_img"]);
-                }  
-            }else{
+                }
+            } else {
                 return response()->json(["status" => "failed"]);
             }
-
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
-
     }
 
     private function uploadImageIcon($img, $name)
@@ -120,116 +119,123 @@ class MemberController extends Controller
     public function uploadAttachment($file, $id)
     {
 
-        try{
+        try {
 
             if ($file) {
 
                 $exAttachment = MemberAttachment::where('member_id', $id)->first();
-    
-                if($exAttachment){
+
+                if ($exAttachment) {
 
                     $ex_filepath = $exAttachment->path;
 
-                    if($ex_filepath){
+                    if ($ex_filepath) {
                         $baseUrl = url('/') . "/attachments/member_images/";
                         $file_data =  str_replace($baseUrl, '', $ex_filepath);
-                        $file_data = public_path('attachments/member_images').'/'.$file_data;
+                        $file_data = public_path('attachments/member_images') . '/' . $file_data;
 
-                        if(file_exists($file_data)){
+                        if (file_exists($file_data)) {
                             unlink($file_data);
                         }
                     }
-                    
+
                     $file_name = $file->getClientOriginalName();
                     $filename = url('/') . '/attachments/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
                     $filename = str_replace(' ', '', str_replace('\'', '', $filename));
                     $file->move(public_path('attachments/member_images'), $filename);
 
                     $data = DB::table('member_attachments')
-                                        ->where('member_id', $id)
-                                        ->update(['path' => $filename]);
-                    if($data){
+                        ->where('member_id', $id)
+                        ->update(['path' => $filename]);
+                    if ($data) {
                         $data = DB::table('members')
-                                        ->where('id', $id)
-                                        ->update(['path' => $filename]);
+                            ->where('id', $id)
+                            ->update(['path' => $filename]);
                     }
-                    
-                }else{
-    
+                } else {
+
                     $file_name = $file->getClientOriginalName();
                     $filename = url('/') . '/attachments/member_images/' . uniqid() . '_' . time() . '.' . str_replace(' ', '_', $file_name);
                     $filename = str_replace(' ', '', str_replace('\'', '', $filename));
                     $file->move(public_path('attachments/member_images'), $filename);
-    
+
                     $attachment = new MemberAttachment();
                     $attachment->member_id = $id;
                     $attachment->path = $filename;
                     $attachment->save();
-    
+
                     $pathAttach = DB::table('members')
-                                  ->where('id', $id)
-                                  ->update(['path' => $filename]);
-    
+                        ->where('id', $id)
+                        ->update(['path' => $filename]);
                 }
             }
-
-        }catch(Exception $ex){
+        } catch (Exception $ex) {
             return $ex;
         }
     }
 
 
-    public function get_all_members(){
+    public function get_all_members()
+    {
 
         try {
 
-           /* $all_members = DB::table("members")
+            /* $all_members = DB::table("members")
                             ->select('members.computer_number','members.path','members.id','members.member_number','members.name_initials','members.national_id_number','members.mobile_phone_number')
                             ->get();
 
             return compact('all_members');*/
-$all_members ="SELECT *,MSD.id,MSD.name AS subname FROM members
+            $all_members = "SELECT *,MSD.id,MSD.name AS subname FROM members
 INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id";
-$result = DB::select($all_members);
-return response()->json((['success' => 'Data loaded', 'data' => $result]));
-        }
-         catch (Exception $ex) {
+            $result = DB::select($all_members);
+            return response()->json((['success' => 'Data loaded', 'data' => $result]));
+        } catch (Exception $ex) {
             return $ex->getMessage();
         }
     }
 
-    public function get_member_data($id){
-        
-        try{
-            $memberRequest = Member::where('id',$id)->first();
+    public function get_member_data($id)
+    {
+
+        try {
+
+            $quary = "SELECT *,
+            users.id,
+            users.name AS createname,
+            CASE WHEN U.name IS NULL THEN 'NULL' ELSE U.name END AS updatename
+     FROM members
+     INNER JOIN users ON members.create_by = users.id
+     LEFT JOIN users AS U ON members.update_by = U.id
+     WHERE members.id =$id";
+            $memberRequest = DB::select($quary);
 
             $get_img_path = DB::table("member_attachments")
-                                ->select('member_attachments.path')
-                                ->where('member_id', $id)
-                                ->first();
+                ->select('member_attachments.path')
+                ->where('member_id', $id)
+                ->first();
 
-                                
-            if($get_img_path == null){
+
+            if ($get_img_path == null) {
                 $path = 'not_available';
-            }else{
+            } else {
                 $path = $get_img_path->path;
             }
 
             return [$memberRequest, $path];
-
-        }catch(Exception $ex) {
+        } catch (Exception $ex) {
             return $ex->getMessage();
         }
     }
-       
 
-    public function update(Request $request){
-        
+
+    public function update(Request $request)
+    {
+
         try {
             $id = $request->input('id');
             $file =  $request->file('file');
             $approvedBy = Auth::user()->id;
-            $member =Member::find($request->id);
+            $member = Member::find($request->id);
 
             $member->update_by = $approvedBy;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
@@ -264,80 +270,76 @@ return response()->json((['success' => 'Data loaded', 'data' => $result]));
 
             if ($member->save()) {
 
-                if(isset($file)){
+                if (isset($file)) {
                     $this->uploadAttachment($file, $request->id);
                     return response()->json(["status" => "success", "file" => $file]);
-                }else{
+                } else {
 
                     $exAttachment = MemberAttachment::where('member_id', $id)->first();
                     $ex_filepath = "";
 
-                    if(isset($exAttachment->path)){
+                    if (isset($exAttachment->path)) {
                         $ex_filepath =  $exAttachment->path;
                     }
                     $baseUrl = url('/') . "/attachments/member_images/";
                     $file_data =  str_replace($baseUrl, '', $ex_filepath);
-                    $file_data = public_path('attachments/member_images').'/'.$file_data;
+                    $file_data = public_path('attachments/member_images') . '/' . $file_data;
 
-                    if(file_exists('attachments/member_images/'. $file_data)){
+                    if (file_exists('attachments/member_images/' . $file_data)) {
                         unlink($file_data);
                     }
 
                     $remove_att_records = DB::table("member_attachments")
-                                                ->where('member_id', $id)
-                                                ->delete();
+                        ->where('member_id', $id)
+                        ->delete();
 
                     $remove_mem_path = DB::table("members")
-                                            ->select('members.path')
-                                            ->where('id', $id)
-                                            ->update(['path' => '']);
+                        ->select('members.path')
+                        ->where('id', $id)
+                        ->update(['path' => '']);
 
                     return response()->json(["status" => "without_img"]);
-                }  
-            }else{
+                }
+            } else {
                 return response()->json(["status" => "failed"]);
             }
-
-        }
-         catch (Exception $ex) {
-            return $ex;
-        }
-    }
-
-    public function delete($id){
-
-        try {
-
-            $member = Member::where('id',$id)->first();
-            $filePath = $member->path;
-
-            if($filePath){
-                $baseUrl = url('/') . "/attachments/member_images/";
-
-                $file =  str_replace($baseUrl, '', $filePath);
-                $file = public_path('attachments/member_images').'/'.$file;
-    
-                if(file_exists($file)){
-                    unlink($file);
-                }
-    
-                if($member->delete()){
-                    $attachment = MemberAttachment::where('member_id',$id)->first();
-                    $attachment->delete();
-        
-                    return "deleted";
-                }else{
-                    return "failed";
-                }
-            }else{
-                $member->delete();
-                return "deleted";
-            }
-            
         } catch (Exception $ex) {
             return $ex;
         }
-
     }
 
+    public function delete($id)
+    {
+
+        try {
+
+            $member = Member::where('id', $id)->first();
+            $filePath = $member->path;
+
+            if ($filePath) {
+                $baseUrl = url('/') . "/attachments/member_images/";
+
+                $file =  str_replace($baseUrl, '', $filePath);
+                $file = public_path('attachments/member_images') . '/' . $file;
+
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+
+                if ($member->delete()) {
+                    $attachment = MemberAttachment::where('member_id', $id)->first();
+                    $attachment->delete();
+
+                    return "deleted";
+                } else {
+                    return "failed";
+                }
+            } else {
+                $member->delete();
+                return "deleted";
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 }

@@ -207,7 +207,7 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            
             <div class="row">
                 <div class="col-md-6">
                     <div>
@@ -223,6 +223,25 @@
                     </div>
                 </div>
             </div>
+
+            <hr>
+            <div class="row">
+               
+                <div class="col-md-3" id="divcreate">
+                    <div>
+                        <label class="col-form-label mb-0">Create By</label>
+                        <input type="email" name="createby" id="createby"  class="form-control form-control-sm" disabled>
+                    </div>
+                </div>
+                <div class="col-md-3" id="divupdate">
+                    <div>
+                        <label class="col-form-label mb-0">Update By</label>
+                        <input type="text" name="updateby" id="updateby"  class="form-control form-control-sm" disabled>
+                    </div>
+                </div>
+            </div>
+            
+
             <div class="row mt-4">
                 <div class="col-md-4">
                     <button type="submit" id="btnsave" class="btn btn-success form-btn" style="width: 6rem;">Save</button>
