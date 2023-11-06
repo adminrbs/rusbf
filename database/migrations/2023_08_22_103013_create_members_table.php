@@ -46,6 +46,8 @@ return new class extends Migration
             $table->string('path', 300)->nullable();
             $table->integer('ref_by')->nullable();
             $table->integer('prepared_by');
+            $table->integer('create_by')->nullable();
+            $table->integer('update_by')->nullable();
             $table->timestamps();
         });
     }

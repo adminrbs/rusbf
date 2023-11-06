@@ -51,6 +51,7 @@ class MemberController extends Controller
             $member = new Member();
            
             $member->prepared_by = $approvedBy;
+            $member->create_by = $approvedBy;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');
@@ -182,12 +183,15 @@ class MemberController extends Controller
 
         try {
 
-            $all_members = DB::table("members")
+           /* $all_members = DB::table("members")
                             ->select('members.computer_number','members.path','members.id','members.member_number','members.name_initials','members.national_id_number','members.mobile_phone_number')
                             ->get();
 
-            return compact('all_members');
-
+            return compact('all_members');*/
+$all_members ="SELECT *,MSD.id,MSD.name AS subname FROM members
+INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id";
+$result = DB::select($all_members);
+return response()->json((['success' => 'Data loaded', 'data' => $result]));
         }
          catch (Exception $ex) {
             return $ex->getMessage();
@@ -224,9 +228,10 @@ class MemberController extends Controller
         try {
             $id = $request->input('id');
             $file =  $request->file('file');
-            
+            $approvedBy = Auth::user()->id;
             $member =Member::find($request->id);
-            
+
+            $member->update_by = $approvedBy;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');

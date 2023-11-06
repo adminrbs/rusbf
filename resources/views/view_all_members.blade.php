@@ -35,13 +35,14 @@
                         <div class="table-responsive">
                             <table id="tableMembers" class="table datatable-fixed-both-members table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr> <th>id</th>
                                         <th>Image</th>
                                         <th>#No</th>
                                         <th>Name </th>
                                         <th> NIC</th>
                                         <th> Computer No</th>
                                         <th> Phone</th>
+                                       <th>Serve Sub Department</th>
                                         <th> Actions</th>
                                     </tr>
                                 </thead>
