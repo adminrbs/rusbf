@@ -31,10 +31,10 @@ class MembersLoanRequestController extends Controller
     public function getlone()
     {
         try {
-$query = "SELECT loan_id, loan_code, loan_name, CONCAT(loan_name,  ' - ', loan_code) AS concatenated_name_code
-FROM loans";
-$loan = DB::select($query);
-          
+            $query = "SELECT loan_id, loan_code, loan_name, CONCAT(loan_name,  ' - ', loan_code) AS concatenated_name_code
+                        FROM loans";
+            $loan = DB::select($query);
+
             if ($loan) {
                 return response()->json((['success' => 'Data loaded', 'data' => $loan]));
             } else {
@@ -65,12 +65,12 @@ $loan = DB::select($query);
     {
 
         try {
-           // dd($request);
+            // dd($request);
 
             $member = $request->get('txtmembershipno');
             $memberno = Member::where('member_number', $member)->first();
 
-           
+
 
 
 
@@ -291,7 +291,7 @@ $loan = DB::select($query);
         try {
             $memberterm = $request->get('cbxloneterm');
 
-//dd( $memberterm );
+            //dd( $memberterm );
             $memberlonrequest = members_loan_request::find($id);
             $memberlonrequest->approval_status = 1;
             //$request->approved_by = $approvedBy;
@@ -401,6 +401,4 @@ $loan = DB::select($query);
             return $ex;
         }
     }
-
-
 }

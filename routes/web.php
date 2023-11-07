@@ -3,6 +3,8 @@
 use App\Http\Controllers\contributionandLoanFilterController;
 use App\Http\Controllers\contributnController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DeathGratuityRequestsController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\MasterPlaceWorkController;
@@ -309,3 +311,23 @@ Route::post('/getcontribution/{id}',[contributionandLoanFilterController::class,
 Route::post('/getLoan/{id}',[contributionandLoanFilterController::class,'getmemberloandata']);
 Route::get('/subdepartment/{id}',[contributionandLoanFilterController::class,'subdepartment']);
 Route::get('/subserveDepartmentmember/{id}',[contributionandLoanFilterController::class,'subserveDepartmentmember']);
+
+// master donation 
+
+Route::get('/donation',function(){
+return view('donation');
+});
+Route::post('/save_donetion',[DonationController::class,'save_donetion']);
+Route::get('/get_donetion',[DonationController::class,'get_donetion']);
+Route::get('/get_donetion_data/{id}',[DonationController::class,'get_donetion_data']);
+Route::post('/update_donetion',[DonationController::class,'update_donetion']);
+Route::delete('/delete_donetion/{id}',[DonationController::class,'delete_donetion']);
+Route::post('/cbxdonation/{id}',[DonationController::class,'cbxdonation']);
+
+
+//  Death_gratuity_requests
+
+Route::get('/Death_gratuity_requests',function(){
+return view('death_gratuity_requests');
+});
+Route::get('/alldatamemberShip/{id}',[DeathGratuityRequestsController::class,'alldatamemberShip']);

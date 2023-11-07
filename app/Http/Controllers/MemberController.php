@@ -185,8 +185,8 @@ class MemberController extends Controller
                             ->get();
 
             return compact('all_members');*/
-            $all_members = "SELECT *,MSD.id,MSD.name AS subname FROM members
-INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id";
+            $all_members = "SELECT members.*,MSD.id AS msid,MSD.name AS subname FROM members
+            INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id";
             $result = DB::select($all_members);
             return response()->json((['success' => 'Data loaded', 'data' => $result]));
         } catch (Exception $ex) {
@@ -199,8 +199,8 @@ INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD
 
         try {
 
-            $quary = "SELECT *,
-            users.id,
+            $quary = "SELECT members.*,
+            users.id As userid,
             users.name AS createname,
             CASE WHEN U.name IS NULL THEN 'NULL' ELSE U.name END AS updatename
      FROM members
@@ -208,6 +208,7 @@ INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD
      LEFT JOIN users AS U ON members.update_by = U.id
      WHERE members.id =$id";
             $memberRequest = DB::select($quary);
+
 
             $get_img_path = DB::table("member_attachments")
                 ->select('member_attachments.path')
@@ -232,12 +233,16 @@ INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD
     {
 
         try {
+
             $id = $request->input('id');
+
             $file =  $request->file('file');
-            $approvedBy = Auth::user()->id;
+           
+
             $member = Member::find($request->id);
 
-            $member->update_by = $approvedBy;
+           //dd($request->get('beneficiary_full_name'));
+           $member->update_by = Auth::user()->id;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');
@@ -267,7 +272,8 @@ INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
             $member->ref_by = $request->get('ref_by');
-
+ 
+           
             if ($member->save()) {
 
                 if (isset($file)) {

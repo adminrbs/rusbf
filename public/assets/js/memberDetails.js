@@ -431,7 +431,7 @@ function loadMemberData(id){
         success: function (response) {
             console.log(response);
             var data = response[0];
-console.log("jjj",data);
+
             var pathData = response[1];
 
             if (response) {
@@ -475,7 +475,7 @@ console.log("jjj",data);
 var creatby = data[0].create_by;
 var updteby = data[0].update_by;
 
-
+console.log(updteby);
 
 if (ACTION == "view"){
 if(updteby == null){
