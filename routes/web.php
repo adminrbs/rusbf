@@ -236,7 +236,8 @@ Route::get('/members_loan_form', function () {
 Route::get('/members_loan_request_Approvel', function () {
     return view('members_loan_requestform_ApprovelList');
 });
-Route::get('/memberShip',[MembersLoanRequestController::class,'memberShip']);
+Route::get('/memberShip/{id}',[MembersLoanRequestController::class,'memberShip']);
+Route::get('/memberShipdesignation/{id}',[MembersLoanRequestController::class,'MembersLoanRequestController']);
 Route::get('/getalldetails/{memberid}/{id}',[MembersLoanRequestController::class,'getalldetails']);
 Route::post('/save_memberlonrequest',[MembersLoanRequestController::class,'save_memberlonrequest']);
 Route::get('/allmemberlonrequest',[MembersLoanRequestController::class,'allmemberlonrequest']);
@@ -330,4 +331,28 @@ Route::post('/cbxdonation/{id}',[DonationController::class,'cbxdonation']);
 Route::get('/Death_gratuity_requests',function(){
 return view('death_gratuity_requests');
 });
+
+Route::get('/Death_gratuity_all_requests',function(){
+    return view('death_gratuity_requests_list');
+    });
 Route::get('/alldatamemberShip/{id}',[DeathGratuityRequestsController::class,'alldatamemberShip']);
+Route::get('/getPosition',[DeathGratuityRequestsController::class,'getPosition']);
+Route::get('/getdepartmentsection',[DeathGratuityRequestsController::class,'getdepartmentsection']);
+Route::post('/saveDeathgratuityrequests',[DeathGratuityRequestsController::class,'saveDeathgratuityrequests']);
+Route::get('/alldeathgratuity',[DeathGratuityRequestsController::class,'alldeathgratuity']);
+Route::get('/getdeathgratuityrequest/{id}',[DeathGratuityRequestsController::class,'getdeathgratuityrequest']);
+Route::post('/deathgratuitysaveattachment/{id}',[DeathGratuityRequestsController::class,'deathgratuitysaveattachment']);
+Route::post('/update_deathgratuity/{id}',[DeathGratuityRequestsController::class,'update_deathgratuity']);
+Route::get('/getdeathgratuityAttachment/{id}',[DeathGratuityRequestsController::class,'getdeathgratuityAttachment']);
+Route::get('/viewdeathgratuityAttachment/{id}',[DeathGratuityRequestsController::class,'viewdeathgratuityAttachment']);
+Route::delete('/deletadeathgratuityttachment/{id}',[DeathGratuityRequestsController::class,'deletadeathgratuityttachment']);
+Route::delete('/deletedeathgratuity/{id}',[DeathGratuityRequestsController::class,'deletedeathgratuity']);
+
+// approvel
+
+Route::get('/Death_gratuity_requests_Approvel',function(){
+    return view('Death_gratuity_requests_Approvallist');
+    });
+Route::get('/alldeathgratuityapprovelapprovel',[DeathGratuityRequestsController::class,'alldeathgratuityapprovelapprovel']);
+Route::get('/approvedeathgratuityRequest/{id}',[DeathGratuityRequestsController::class,'approvedeathgratuityRequest']);
+Route::post('/rejectdeathgratuityRequest/{id}',[DeathGratuityRequestsController::class,'rejectdeathgratuityRequest']);

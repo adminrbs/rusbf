@@ -113,7 +113,7 @@ var memberid;
 
 var formData = new FormData();
 $(document).ready(function () {
-    getAttachment();
+    getdeathgratuityAttachment();
     dropzoneSingle = new Dropzone("#dropzone_single", {
         paramName: "file", // The name that will be used to transfer the file
         maxFilesize: 2, // MB
@@ -186,12 +186,13 @@ $(document).ready(function () {
 
     $('.select2').select2();
     memberShip(0);
-    lone();
+    getdepartmentsection();
+    getPosition();
 
-    $('#cbxlone').on('change', function () {
+    /*$('#cbxgetdepartmentsection').on('change', function () {
         var lonId = $(this).val();
-        term(lonId);
-    });
+        getPosition(lonId);
+    });*/
     $('#btncontribution').on('click', function () {
         $('input[type="text"]').val('');
         $('input[type="number"]').val('');
@@ -277,12 +278,21 @@ $(document).ready(function () {
             //console.log(action);
         } else if (action == 'view') {
             $('#btnSave').hide();
-            getcontributeview(mid);
-
+           // getcontributeview(mid);
+           $('#btnsave').hide();
+           $('#btnReset').hide();
+           $('input[type="text"]').prop('disabled', true);
+           $('input[type="number"]').prop('disabled', true);
+           $('input[type="date"]').prop('disabled', true);
+           $('textarea').prop('disabled', true);
+           $('select').prop('disabled', true);
+           $('#txtmembershipno').removeClass('form-select select2').addClass('form-control  select2');
+           $('#tbl_attachment').show();
+           $('.table-responsive').show();
 
         }
 
-        getmemberlone(mid);
+        getdeathgratuityrequest(mid);
 
     }
 
@@ -306,7 +316,7 @@ $(document).ready(function () {
                 if (result) {
                     if ($('#btnsave').text() == 'Save') {
 
-                        save_memberlonrequest();
+                        saveDeathgratuityrequests();
                     } else if ($('#btnsave').text() == 'Update') {
                         update_memberlonrequest();
                     }
@@ -403,43 +413,29 @@ $(document).ready(function () {
 });
 
 
-function save_memberlonrequest() {
+function saveDeathgratuityrequests() {
 
-    var loan = $('#cbxlone').val();
-    if (loan > 0) {
+        formData.append('txtmembershipno',memberid )
 
+        formData.append('txtPosition', $('#txtPosition').val());
+        formData.append('txtfullnameofthedeceasedperson', $('#txtfullnameofthedeceasedperson').val());
+        formData.append('txtdepartmentsection', $('#txtdepartmentsection').val());
 
+        formData.append('txtdateandplaseofdeath', $('#txtdateandplaseofdeath').val());
+        formData.append('txtrelationshiptothedeceased', $('#txtrelationshiptothedeceased').val());
+        formData.append('txtageifthedeceasedchildmember', $('#txtageifthedeceasedchildmember').val());
 
-        formData.append('txtmembershipno', $('#txtmembershipno').val());
+        formData.append('txtGenderdeceasedperson', $('#txtGenderdeceasedperson').val());
+        formData.append('txtDeathcertificateNo', $('#txtDeathcertificateNo').val());
+        formData.append('txtIssueddate', $('#txtIssueddate').val());
 
-        // formData.append('name', $('#name').val());
-        //formData.append('txtDesignation', $('#txtDesignation').val());
-
-        //formData.append('txtStaffno', $('#txtStaffno').val());
-        //formData.append('txtmembershipno', $('#txtmembershipno').val());
-        //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
-
-        // formData.append('txtStaffno', $('#txtbirthday').val());
-        //.append('txtnic', $('#txtnic').val());
-        //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
-
-        formData.append('txtcontactno', $('#txtcontactno').val());
-        //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
-        formData.append('txtpriodofservice', $('#txtpriodofservice').val());
-
-        formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
-        formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
-        //formData.append('txtcomputerno', $('#txtcomputerno').val());
-
-        //formData.append('txtnicNo2', $('#txtnicNo2').val());
-        formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
-        formData.append('txtresontoobtain', $('#txtresontoobtain').val());
-
-        formData.append('txtprivetAddress', $('#txtprivetAddress').val());
-        formData.append('txtdate', $('#txtdate').val());
-        formData.append('cbxlone', $('#cbxlone').val());
-        formData.append('cbxloneterm', $('#cbxloneterm').val());
-
+        formData.append('txtissuedplace', $('#txtissuedplace').val());
+        formData.append('txtbirthcertificateno', $('#txtbirthcertificateno').val());
+        formData.append('txtmarriagecertificateeno', $('#txtmarriagecertificateeno').val());
+        formData.append('txtreceiptofofficechargecertificate', $('#txtreceiptofofficechargecertificate').val());
+        formData.append('txtoutherdetails', $('#txtoutherdetails').val());
+        formData.append('txtgsdate',$('#txtgsdate').val());
+      
 
         console.log(formData);
 
@@ -447,7 +443,7 @@ function save_memberlonrequest() {
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: '/save_memberlonrequest',
+            url: '/saveDeathgratuityrequests',
             data: formData,
             processData: false,
             contentType: false,
@@ -461,13 +457,18 @@ function save_memberlonrequest() {
 
             },
             success: function (response) {
-
+             if( response.status == true)  {
                 resetForm();
                 new Noty({
                     text: 'Successfully saved',
                     type: 'success'
                 }).show();
-
+            }else{
+                new Noty({
+                    text: 'Something went wrong',
+                    type: 'error'
+                }).show();
+}
 
             },
             error: function (error) {
@@ -484,50 +485,46 @@ function save_memberlonrequest() {
             }
 
         });
-    } else {
-        new Noty({
-            text: 'Select loan',
-            type: 'warning'
-        }).show();
-        console.log(error);
-    }
+    
 
 
 }
 
-function getmemberlone(id) {
+function getdeathgratuityrequest(id) {
     //$('#btnsave').text('Update');
-    getAttachment();
+    getdeathgratuityAttachment();
     $.ajax({
-        url: '/getmemberlone/' + id,
+        url: '/getdeathgratuityrequest/' + id,
         method: 'get',
 
         success: function (response) {
-            console.log("lon", response);
-            term(response.loan_id);
+            console.log("deathgratuity", response);
+            //getPosition(response.loan_id);
 
-            $('#id').val(response.members_loan_request_id);
-            $("#txtmembershipno").val(response.member_id).trigger('change');
-            $('#txtcontactno').val(response.contact_no);
-            $('#txtpriodofservice').val(response.service_period);
+            $('#id').val(response.death_gratuity_requestss_id );
+            $("#cmbnameinfull").val(response.member_id).trigger('change');
+            $('#txtPosition').val(response.designation_id).trigger('change');
+            $('#txtdepartmentsection').val(response.serving_sub_department_id).trigger('change');
 
-            $('#txtdateofenlistment').val(response.date_of_enlistment);
-            $('#txtpresetmonthlybSalary').val(response.Monthly_basic_salary);
-            //$('#txtcomputerno').val(response.computer_no);
-
-
-            //$('#txtnicNo2').val(response.nic_no);
-            $('#txtManageofrepayment').val(response.manner_of_repayment);
-            $('#txtresontoobtain').val(response.reason);
+            $('#txtfullnameofthedeceasedperson').val(response.full_name_of_the_deceased_person);
+            $('#txtdateandplaseofdeath').val(response.date_and_place_of_death);
+            $('#txtrelationshiptothedeceased').val(response.relationship_to_the_deceased_person);
 
 
-            $('#txtprivetAddress').val(response.private_address);
-            $('#txtdate').val(response.date);
-            // $('#txtcomputerno').val(response.description);
-            $('#cbxloneterm').val(response.term_id).trigger('change');
-            $('#cbxlone').val(response.loan_id).trigger('change');
+            $('#txtageifthedeceasedchildmember').val(response.age_of_deceased);
+            $('#txtGenderdeceasedperson').val(response.gender_of_deceased_person);
+            $('#txtDeathcertificateNo').val(response.death_certificate_No);
 
 
+            $('#txtIssueddate').val(response.issued_date);
+            $('#txtissuedplace').val(response.issued_place);
+             $('#txtbirthcertificateno').val(response.birth_certificate_no);
+            $('#txtmarriagecertificateeno').val(response.marriage_certificate_no);
+            $('#txtgsdate').val(response.gs_date);
+            $('#txtreceiptofofficechargecertificate').val(response.date_of_oic);
+            $('#txtoutherdetails').val(response.note);
+
+            getdeathgratuityAttachment()
 
 
 
@@ -539,45 +536,31 @@ function getmemberlone(id) {
 function update_memberlonrequest() {
     var id = $('#id').val();
 
+    formData.append('txtmembershipno',memberid )
 
-    var loan = $('#cbxlone').val();
-    if (loan > 0) {
+    formData.append('txtPosition', $('#txtPosition').val());
+    formData.append('txtfullnameofthedeceasedperson', $('#txtfullnameofthedeceasedperson').val());
+    formData.append('txtdepartmentsection', $('#txtdepartmentsection').val());
 
+    formData.append('txtdateandplaseofdeath', $('#txtdateandplaseofdeath').val());
+    formData.append('txtrelationshiptothedeceased', $('#txtrelationshiptothedeceased').val());
+    formData.append('txtageifthedeceasedchildmember', $('#txtageifthedeceasedchildmember').val());
 
+    formData.append('txtGenderdeceasedperson', $('#txtGenderdeceasedperson').val());
+    formData.append('txtDeathcertificateNo', $('#txtDeathcertificateNo').val());
+    formData.append('txtIssueddate', $('#txtIssueddate').val());
 
-
-        formData.append('txtmembershipno', $('#txtmembershipno').val());
-        //formData.append('txtDesignation', $('#txtDesignation').val());
-
-        //formData.append('txtStaffno', $('#txtStaffno').val());
-        //formData.append('txtmembershipno', $('#txtmembershipno').val());
-        //formData.append('txtplaseemployment', $('#txtplaseemployment').val());
-
-        // formData.append('txtStaffno', $('#txtbirthday').val());
-        //.append('txtnic', $('#txtnic').val());
-        //formData.append('txtpaysheetno', $('#txtpaysheetno').val());
-
-        formData.append('txtcontactno', $('#txtcontactno').val());
-        //formData.append('txtmembershipyear', $('#txtmembershipyear').val());
-        formData.append('txtpriodofservice', $('#txtpriodofservice').val());
-
-        formData.append('txtdateofenlistment', $('#txtdateofenlistment').val());
-        formData.append('txtpresetmonthlybSalary', $('#txtpresetmonthlybSalary').val());
-        //formData.append('txtcomputerno', $('#txtcomputerno').val());
-
-        //formData.append('txtnicNo2', $('#txtnicNo2').val());
-        formData.append('txtManageofrepayment', $('#txtManageofrepayment').val());
-        formData.append('txtresontoobtain', $('#txtresontoobtain').val());
-
-        formData.append('txtprivetAddress', $('#txtprivetAddress').val());
-        formData.append('txtdate', $('#txtdate').val());
-        formData.append('cbxlone', $('#cbxlone').val());
-        formData.append('cbxloneterm', $('#cbxloneterm').val());
+    formData.append('txtissuedplace', $('#txtissuedplace').val());
+    formData.append('txtbirthcertificateno', $('#txtbirthcertificateno').val());
+    formData.append('txtmarriagecertificateeno', $('#txtmarriagecertificateeno').val());
+    formData.append('txtreceiptofofficechargecertificate', $('#txtreceiptofofficechargecertificate').val());
+    formData.append('txtoutherdetails', $('#txtoutherdetails').val());
+    formData.append('txtgsdate',$('#txtgsdate').val());
 
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: '/update_memberlonrequest/' + id,
+            url: '/update_deathgratuity/' + id,
             data: formData,
             processData: false,
             contentType: false,
@@ -591,6 +574,7 @@ function update_memberlonrequest() {
 
             },
             success: function (response) {
+
                 //suplyGroupAllData();
                 // $('#modalmemberlonrequest').modal('hide');
 
@@ -613,13 +597,7 @@ function update_memberlonrequest() {
             }
 
         });
-    } else {
-        new Noty({
-            text: 'Select loan',
-            type: 'warning'
-        }).show();
-        console.log(error);
-    }
+    
 }
 
 // save Attachment 
@@ -640,7 +618,7 @@ function saveattachment() {
         $.ajax({
             type: "POST",
             enctype: 'multipart/form-data',
-            url: '/saveattachment/' + id,
+            url: '/deathgratuitysaveattachment/' + id,
             data: formData,
             processData: false,
             contentType: false,
@@ -657,7 +635,7 @@ function saveattachment() {
                 //suplyGroupAllData();
                 $('#Attachment_modal').modal('hide');
                 $('input[type="textarea"]').val('');
-                getAttachment();
+                getdeathgratuityAttachment();
                 //allmemberlonrequest()
 
                 new Noty({
@@ -686,22 +664,17 @@ function saveattachment() {
 
 }
 
-function getAttachment() {
+function getdeathgratuityAttachment() {
     var id = $('#id').val();
+
     $.ajax({
         type: 'GET',
-        url: '/getAttachment/' + id,
+        url: '/getdeathgratuityAttachment/' + id,
         success: function (response) {
             console.log(response);
             var dt = response;
             console.log(dt);
-            var data = [];
-            for (i = 0; i < response.length; i++) {
-
-                var dt = response;
-
-
-
+           
                 var data = [];
                 for (var i = 0; i < dt.length; i++) {
                     var attachment = dt[i].attachment;
@@ -711,16 +684,16 @@ function getAttachment() {
 
 
                     data.push({
-                        "id": dt[i].members_loan_request_attachment_id,
+                        "id": dt[i].death_gratuity_requests_attachments_id ,
                         "description": dt[i].description,
                         "attachment": Attachment,
-                        "action": '<button title="View" class="btn btn-success btn-sm" type="button"  onclick="view(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>&#160<button title="Delete" type="button" class="btn btn-danger btn-sm" id="attachmentdelete" onclick="_delete(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>&#160<button title="Download" type="button" class="btn btn-primary btn-sm" onclick="download(' + dt[i].members_loan_request_attachment_id + ')"><i class="fa fa-download" aria-hidden="true"></i></button>',
+                        "action": '<button title="View" class="btn btn-success btn-sm" type="button"  onclick="view(' + dt[i].death_gratuity_requests_attachments_id  + ')"><i class="fa fa-eye" aria-hidden="true"></i></button>&#160<button title="Delete" type="button" class="btn btn-danger btn-sm" id="attachmentdelete" onclick="_delete(' + dt[i].death_gratuity_requests_attachments_id  + ')"><i class="fa fa-trash" aria-hidden="true"></i></button>&#160<button title="Download" type="button" class="btn btn-primary btn-sm" onclick="download(' + dt[i].death_gratuity_requests_attachments_id  + ')"><i class="fa fa-download" aria-hidden="true"></i></button>',
                     });
                 }
 
 
 
-            }
+            
             var table = $('#tbl_attachment').DataTable();
             table.clear();
             table.rows.add(data).draw();
@@ -734,57 +707,9 @@ function getAttachment() {
     });
 }
 
-function getcontributeview(id) {
-
-
-
-    $('#btnsave').hide();
-    $('#btnReset').hide();
-    $('input[type="text"]').prop('disabled', true);
-    $('input[type="number"]').prop('disabled', true);
-    $('input[type="date"]').prop('disabled', true);
-    $('textarea').prop('disabled', true);
-    $('select').prop('disabled', true);
-    $('#txtmembershipno').removeClass('form-select select2').addClass('form-control  select2');
-    $('#tbl_attachment').show();
-    $('.table-responsive').show();
-
-    $.ajax({
-        url: '/getmemberlone/' + id,
-        method: 'get',
-
-
-        success: function (response) {
-            console.log(response);
-
-            $('#id').val(response.members_loan_request_id);
-            $("#txtmembershipno").val(response.member_id).trigger('change');
-            $('#txtcontactno').val(response.contact_no);
-            $('#txtpriodofservice').val(response.service_period);
-
-            $('#txtdateofenlistment').val(response.date_of_enlistment);
-            $('#txtpresetmonthlybSalary').val(response.Monthly_basic_salary);
-
-            $('#txtManageofrepayment').val(response.manner_of_repayment);
-            $('#txtresontoobtain').val(response.reason);
-
-
-            $('#txtprivetAddress').val(response.private_address);
-            $('#txtdate').val(response.date);
-            $('#cbxloneterm').val(response.term_id).trigger('change');
-            $('#cbxlone').val(response.loan_id).trigger('change');
-
-
-
-
-        }
-    });
-}
-
-  
 
 function memberShip(id) {
-
+var mid = id
     $.ajax({
         url: '/alldatamemberShip/' + id,
         type: 'get',
@@ -793,11 +718,28 @@ function memberShip(id) {
 
 
         success: function (response) {
-
-if(response[0] == "not filter"){
+if(mid>0){
+    $('#cmbnameinfull').html('');
+    $('#txtmembreshipno').html('');
+    $('#cmbofficialid').html('');
+    $('#cmbdateofmembership').html('');
 
     var dt = response.data;
 
+    for (var i = 0; i < dt.length; i++) {
+
+        $('#cmbnameinfull').append("<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>");
+        $('#txtmembreshipno').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
+        $('#cmbofficialid').append("<option value='" + dt[i].id + "'>" + dt[i].official_number + "</option>");
+         $('#cmbdateofmembership').append("<option value='" + dt[i].id + "'>" + dt[i].date_of_joining + "</option>");
+
+    }
+    $('#txtaddressinfull').val(dt[0].personal_address);
+
+}else{
+
+
+    var dt = response.data
 
     var cmbnameinfull = "<option value='0'>Select Name In Full</option>";
     var txtmembreshipno = "<option value='0'>Select Membership No</option>";
@@ -818,15 +760,8 @@ if(response[0] == "not filter"){
     $('#txtmembreshipno').html(txtmembreshipno);
     $('#cmbofficialid').html(cmbofficialid);
     $('#cmbdateofmembership').html(cmbdateofmembership);
-}else{
 
-}
-
-            $('#cmbnameinfull').html('');
-            $('#txtmembreshipno').html('');
-            $('#cmbofficialid').html('');
-            $('#cmbdateofmembership').html('');
-           
+}     
            
 
         }, error: function (data) {
@@ -835,111 +770,6 @@ if(response[0] == "not filter"){
 
     })
 
-}
-
-/*
-function membershipno(id) {
-
-    // $('#cmbservsubdepartment').empty(); 
-      $.ajax({
-          url: '/membershipno/' + id,
-          type: 'get',
-          async: false,
-          success: function (data) {
-              console.log(data);
-              var htmlContent = "";
-  
-  
-              $.each(data, function (key, value) {
-  
-                  htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
-              });
-              $('#txtmembershipno').html(htmlContent);
-  
-          },
-      })
-  }
-  */
-
-
-
-
-
-
-
-
-
-
-function getalldetails(memberid, id) {
-
-    $.ajax({
-        url: '/getalldetails/' + memberid + '/' + id,
-        type: 'get',
-        dataType: 'json',
-        async: false,
-
-
-        success: function (response) {
-            console.log("lll", response);
-            $('#txtnic').html('');
-            $('#txtcomputerno').html('');
-            $('#txtmembershipyear').html('');
-            $('#txtmembershipno').html('');
-            $('#memberage').html('');
-            var dt = response;
-            console.log(dt);
-            for (var i = 0; i < dt.length; i++) {
-
-                $('#txtmembershipno').append("<option value='" + dt[i].member_number + "'>" + dt[i].member_number + "</option>");
-                $('#txtnic').append("<option value='" + dt[i].national_id_number + "'>" + dt[i].national_id_number + "</option>");
-                $('#txtcomputerno').append("<option value='" + dt[i].computer_number + "'>" + dt[i].computer_number + "</option>");
-                // $('#txtmembershipyear').append("<option value='" + dt[i].date_of_joining + "'>" + dt[i].date_of_joining + "</option>");
-
-            }
-
-            var dateOfJoining = new Date(response[0].date_of_joining);
-
-            if (!isNaN(dateOfJoining)) {
-                var currentDate = new Date();
-
-                var years = currentDate.getFullYear() - dateOfJoining.getFullYear();
-                var months = currentDate.getMonth() - dateOfJoining.getMonth();
-
-                if (months < 0) {
-                    years--;
-                    months += 12;
-                }
-                var newage = years + " years and " + months + " months";
-                $("#memberage").val(newage);
-            } else {
-                console.log("Invalid date format ");
-            }
-            // Set the values of the input fields as you were doing
-            $('#txtmembershipno').val(response[0].member_number);
-            $('#txtcomputerno').val(response[0].computer_number);
-            $('#txtnic').val(response[0].national_id_number);
-            $('#txtmembershipyear').val(response[0].date_of_joining);
-
-            $('#name').val(response[0].name_initials);
-            $('#txtDesignation').val(response[0].designation);
-            $('#txtStaffno').val(response[0].payroll_number);
-
-            $("#txtplaseemployment").val(response[0].work_location);
-            $('#txtbirthday').val(response[0].date_of_birth);
-            $('#txtpaysheetno').val(response[0].payroll_number);
-
-
-
-
-
-
-            //$('#txtnicNo2').val(response[0].nic_no);
-
-        }, error: function (data) {
-            console.log(data)
-        }
-
-    })
 }
 
 function resetForm() {
@@ -958,21 +788,10 @@ function approveRequest(id) {
 
     formData.append('txtmembershipno', memberid);
 
-    formData.append('cbxlone', $('#cbxlone').val());
-    formData.append('cbxloneterm', $('#cbxloneterm').val());
     $.ajax({
-        url: '/approveRequest/' + id,
-        type: 'post',
-        enctype: 'multipart/form-data',
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        async: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
+        url: '/approvedeathgratuityRequest/' + id,
+        type: 'get',
+      
         beforeSend: function () {
             /* $('#btnSave').prop('disabled', true); */
         }, success: function (response) {
@@ -1004,7 +823,7 @@ function approveRequest(id) {
 //reject
 function rejectRequest(id) {
     $.ajax({
-        url: '/rejectRequest/' + id,
+        url: '/rejectdeathgratuityRequest/' + id,
         type: 'post',
         enctype: 'multipart/form-data',
         data: formData,
@@ -1046,7 +865,7 @@ function rejectRequest(id) {
 function view(id) {
 
     $.ajax({
-        url: '/viewAttachment/' + id,
+        url: '/viewdeathgratuityAttachment/' + id,
         type: 'get',
         dataType: 'json',
         // async: false,
@@ -1054,10 +873,14 @@ function view(id) {
 
         success: function (response) {
             console.log(response);
-            window.open(response.attachment, '_blank');
+var filepath =response.attachment;
 
 
-            console.log(data)
+
+            var fileUrl = filepath ;
+
+           
+            window.open(fileUrl, '_blank');
         }
 
     })
@@ -1067,10 +890,7 @@ function view(id) {
 
 
 function _delete(id) {
-    if (action == 'view') {
-
-    } else {
-
+    
 
 
 
@@ -1097,7 +917,7 @@ function _delete(id) {
             }
         });
         $('.bootbox').find('.modal-header').addClass('bg-danger text-white');
-    }
+    
 
 }
 
@@ -1105,7 +925,7 @@ function deletattachment(id) {
 
     $.ajax({
         type: 'DELETE',
-        url: '/deletattachment/' + id,
+        url: '/deletadeathgratuityttachment/' + id,
         data: {
             _token: $('input[name=_token]').val()
         },
@@ -1117,9 +937,9 @@ function deletattachment(id) {
         }, success: function (response) {
 
 
-            if (response.success) {
+            if (response == "deleted") {
 
-                getAttachment();
+                getdeathgratuityAttachment();
                 new Noty({
                     text: 'Successfully deleted',
                     type: 'success',
@@ -1141,36 +961,25 @@ function deletattachment(id) {
 }
 function download(attachmentId) {
     $.ajax({
-        url: '/viewAttachment/' + attachmentId,
+        url: '/viewdeathgratuityAttachment/' + attachmentId,
         type: 'get',
         dataType: 'json',
         // async: false,
 
 
         success: function (response) {
-            // var fileName = response.attachment;
-
+           
             var attachmentData = response.attachment;
-            // var fileName = response.filename;
-
-            // Create a Blob object from the attachment data
+           
             var blob = new Blob([attachmentData], { type: 'pdf' });
-
-            // Create a temporary URL for the Blob
             var url = window.URL.createObjectURL(blob);
-
-            // Create an anchor element for downloading
             var a = document.createElement('a');
             a.style.display = 'flex';
             a.href = url;
-            a.download = attachmentData; // Set the desired file name
+            a.download = attachmentData; 
 
-            // Trigger a click event on the anchor element to initiate the download
             document.body.appendChild(a);
             a.click();
-
-            // Clean up the temporary URL
-            //window.URL.revokeObjectURL(url);
         },
         error: function (data) {
             console.log(data);
@@ -1180,10 +989,10 @@ function download(attachmentId) {
 }
 
 
-function lone() {
+function getdepartmentsection() {
 
     $.ajax({
-        url: '/getlone',
+        url: '/getdepartmentsection',
         type: 'get',
         dataType: 'json',
         // async: false,
@@ -1192,13 +1001,13 @@ function lone() {
         success: function (data) {
             var dt = data.data
             var htmlContent;
-            htmlContent += "<option value='0'>Select Loan</option>";
+           
             for (var i = 0; i < dt.length; i++) {
-                htmlContent += "<option value='" + dt[i].loan_id + "'>" + dt[i].concatenated_name_code + "</option>";
+                htmlContent += "<option value='" + dt[i].id + "'>" + dt[i].name + "</option>";
             }
 
             // Set the HTML content of the select element after the loop
-            $('#cbxlone').html(htmlContent);
+            $('#txtdepartmentsection').html(htmlContent);
 
         }, error: function (data) {
             console.log(data)
@@ -1207,49 +1016,29 @@ function lone() {
     })
 
 }
-/*
-function term(id) {
-    $('#cbxloneterm').empty();
+
+
+function getPosition() {
+   
     $.ajax({
-        url: '/getterm/' + id,
-        type: 'get',
-        dataType: 'json',
-        // async: false,
-
-
-        success: function (data) {
-
-            var dt = data.data
-            var htmlContent = "";
-            // htmlContent += "<option value='0'>Select Loan</option>";
-            for (var i = 0; i < dt.length; i++) {
-                htmlContent += "<option value='" + dt[i].loan_term_id + "'>" + dt[i].no_of_terms + "</option>";
-            }
-
-            // Set the HTML content of the select element after the loop
-            $('#cbxloneterm').html(htmlContent);
-
-        }, error: function (data) {
-            console.log(data)
-        }
-
-    })
-
-}*/
-
-
-function term(id) {
-    $('#cbxloneterm').empty();
-    $.ajax({
-        url: '/getterm/' + id,
+        url: '/getPosition',
         type: 'get',
         //dataType: 'json',
         async: false,
-        success: function (response) {
-            $.each(response, function (index, value) {
-                $('#cbxloneterm').append('<option value="' + value.loan_term_id + '">' + value.no_of_terms + '</option>');
+        success: function (data) {
 
-            })
+            var dt = data.data
+
+            var htmlContent;
+           
+            for (var i = 0; i < dt.length; i++) {
+                htmlContent += "<option value='" + dt[i].id + "'>" + dt[i].name + "</option>";
+            }
+
+            // Set the HTML content of the select element after the loop
+            $('#txtPosition').html(htmlContent);
+
+
 
         }, error: function (response) {
             console.log(response)

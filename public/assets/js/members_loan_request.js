@@ -185,7 +185,7 @@ $(document).ready(function () {
     $('.table-responsive').hide();
 
     $('.select2').select2();
-    memberShip();
+    memberShip(0);
     lone();
 
     $('#cbxlone').on('change', function () {
@@ -207,24 +207,24 @@ $(document).ready(function () {
     $('#txtmembershipno').on('change', function () {
         memberid = $(this).val();
 
-
-        getalldetails(memberid, 1);
-        membershipno(memberid);
+        //getalldetails(memberid, 1);
+       // membershipno(memberid);
+        memberShip(memberid)
     })
     $('#txtnic').on('change', function () {
-        var nicid = $(this).val();
-
-        getalldetails(nicid, 2);
+        var memberid = $(this).val();
+        memberShip(memberid)
+        //getalldetails(nicid, 2);
     })
     $('#txtcomputerno').on('change', function () {
-        var computer = $(this).val();
-
-        getalldetails(computer, 3);
+        var memberid = $(this).val();
+        memberShip(memberid)
+        ///getalldetails(computer, 3);
     })
     $('#txtmembershipyear').on('change', function () {
-        var membership = $(this).val();
-
-        getalldetails(membership, 4);
+        var memberid = $(this).val();
+        memberShip(memberid)
+        //getalldetails(membership, 4);
     })
 
 
@@ -410,7 +410,7 @@ function save_memberlonrequest() {
 
 
 
-        formData.append('txtmembershipno', $('#txtmembershipno').val());
+        formData.append('txtmembershipno', memberid);
 
         // formData.append('name', $('#name').val());
         //formData.append('txtDesignation', $('#txtDesignation').val());
@@ -508,7 +508,7 @@ function getmemberlone(id) {
 
             $('#id').val(response.members_loan_request_id);
             $("#txtmembershipno").val(response.member_id).trigger('change');
-            $('#txtcontactno').val(response.contact_no);
+           $('#txtcontactno').val(response.contact_no);
             $('#txtpriodofservice').val(response.service_period);
 
             $('#txtdateofenlistment').val(response.date_of_enlistment);
@@ -527,7 +527,7 @@ function getmemberlone(id) {
             $('#cbxloneterm').val(response.term_id).trigger('change');
             $('#cbxlone').val(response.loan_id).trigger('change');
 
-
+            getAttachment();
 
 
 
@@ -758,9 +758,9 @@ function getcontributeview(id) {
             console.log(response);
 
             $('#id').val(response.members_loan_request_id);
-            $("#txtmembershipno").val(response.member_id).trigger('change');
-            $('#txtcontactno').val(response.contact_no);
-            $('#txtpriodofservice').val(response.service_period);
+           // $("#txtmembershipno").val(response.member_id).trigger('change');
+           // $('#txtcontactno').val(response.contact_no);
+            //$('#txtpriodofservice').val(response.service_period);
 
             $('#txtdateofenlistment').val(response.date_of_enlistment);
             $('#txtpresetmonthlybSalary').val(response.Monthly_basic_salary);
@@ -809,44 +809,123 @@ function cbxcontribute(id) {
 }*/
 
 
-function memberShip() {
 
-    $.ajax({
-        url: '/memberShip',
-        type: 'get',
-        dataType: 'json',
-        // async: false,
+function memberShip(id) {
+    var mid = id
+        $.ajax({
+            url: '/memberShip/' + id,
+            type: 'get',
+            dataType: 'json',
+             async: false,
+    
+    
+            success: function (response) {
 
-
-        success: function (data) {
-            var dt = data.data;
-            var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
-            var htmlNicOptions = "<option value='0'>Select National ID</option>";
-            var htmlComputercode = "<option value='0'>Select Computer Code</option>";
-            //var htmlmemberyear = "<option value='0'>Select Membership (Year)</option>";
-
-
-            for (var i = 0; i < dt.length; i++) {
-                htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
-                htmlNicOptions += "<option value='" + dt[i].national_id_number + "'>" + dt[i].national_id_number + "</option>";
-                htmlComputercode += "<option value='" + dt[i].computer_number + "'>" + dt[i].computer_number + "</option>";
-                // htmlmemberyear += "<option value='" + dt[i].date_of_joining + "'>" + dt[i].date_of_joining + "</option>";
-            }
-
-            // Set the HTML content of the select elements after the loop
-            $('#txtmembershipno').html(htmlMembershipOptions);
-            $('#txtnic').html(htmlNicOptions);
-            $('#txtcomputerno').html(htmlComputercode);
-            //$('#txtmembershipyear').html(htmlmemberyear);
-
-        }, error: function (data) {
-            console.log(data)
+    if(mid>0){
+        $('#txtmembershipno').html('');
+        $('#txtnic').html('');
+        $('#txtcomputerno').html('');
+       
+    
+        var dt = response.data;
+    
+        for (var i = 0; i < dt.length; i++) {
+    
+            $('#txtmembershipno').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
+            $('#txtnic').append("<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>");
+            $('#txtcomputerno').append("<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>");
+           
+    
         }
+       
 
-    })
+        //$('#txtaddressinfull').val(dt[0].personal_address);
 
-}
+        var dateOfJoining = new Date(dt[0].date_of_joining);
 
+        if (!isNaN(dateOfJoining)) {
+            var currentDate = new Date();
+
+            var years = currentDate.getFullYear() - dateOfJoining.getFullYear();
+            var months = currentDate.getMonth() - dateOfJoining.getMonth();
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            var newage = years + " years and " + months + " months";
+            $("#memberage").val(newage);
+        } else {
+            console.log("Invalid date format ");
+        }
+        console.log(dt[0].id);
+
+        $('#name').val(dt[0].name_initials);
+        $('#txtDesignation').val(dt[0].designation);
+        $('#txtStaffno').val(dt[0].payroll_number);
+
+        $("#txtplaseemployment").val(dt[0].work_location);
+        $('#txtbirthday').val(dt[0].date_of_birth);
+        $('#txtpaysheetno').val(dt[0].payroll_number);
+
+
+
+
+    
+    }else{
+    
+    
+        var dt = response.data
+    
+
+        var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
+        var htmlNicOptions = "<option value='0'>Select National ID</option>";
+        var htmlComputercode = "<option value='0'>Select Computer Code</option>";
+    
+    
+        for (var i = 0; i < dt.length; i++) {
+           // console.log(dt[i].full_name);
+           htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+           htmlNicOptions += "<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>";
+           htmlComputercode += "<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>";
+          
+        }
+    
+        // Set the HTML content of the select elements after the loop
+        $('#txtmembershipno').html(htmlMembershipOptions);
+        $('#txtnic').html(htmlNicOptions);
+        $('#txtcomputerno').html(htmlComputercode);
+        
+    
+    }     
+
+
+
+
+               
+    
+            }, error: function (data) {
+                console.log(data)
+            }
+    
+        })
+    
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 function memberShip() {
 
     $.ajax({
@@ -884,29 +963,7 @@ function memberShip() {
     })
 
 }
-/*
-function membershipno(id) {
 
-    // $('#cmbservsubdepartment').empty(); 
-      $.ajax({
-          url: '/membershipno/' + id,
-          type: 'get',
-          async: false,
-          success: function (data) {
-              console.log(data);
-              var htmlContent = "";
-  
-  
-              $.each(data, function (key, value) {
-  
-                  htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
-              });
-              $('#txtmembershipno').html(htmlContent);
-  
-          },
-      })
-  }
-  */
 
 
 
@@ -987,7 +1044,7 @@ function getalldetails(memberid, id) {
         }
 
     })
-}
+}*/
 
 function resetForm() {
     //$('.validation-invalid-label').empty();

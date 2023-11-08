@@ -15,19 +15,46 @@ use Illuminate\Support\Facades\DB;
 
 class MembersLoanRequestController extends Controller
 {
-    public function memberShip()
+    public function memberShip($id)
     {
         try {
-            $member = Member::all();
+           /* $member = Member::all();
             if ($member) {
                 return response()->json((['success' => 'Data loaded', 'data' => $member]));
             } else {
                 return response()->json((['error' => 'Data is not loaded']));
+            }*/
+
+            if ($id == 0) {
+                $member = Member::all();
+                if ($member) {
+                    return response()->json((['success' => 'Data loaded', 'data' => $member, 'not filter']));
+                } else {
+                    return response()->json((['error' => 'Data is not loaded']));
+                }
+            } else {
+                $quary = " SELECT M.*, md.name AS designation, mpw.name AS work_location
+                FROM members M
+                LEFT JOIN master_designations md ON md.id = M.designation_id
+                LEFT JOIN master_place_works mpw ON mpw.id = M.work_location_id
+                ORDER BY (M.id = $id) DESC";
+
+                $member = DB::select($quary);
+                if ($member) {
+                    return response()->json((['success' => 'Data loaded', 'data' => $member]));
+                } else {
+                    return response()->json((['error' => 'Data is not loaded']));
+                }
             }
+
+
+
+
         } catch (Exception $ex) {
             return $ex;
         }
     }
+
     public function getlone()
     {
         try {
@@ -67,17 +94,14 @@ class MembersLoanRequestController extends Controller
         try {
             // dd($request);
 
-            $member = $request->get('txtmembershipno');
-            $memberno = Member::where('member_number', $member)->first();
-
-
+           
 
 
 
             $approvedBy = Auth::user()->id;
             $memberlon = new members_loan_request();
             $memberlon->prepared_by = $approvedBy;
-            $memberlon->member_id  = $memberno->id;
+            $memberlon->member_id  = $request->get('txtmembershipno');
             $memberlon->membership_no = $request->get('txtmembershipno');
             $memberlon->contact_no  = $request->get('txtcontactno');
             $memberlon->service_period  = $request->get('txtpriodofservice');
@@ -240,6 +264,54 @@ class MembersLoanRequestController extends Controller
     public function deletememberlone($id)
     {
         try {
+            $members_loan = members_loan_request::find($id);
+
+            $delet = $members_loan->delete();
+            if ($delet) {
+                $deletattachment =  $members_loan->members_loan_request_id;
+
+                //$death_gratuityAttachment = death_gratuity_requests_attachment::find($deletattachment);
+                $members_loanAttachments = members_loan_request_attachment::where('members_loan_request_id', $deletattachment)->get();
+
+                if ($members_loanAttachments->isEmpty()) {
+                    return response()->json(['success' => 'Record has been Delete']);
+                } else {
+                    // dd( $death_gratuityAttachments);
+                    foreach ($members_loanAttachments as $attachment) {
+                        $filePath = $attachment->attachment;
+
+                        if ($filePath) {
+                            $baseUrl = url('/') . "/attachments/member_lone_request_file/";
+
+                            $file =  str_replace($baseUrl, '', $filePath);
+                            $file = public_path('attachments/member_lone_request_file') . '/' . $file;
+
+                            if (file_exists($file)) {
+                                unlink($file);
+                            }
+
+                            if ($members_loanAttachments->isNotEmpty()) {
+                                foreach ($members_loanAttachments as $attachment) {
+                                    $filePath = $attachment->attachment;
+                                    $attachment->delete();
+                                }
+                            }
+                            return response()->json(['success' => 'Record has been Delete']);
+                        } else {
+                            return "failed";
+                        }
+                    }
+                }
+            }else {
+                return "failed";
+            }
+
+
+
+
+
+
+
             $memberlon = members_loan_request::find($id);
 
             $memberlon->delete();
@@ -378,9 +450,29 @@ class MembersLoanRequestController extends Controller
     {
         try {
             $request = members_loan_request_attachment::find($id);
+            $filePath = $request->attachment;
 
-            $request->delete();
-            return response()->json(['success' => 'Record has been Delete']);
+            if ($filePath) {
+                $baseUrl = url('/') . "/attachments/member_lone_request_file/";
+
+                $file =  str_replace($baseUrl, '', $filePath);
+                $file = public_path('attachments/member_lone_request_file') . '/' . $file;
+
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+
+                if ($request) {
+
+                    $request->delete();
+
+                    return response()->json(['success' => 'Record has been Delete']);
+                } else {
+                    return "failed";
+                }
+            }
+
+           
         } catch (Exception $ex) {
             return response()->json($ex);
         }

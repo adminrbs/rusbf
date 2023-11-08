@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle')Loan Management @endslot
+@slot('subtitle')Donation @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -61,19 +61,25 @@
                             <div class="col-3">
 
                                 <label class="col-form-label">Position</label>
-                                <input type="text" class="form-control " id="txtPosition" name="memberage"  />
+                                <select id="txtPosition" class="form-select select2">
+
+                                </select>
+                                <!--<input type="text" class="form-control " id="txtPosition" name="memberage"  />-->
                                
                             </div>
                             <div class="col-3">
 
                                 <label class="col-form-label">Department/Section</label>
-                                <input type="text" class="form-control " id="txtdepartmentsection" name="departmentsection"  />
+                                <select id="txtdepartmentsection" class="form-select select2">
+
+                                </select>
+                               <!-- <input type="text" class="form-control " id="txtdepartmentsection" name="departmentsection"  />-->
                               
                             </div>
-                            <div class="col-3">
+                            <div class="col-6">
 
                                 <label class="col-form-label">Address In Full</label>
-                                <input type="text" class="form-control " id="txtaddressinfull" name="addressinfull"  />
+                                <input type="text" class="form-control " id="txtaddressinfull" name="addressinfull"  disabled/>
                               
                             </div>
 
@@ -104,14 +110,19 @@
 
                             <div class="col-3">
 
-                                <label class="col-form-label">Age if the deceased was a child of the member</label>
+                                <label class="col-form-label">Age if the deceased was a child</label>
                                 <input type="text" class="form-control " id="txtageifthedeceasedchildmember" name="ageifthedeceasedchildmember"/>
                             </div>
                             <div class="col-3">
 
                                 <label class="col-form-label">Gender of deceased person</label>
-                                <input type="text" class="form-control " id="txtGenderdeceasedperson" name="Genderdeceasedperson"
-                                 />
+                                <select id="txtGenderdeceasedperson" class="form-select select2">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <!--<input type="text" class="form-control " id="txtGenderdeceasedperson" name="Genderdeceasedperson"
+                                 />-->
                             </div>
                         </div>
 
@@ -154,7 +165,7 @@
                             </div>
                             <div class="col-3">
 
-                                <label class="col-form-label">Date of receipt of Officer-in-charge’s certificate</label>
+                                <label class="col-form-label">Date of receipt OIC certificate</label>
                                 <input type="date" class="form-control " id="txtreceiptofofficechargecertificate"
                                     name="receiptofofficechargecertificate" />
                             </div>

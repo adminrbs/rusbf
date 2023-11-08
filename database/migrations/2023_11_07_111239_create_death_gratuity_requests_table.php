@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('designation_id');
             $table->integer('serving_sub_department_id');
             $table->string('full_name_of_the_deceased_person')->nullable();
-            $table->string('date_and _place_of_death')->nullable();
+            $table->string('date_and_place_of_death')->nullable();
             $table->string('relationship_to_the_deceased_person')->nullable();
             $table->string('age_of_deceased')->nullable();
             $table->string('gender_of_deceased_person')->nullable();
@@ -31,6 +31,7 @@ return new class extends Migration
             $table->date('gs_date')->nullable();
             $table->date('date_of_oic')->nullable();
             $table->text('note')->nullable();
+            $table->integer('approval_status')->default(0);
             $table->timestamps();
         });
     }

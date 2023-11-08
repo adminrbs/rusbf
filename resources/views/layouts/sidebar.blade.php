@@ -173,6 +173,49 @@
 
                             </ul>
                         </li>
+
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-files"></i>
+                                <span>Donation</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item">
+                                    <a href="/Death_gratuity_all_requests" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                           
+                                            Death Gratuity Requests
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Death_gratuity_requests_Approvel" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            
+                                            Death Gratuity Requests Approval
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                               
+                                <ul class="nav-item-submenu">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-gear"></i>
+                                        <span>Setting</span>
+                                    </a>
+                                    <ul class="nav-group-sub collapse">
+                                        <li class="nav-item"><a href="/donation" class="nav-link">Donation</a></li>
+                                        
+                                    </ul>
+
+                                </ul>
+                               
+
+                            </ul>
+                        </li>
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
@@ -209,6 +252,7 @@
                                 @endif
                             </ul>
                         </li>
+
 
                     </ul>
                 </div>
