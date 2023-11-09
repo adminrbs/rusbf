@@ -19,7 +19,7 @@ class CompanyDetailsController extends Controller
     }
     public static function companyimage(){
 
-    return "images/companylogo.png";
+    return "images/login_logo copy.png";
     }
     
 

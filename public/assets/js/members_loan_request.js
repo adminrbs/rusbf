@@ -862,7 +862,7 @@ function memberShip(id) {
 
         $('#name').val(dt[0].name_initials);
         $('#txtDesignation').val(dt[0].designation);
-        $('#txtStaffno').val(dt[0].payroll_number);
+        $('#txtStaffno').val(dt[0].cabinet_number);//no
 
         $("#txtplaseemployment").val(dt[0].work_location);
         $('#txtbirthday').val(dt[0].date_of_birth);

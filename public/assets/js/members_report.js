@@ -107,11 +107,11 @@ $(document).ready(function () {
     })
     
     // select report
-    $("#memberreport").prop("checked", true);
-    var isChecked = $("#memberreport").prop("checked");
+    $("#adviceofdeducation").prop("checked", true);
+    var isChecked = $("#adviceofdeducation").prop("checked");
 
     if (isChecked == true) {
-        $("#memberreport").prop("checked", false);
+        $("#adviceofdeducation").prop("checked", false);
     }
 
     $('#btn-collapse-search').on('click', function () {
@@ -128,7 +128,7 @@ $(document).ready(function () {
             alert("select report")
         } else {
             $('#row1').hide();
-            if (report == 'memberreport') {
+            if (report == 'adviceofdeducation') {
 
 
                 var requestData = [
@@ -139,7 +139,7 @@ $(document).ready(function () {
                     { selecteyear: selecteyear },
                     { selectemonth: selectemonth }
                 ];
-                $('#pdfContainer').attr('src', '/loanReport/' + JSON.stringify(requestData));
+                $('#pdfContainer').attr('src', '/adviceofdeductionReport/' + JSON.stringify(requestData));
             }
         }
 

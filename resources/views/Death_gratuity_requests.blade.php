@@ -117,9 +117,9 @@
 
                                 <label class="col-form-label">Gender of deceased person</label>
                                 <select id="txtGenderdeceasedperson" class="form-select select2">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
                                 </select>
                                 <!--<input type="text" class="form-control " id="txtGenderdeceasedperson" name="Genderdeceasedperson"
                                  />-->

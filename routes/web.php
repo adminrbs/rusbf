@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdviceofdeductionController;
 use App\Http\Controllers\contributionandLoanFilterController;
 use App\Http\Controllers\contributnController;
 use App\Http\Controllers\CustomerController;
@@ -356,3 +357,6 @@ Route::get('/Death_gratuity_requests_Approvel',function(){
 Route::get('/alldeathgratuityapprovelapprovel',[DeathGratuityRequestsController::class,'alldeathgratuityapprovelapprovel']);
 Route::get('/approvedeathgratuityRequest/{id}',[DeathGratuityRequestsController::class,'approvedeathgratuityRequest']);
 Route::post('/rejectdeathgratuityRequest/{id}',[DeathGratuityRequestsController::class,'rejectdeathgratuityRequest']);
+
+// advice of deduction report
+Route::get('adviceofdeductionReport/{search}',[AdviceofdeductionController::class,'adviceofdeductionReport']);

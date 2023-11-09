@@ -121,35 +121,39 @@ var formData = new FormData();
 $(document).ready(function () {
     $('.select2').select2();
     allcontributedata(0);
-    Fullname(0)
+   /* Fullname(0)
     memberNumber(0);
-    computerNumber(0);
+    computerNumber(0);*/
+    memberShip(0);
     imageloard(0);
     $('input[type="number"]').val('');
 
     $('#cmbmember').change(function () {
         memberid = $(this).val();
-        Fullname(memberid);
-        computerNumber(nameid);
+        /*Fullname(memberid);
+        computerNumber(nameid);*/
         imageloard(memberid);
         allcontributedata(memberid)
+        memberShip(memberid)
        // amountset(memberid)
     })
 
     $('#cmbName').change(function () {
         nameid = $(this).val();
 
-        memberNumber(nameid);
-        computerNumber(nameid);
+        // memberNumber(nameid);
+        // computerNumber(nameid);
         imageloard(nameid);
         allcontributedata(memberid);
+        memberShip(nameid)
         //amountset(memberid);
     });
-    $('#cmbcomputernum').change(function () {
+    $('#cmbcomputer').change(function () {
         nameid = $(this).val();
+        memberShip(nameid)
 
-        memberNumber(nameid);
-        Fullname(memberid);
+        // memberNumber(nameid);
+        // Fullname(memberid);
         imageloard(nameid);
         allcontributedata(memberid);
         //amountset(memberid);
@@ -162,7 +166,7 @@ $(document).ready(function () {
 
 });
 
-
+/*
 function memberNumber(id) {
     $('#cmbmember').empty();
     $.ajax({
@@ -237,7 +241,87 @@ function Fullname(id) {
 
         },
     })
-}
+}*/
+
+
+
+
+function memberShip(id) {
+    var mid = id
+        $.ajax({
+            url: '/memberNumber/' + id,
+            type: 'get',
+            dataType: 'json',
+            // async: false,
+    
+    
+            success: function (response) {
+    if(mid>0){
+       // $('#cmbnameinfull').html('');
+        $('#cmbmember').html('');
+        $('#cmbcomputer').html('');
+        $('#cmbName').html('');
+    
+        var dt = response.data;
+    
+        for (var i = 0; i < dt.length; i++) {
+    
+           // $('#cmbnameinfull').append("<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>");
+            $('#cmbmember').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
+            $('#cmbcomputer').append("<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>");
+             $('#cmbName').append("<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>");
+    
+        }
+     
+    
+    }else{
+    
+    
+        var dt = response.data
+    
+       // var cmbnameinfull = "<option value='0'>Select Name In Full</option>";
+        var cmbmember = "<option value='0'>Select Member Number</option>";
+        var cmbcomputer = "<option value='0'>Select Computer Number</option>";
+        var cmbName = "<option value='0'>Select Full Name</option>";
+    
+    
+        for (var i = 0; i < dt.length; i++) {
+           // console.log(dt[i].full_name);
+          ///  cmbnameinfull += "<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>";
+          cmbmember += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+          cmbcomputer += "<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>";
+          cmbName += "<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>";
+        }
+    
+        // Set the HTML content of the select elements after the loop
+       // $('#cmbnameinfull').html(cmbnameinfull);
+        $('#cmbmember').html(cmbmember);
+        $('#cmbcomputer').html(cmbcomputer);
+        $('#cmbName').html(cmbName);
+    
+    }     
+               
+    
+            }, error: function (data) {
+                console.log(data)
+            }
+    
+        })
+    
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function imageloard(id) {

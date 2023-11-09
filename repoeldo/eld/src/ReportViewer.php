@@ -9,7 +9,29 @@ use Carbon\Carbon;
 class ReportViewer
 {
     protected $parameters = [];
-    protected $group_grand_total = 0;
+    protected $group_grand_total = [
+        0 => ["amount" => 0],
+        1 => ["amount" => 0],
+        2 => ["amount" => 0],
+        3 => ["amount" => 0],
+        4 => ["amount" => 0],
+        5 => ["amount" => 0],
+        6 => ["amount" => 0],
+        7 => ["amount" => 0],
+        8 => ["amount" => 0],
+        9 => ["amount" => 0],
+        10 => ["amount" => 0],
+        11 => ["amount" => 0],
+        12 => ["amount" => 0],
+        13 => ["amount" => 0],
+        14 => ["amount" => 0],
+        15 => ["amount" => 0],
+        16 => ["amount" => 0],
+        17 => ["amount" => 0],
+        18 => ["amount" => 0],
+        19 => ["amount" => 0],
+        20 => ["amount" => 0],
+    ];
 
 
     public function viewReport($report)
@@ -755,7 +777,8 @@ class ReportViewer
         for ($i = 0; $i < count($body); $i++) {
             $row_bg = "white";
             if ($i % 2 == 0) {
-                $row_bg = "#f4f4f4";
+                $row_bg = "white";
+                //$row_bg = "#f4f4f4";
             }
             $table .= '<tr style="background-color:' . $row_bg . '">';
             for ($i2 = 0; $i2 < count($body[$i]); $i2++) {
@@ -785,6 +808,7 @@ class ReportViewer
         }
         if ($sum != null) {
             $table .= '<tr>';
+            $SUB_TOTAL_TEXT = "Sub Total :";
             for ($i = 0; $i < count($header); $i++) {
                 $display = "";
                 if (isset($header[$i][0]['visible'])) {
@@ -792,13 +816,16 @@ class ReportViewer
                         $display .= 'display:none;';
                     }
                 }
+
                 if (array_key_exists("sum", $group_sub_total[$i])) {
                     $table .= '<td style="border:0px solid black;' . $display . '">';
-                    $table .= '<table style="width:100%;border:0px;' . $display . '"><tr><td style="border:0px;">Total</td>';
+                    $table .= '<table style="width:100%;border:0px;' . $display . '"><tr><td style="border:0px;" colspan="' . count($header) . '">' . $SUB_TOTAL_TEXT . '</td>';
                     $table .= '<td  style="border:0px;text-align:' . $header[$i][0]['align'] . '">' . number_format($group_sub_total[$i]["sum"], 2) . '</td></tr></table>';
-                    $this->group_grand_total += $group_sub_total[$i]["sum"];
+                    $this->group_grand_total[$i - 1]["amount"] += $group_sub_total[$i]["sum"];
                     $table .= '</td>';
+                    $SUB_TOTAL_TEXT = "";
                 } else {
+                    $this->group_grand_total[$i - 1]["amount"] = "";
                     $table .= '<td style="border:0px solid black;' . $display . '">';
                     $table .= '<table style="width:100%;border:0px;' . $display . '"><tr><td style="border:0px;"></td>';
                     $table .= '<td></td></tr></table>';
@@ -902,7 +929,6 @@ class ReportViewer
     private function createGroup($obj)
     {
 
-
         $header = [];
         if (isset($obj['header'])) {
             $header = $obj['header'];
@@ -971,29 +997,59 @@ class ReportViewer
                                 $table["body"] = $dd;
                                 $group_content .= $this->createTable($table);
                             }
-                            foreach ($footer as $foot) {
-                                if (isset($foot['visible'])) {
-                                    if ($foot['visible']) {
-                                        if (isset($foot['number'])) {
-                                            $group_content .=  $this->createNumberArgs($foot['number'], $this->group_grand_total);
-                                        }
-                                        if (isset($foot['label'])) {
-                                            $group_content .=  $this->createLabelArgs($foot['label'], $this->group_grand_total);
-                                        }
-                                        $this->group_grand_total = 0;
-                                    }
-                                } else {
-                                    if (isset($foot['number'])) {
-                                        $group_content .=  $this->createNumberArgs($foot['number'], $this->group_grand_total);
-                                    }
-                                    if (isset($foot['label'])) {
-                                        $group_content .=  $this->createLabelArgs($foot['label'], $this->group_grand_total);
-                                    }
-                                    $this->group_grand_total = 0;
-                                }
-                            }
                         }
                     }
+                }
+            }
+
+            if (isset($detail['grand-total'])) {
+                //dd($this->group_grand_total);
+                $grand_total = $detail['grand-total'];
+                $visible = true;
+                if (isset($grand_total['visible'])) {
+                    $visible = $grand_total['visible'];
+                }
+                if ($visible) {
+
+                    if (isset($grand_total['column'])) {
+
+                        $column = $grand_total['column'];
+
+                        $table = '<table><tr>';
+                        for ($i = 0; $i < count($column); $i++) {
+                            $column_width = '100%';
+                            if (isset($column[$i]['width'])) {
+                                $column_width = $column[$i]['width'] . 'px';
+                            }
+                            $text_align = 'left';
+                            if (isset($column[$i]['align'])) {
+                                $text_align = $column[$i]['align'];
+                            }
+                            $display = "";
+                            if (isset($column[$i]['visible'])) {
+                                if (!$column[$i]['visible']) {
+                                    $display .= 'display:none;';
+                                }
+                            }
+                            $format = "";
+                            if (isset($column[$i]['format'])) {
+                                $format = $column[$i]['format'];
+                            }
+                            $style = "style='min-width:" . $column_width . ";text-align:" . $text_align . ";" . $display . "'";
+
+                            if ($this->group_grand_total[$i]["amount"] >= 0) {
+                                if ($format == "text") {
+                                    $table .= '<td ' . $style . '>' . $this->group_grand_total[$i]["amount"] . '</td>';
+                                } else {
+                                    $table .= '<td ' . $style . '>' . number_format($this->group_grand_total[$i+1]["amount"], 2) . '</td>';
+                                }
+                            } else {
+                                $table .= '<td ' . $style . '>' . $column[$i+1]['text'] . '</td>';
+                            }
+                        }
+                        $table .= '</tr></table>';
+                    }
+                    $group_content .= $table;
                 }
             }
         }

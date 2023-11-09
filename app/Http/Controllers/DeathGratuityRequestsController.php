@@ -104,7 +104,9 @@ class DeathGratuityRequestsController extends Controller
     public function alldeathgratuity()
     {
         try {
-            $deathgratuity = 'SELECT * FROM death_gratuity_requests ORDER BY approval_status ASC';
+            $deathgratuity = 'SELECT *,members.full_name FROM death_gratuity_requests DGR
+            LEFT JOIN members ON members.id=DGR.member_id
+            ORDER BY approval_status ASC';
 
 
             $result = DB::select($deathgratuity);
@@ -343,7 +345,9 @@ class DeathGratuityRequestsController extends Controller
     public function alldeathgratuityapprovelapprovel()
     {
         try {
-            $query = 'SELECT * FROM death_gratuity_requests DGR  WHERE DGR.approval_status="0"';
+            $query = 'SELECT * ,members.full_name FROM death_gratuity_requests DGR 
+LEFT JOIN members ON members.id=DGR.member_id
+ WHERE DGR.approval_status="0"';
 
             $pendingApprovals = DB::select($query);
             if ($pendingApprovals) {

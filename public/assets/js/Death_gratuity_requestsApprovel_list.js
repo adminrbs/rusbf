@@ -147,7 +147,7 @@ function alldeathgratuityapprovel() {
 
                     data.push({
                         "id": dt[i].death_gratuity_requestss_id,
-                        "membeshipno": dt[i].member_id,
+                        "membeshipno": dt[i].full_name,
                         "fullname": dt[i].full_name_of_the_deceased_person,
                         //"nic": dt[i].nic_no,
                         "gsdate": dt[i].gs_date,

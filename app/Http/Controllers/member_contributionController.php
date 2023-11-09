@@ -46,6 +46,25 @@ class member_contributionController extends Controller
     {
         try {
             if ($id == 0) {
+                $member = Member::all();
+                if ($member) {
+                    return response()->json((['success' => 'Data loaded', 'data' => $member, 'not filter']));
+                } else {
+                    return response()->json((['error' => 'Data is not loaded']));
+                }
+            } else {
+                $quary = " SELECT M.*
+                FROM members M
+                ORDER BY (M.id = $id) DESC";
+
+                $member = DB::select($quary);
+                if ($member) {
+                    return response()->json((['success' => 'Data loaded', 'data' => $member]));
+                } else {
+                    return response()->json((['error' => 'Data is not loaded']));
+                }
+            }
+          /*  if ($id == 0) {
                 $query = "
                 (SELECT id, member_number, full_name FROM members)
                 UNION ALL
@@ -66,7 +85,7 @@ class member_contributionController extends Controller
                 } else {
                     return response()->json(['status' => false]);
                 }
-            }
+            }*/
         } catch (Exception $ex) {
             return $ex;
         }

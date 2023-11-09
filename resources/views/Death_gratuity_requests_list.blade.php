@@ -40,7 +40,7 @@
                                     <thead>
                                         <tr>
                                             <th>id</th>
-                                            <th>Membership No</th>
+                                            <th>Member Name</th>
                                             <th>Full Name</th>
                                            
                                             <th>GS Date</th>

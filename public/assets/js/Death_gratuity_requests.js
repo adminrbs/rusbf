@@ -512,7 +512,7 @@ function getdeathgratuityrequest(id) {
 
 
             $('#txtageifthedeceasedchildmember').val(response.age_of_deceased);
-            $('#txtGenderdeceasedperson').val(response.gender_of_deceased_person);
+            $('#txtGenderdeceasedperson').val(response.gender_of_deceased_person).trigger('change');
             $('#txtDeathcertificateNo').val(response.death_certificate_No);
 
 

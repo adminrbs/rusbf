@@ -59,11 +59,12 @@
                                 <li class="list-group-item">
                                     <label style="display: flex; align-items: center;">
                                         <input class="form-check-input" type="radio" name="option1"
-                                            value="Customer's Ledger" id="memberreport" style="margin-right: 10px;">
+                                            value="Customer's Ledger" id="adviceofdeducation" style="margin-right: 10px;">
                                         <i class="bi bi-folder2 fa-lg"></i>&nbsp;
-                                       Member
+                                       Advice of deduction
                                     </label>
                                 </li>
+
                                 <br>
                                
                                 
