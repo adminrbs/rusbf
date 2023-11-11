@@ -27,6 +27,7 @@ use App\Http\Controllers\MemberLoanLedgerController;
 use App\Http\Controllers\memberLoanLedgerListController;
 use App\Http\Controllers\memberreportController;
 use App\Http\Controllers\MembersLoanRequestController;
+use App\Http\Controllers\MonthendProcessController;
 use App\Models\member_contribution;
 use App\Models\User;
 use App\Notifications\UserNotification;
@@ -209,20 +210,6 @@ Route::post('/update_contribution/{id}',[contributnController::class,'update_con
 Route::delete('deletecontribute/{id}',[contributnController::class,'deletecontribute']);
 Route::post('/cbxcontribute/{id}',[contributnController::class,'cbxcontribute']);
 
-//member_contribution
-Route::get('/member_contribution', function () {
-    return view('member_contribution');
-});
-Route::get('/membercontributedata/{id}',[member_contributionController::class,'membercontributedata']);
-Route::get('/memberNumber/{id}',[member_contributionController::class,'memberNumber']);
-Route::get('/computerNumber/{id}',[member_contributionController::class,'computerNumber']);
-Route::get('/fullName/{id}',[member_contributionController::class,'fullName']);
-Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
-Route::get('/amountset/{id}',[member_contributionController::class,'amountset']);
-
-Route::post('/save_memberContribution',[member_contributionController::class,'save_memberContribution']);
-Route::post('/deleteMembercontribution/{id}',[member_contributionController::class,'deleteMembercontribution']);
-
 
 
 
@@ -360,3 +347,36 @@ Route::post('/rejectdeathgratuityRequest/{id}',[DeathGratuityRequestsController:
 
 // advice of deduction report
 Route::get('adviceofdeductionReport/{search}',[AdviceofdeductionController::class,'adviceofdeductionReport']);
+
+//Monthend Process
+Route::get('/monthend_process', function () {
+    return view('monthend_process');
+});
+Route::get('/getCurrentYearMonthMonthend',[MonthendProcessController::class,'getCurrentYearMonth']);
+Route::post('/monthend_process',[MonthendProcessController::class,'monthend_process']);
+//End of Monthend Process
+
+
+
+
+//member_contribution
+Route::get('/member_contribution', function () {
+    return view('member_contribution');
+});
+Route::get('/membercontributedata/{id}',[member_contributionController::class,'membercontributedata']);
+Route::get('/memberNumber/{dept_id}',[member_contributionController::class,'memberNumber']);
+Route::get('/computerNumber/{dept_id}',[member_contributionController::class,'computerNumber']);
+Route::get('/member_subdepartment',[member_contributionController::class,'member_subdepartment']);
+Route::get('/fullName/{dept_id}',[member_contributionController::class,'fullName']);
+Route::get('/imageloard/{id}',[member_contributionController::class,'imageloard']);
+Route::get('/amountset/{id}',[member_contributionController::class,'amountset']);
+Route::get('/next/{dept_id}/{member_id}',[member_contributionController::class,'next']);
+Route::get('/previous/{dept_id}/{member_id}',[member_contributionController::class,'previous']);
+
+Route::post('/save_memberContribution',[member_contributionController::class,'save_memberContribution']);
+Route::post('/deleteMembercontribution/{id}',[member_contributionController::class,'deleteMembercontribution']);
+Route::get('/loadContribution/{year}/{month}/{member_id}',[member_contributionController::class,'loadContribution']);
+Route::get('/loadLoan/{year}/{month}/{member_id}',[member_contributionController::class,'loadLoan']);
+Route::get('/getGlobalYearMonth',[member_contributionController::class,'getGlobalYearMonth']);
+Route::post('/saveContribution',[member_contributionController::class,'saveContribution']);
+Route::post('/saveLoan',[member_contributionController::class,'saveLoan']);

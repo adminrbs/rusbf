@@ -8,18 +8,18 @@ class CompanyDetailsController extends Controller
 {
     
     public static function CompanyName(){
-        return "EasywinBiz LMS"; 
+        return "The Ceylon Railway Uniform Staff Benevolent Fund"; 
     }
 
     public static function CompanyNumber(){
-        return "Tel : 0314874344 Fax : 0314874347";  
+        return "";  
     }
     public static function CompanyAddress(){
-        return "NO 14,1 ST CROSS STREET,NEGOMBO";  
+        return "Collombo 11";  
     }
     public static function companyimage(){
 
-    return "images/login_logo copy.png";
+    return "";
     }
     
 

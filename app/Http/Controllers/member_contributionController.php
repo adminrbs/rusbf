@@ -9,6 +9,11 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\contribution;
+use App\Models\GlobalSetting;
+use App\Models\loan;
+use App\Models\MasterSubDepartment;
+use App\Models\MemberContributionLedger;
+use App\Models\MemberLoanLedger;
 
 class member_contributionController extends Controller
 {
@@ -42,111 +47,35 @@ class member_contributionController extends Controller
     }
 
 
-    public function memberNumber($id)
+    public function memberNumber($dept_id)
     {
-        try {
-            if ($id == 0) {
-                $member = Member::all();
-                if ($member) {
-                    return response()->json((['success' => 'Data loaded', 'data' => $member, 'not filter']));
-                } else {
-                    return response()->json((['error' => 'Data is not loaded']));
-                }
-            } else {
-                $quary = " SELECT M.*
-                FROM members M
-                ORDER BY (M.id = $id) DESC";
 
-                $member = DB::select($quary);
-                if ($member) {
-                    return response()->json((['success' => 'Data loaded', 'data' => $member]));
-                } else {
-                    return response()->json((['error' => 'Data is not loaded']));
-                }
-            }
-          /*  if ($id == 0) {
-                $query = "
-                (SELECT id, member_number, full_name FROM members)
-                UNION ALL
-                (SELECT 0 AS id, 'Select Member Number' AS member_number, NULL AS full_name)
-                ORDER BY member_number DESC";
-
-                $Member = DB::select($query);
-                return response()->json($Member);
-            } else {
-                $query = 'SELECT id, member_number, full_name
-                FROM members
-                WHERE id= ' . $id . '';
-
-                $Member = DB::select($query);
-                if ($Member) {
-
-                    return response()->json($Member);
-                } else {
-                    return response()->json(['status' => false]);
-                }
-            }*/
-        } catch (Exception $ex) {
-            return $ex;
-        }
+        $members = Member::all();
+        return response()->json($members);
     }
 
 
 
 
-    public function computerNumber($id)
+    public function computerNumber($dept_id)
     {
-        try {
-            if ($id == 0) {
-                $query = "
-                (SELECT id, computer_number, full_name FROM members)
-                UNION ALL
-                (SELECT 0 AS id, 'Select Computer Number' AS computer_number, NULL AS full_name)
-                ORDER BY computer_number DESC";
 
-                $Member = DB::select($query);
-                return response()->json($Member);
-            } else {
-                $query = 'SELECT id, computer_number, full_name
-                FROM members
-                WHERE id= ' . $id . '';
-
-                $Member = DB::select($query);
-                if ($Member) {
-
-                    return response()->json($Member);
-                } else {
-                    return response()->json(['status' => false]);
-                }
-            }
-        } catch (Exception $ex) {
-            return $ex;
-        }
+        $members = Member::all();
+        return response()->json($members);
     }
 
-    public function fullName($id)
+    public function member_subdepartment()
     {
-        try {
-            if ($id == 0) {
-                $query = " (SELECT id, member_number,full_name FROM members)
-                UNION ALL
-                (SELECT 0 AS id,NULL AS member_number,'Select Full Name' AS full_name)
-                ORDER BY id ASC";
+        $query = "SELECT master_sub_departments.`name`,members.id
+        FROM master_sub_departments INNER JOIN members ON master_sub_departments.id = members.id";
+        $departments = DB::select($query);
+        return response()->json($departments);
+    }
 
-                $Member = DB::select($query);
-
-                return response()->json($Member);
-            } else {
-                $Member = Member::where('id', '=', $id)->get();
-                if ($Member) {
-                    return response()->json($Member);
-                } else {
-                    return response()->json(['status' => false]);
-                }
-            }
-        } catch (Exception $ex) {
-            return $ex;
-        }
+    public function fullName($dept_id)
+    {
+        $members = Member::all();
+        return response()->json($members);
     }
 
     public function imageloard($id)
@@ -157,7 +86,7 @@ class member_contributionController extends Controller
 
                 return response()->json($Member);
             } else {
-                $Member = MemberAttachment::where('member_id', '=', $id)->get();
+                $Member = MemberAttachment::where('member_id', '=', $id)->first();
 
                 return response()->json($Member);
             }
@@ -237,6 +166,161 @@ class member_contributionController extends Controller
             return response()->json($Member);
         } catch (Exception $ex) {
             return $ex;
+        }
+    }
+
+
+    public function loadContribution($year, $month, $member_id)
+    {
+        try {
+            $contributions = MemberContributionLedger::where('member_id', '=', $member_id)->get();
+            if ($year == 'any' && $month != 'any') {
+                $contributions = MemberContributionLedger::where([['member_id', '=', $member_id], ['month', '=', $month]])->get();
+            } else  if ($year != 'any' && $month == 'any') {
+                $contributions = MemberContributionLedger::where([['member_id', '=', $member_id], ['year', '=', $year]])->get();
+            } else  if ($year != 'any' && $month != 'any') {
+                $contributions = MemberContributionLedger::where([['member_id', '=', $member_id], ['year', '=', $year], ['month', '=', $month]])->get();
+            }
+
+            foreach ($contributions as $contribution_data) {
+                $contribution_data->contribution_name = "";
+                $contribution = contribution::find($contribution_data->contribution_id);
+                if ($contribution) {
+                    $contribution_data->contribution_name = $contribution->contribution_title;
+                }
+            }
+            return response()->json(["status" => true, "data" => $contributions]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+
+    public function loadLoan($year, $month, $member_id)
+    {
+        try {
+            $loans = MemberLoanLedger::where('member_id', '=', $member_id)->get();
+            if ($year == 'any' && $month != 'any') {
+                $loans = MemberLoanLedger::where([['member_id', '=', $member_id], ['month', '=', $month]])->get();
+            } else  if ($year != 'any' && $month == 'any') {
+                $loans = MemberLoanLedger::where([['member_id', '=', $member_id], ['year', '=', $year]])->get();
+            } else  if ($year != 'any' && $month != 'any') {
+                $loans = MemberLoanLedger::where([['member_id', '=', $member_id], ['year', '=', $year], ['month', '=', $month]])->get();
+            }
+
+            foreach ($loans as $loan_data) {
+                $loan_data->loan_name = "";
+                $loan = loan::find($loan_data->member_loan_id);
+                if ($loan) {
+                    $loan_data->loan_name = $loan->loan_name;
+                }
+            }
+            return response()->json(["status" => true, "data" => $loans]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+    public function getGlobalYearMonth()
+    {
+        try {
+            $year = "any";
+            $month = "any";
+            $global_setting = GlobalSetting::find(1);
+            if ($global_setting) {
+                $year = $global_setting->current_year;
+                $month = $global_setting->current_month;
+            }
+            return response()->json(["status" => true, "year" => $year, "month" => $month]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+    public function saveLoan(Request $request)
+    {
+        try {
+            $collection = json_decode($request->get('data'));
+            foreach ($collection as $data) {
+                $id = json_decode($data)->id;
+                $value1 = json_decode($data)->value1;
+                $value2 = json_decode($data)->value2;
+
+                $loan_ledger = MemberLoanLedger::find($id);
+                if ($loan_ledger) {
+                    $loan_ledger->paid_amount = $value1;
+                    $loan_ledger->paid_interest = $value2;
+
+                    if (!$loan_ledger->update()) {
+                        return response()->json(["status" => false, "error" => 204]);
+                    }
+                }
+            }
+            return response()->json(["status" => true]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+
+    public function saveContribution(Request $request)
+    {
+        try {
+            $collection = json_decode($request->get('data'));
+            foreach ($collection as $data) {
+                $id = json_decode($data)->id;
+                $value = json_decode($data)->value;
+                $contribution_ledger = MemberContributionLedger::find($id);
+                if ($contribution_ledger) {
+                    $contribution_ledger->paid_amount = $value;
+                    if (!$contribution_ledger->update()) {
+                        return response()->json(["status" => false, "error" => 204]);
+                    }
+                }
+            }
+            return response()->json(["status" => true]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+    public function next($dept_id, $member_id)
+    {
+        try {
+            $query = "SELECT id  From  members  
+            WHERE serving_sub_department_id='" . $dept_id . "'  AND id>'" . $member_id . "'
+            ORDER BY id ASC  LIMIT 1";
+            $result = DB::select($query);
+            $id = 0;
+            if (count($result) > 0) {
+                $id = $result[0]->id;
+            }
+            return response()->json(["status" => true, "data" => $id]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
+        }
+    }
+
+
+    public function previous($dept_id, $member_id)
+    {
+        try {
+            $query = "SELECT id  From  members  
+            WHERE serving_sub_department_id='" . $dept_id . "'  AND id<'" . $member_id . "'
+            ORDER BY id DESC  LIMIT 1";
+            $result = DB::select($query);
+            $id = 1;
+            if (count($result) > 0) {
+                $id = $result[0]->id;
+            }
+            return response()->json(["status" => true, "data" => $id]);
+        } catch (Exception $ex) {
+            return response()->json(["status" => false, "error" => $ex]);
         }
     }
 }

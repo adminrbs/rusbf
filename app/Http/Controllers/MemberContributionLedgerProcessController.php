@@ -50,7 +50,7 @@ class MemberContributionLedgerProcessController extends Controller
                 }
                 $globalSetting->current_year = $year;
                 $globalSetting->current_month = $month;
-                $globalSetting->update();
+                //$globalSetting->update();
             }
             return response()->json(["status" => true, "data" => null]);
         } catch (Exception $exception) {

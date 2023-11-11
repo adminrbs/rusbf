@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle') Member Details @endslot
+@slot('subtitle') Loan @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">

@@ -23,6 +23,41 @@
     <script src="{{ URL::asset('assets/js/tooltip.js') }}"></script>
    @include('layouts.head-css')
 
+   <style>
+    .nav-tabs .nav-link {
+        background-color: #f1f1f1;
+        border: none;
+        color: #000;
+        cursor: pointer;
+    }
+
+
+    /* Style for the active tab button */
+    .nav-tabs .nav-link.active {
+        background-color: #0080ff;
+        /* Change this to your desired active background color */
+        color: #fff;
+        /* Set text color for the active tab */
+    }
+
+    /* Optional: Set styles for the tab content */
+    .tab-content {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    #tab_page_demo {
+        margin: 4px, 4px;
+        padding: 4px;
+        height: 400px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: justify;
+    }
+</style>
+
+
+
 </head>
 
 <body>

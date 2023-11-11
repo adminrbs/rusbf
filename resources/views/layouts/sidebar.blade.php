@@ -78,14 +78,10 @@
                                     </a>
                                     <ul class="nav-group-sub collapse">
                                         <li class="nav-item"><a href="/master_designation" class="nav-link">Designation</a></li>
-                                        <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of
-                                                work</a>
+                                        <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of workk</a>
                                         </li>
-                                        <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
-                                                Sub-Department</a></li>
-                                        <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place
-                                                of
-                                                Payroll Preparation</a></li>
+                                        <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving Sub  Department</a></li>
+                                        <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place of Payeoll Preparation</a></li>
                                     </ul>
 
                                 </ul>
@@ -93,10 +89,60 @@
                             </ul>
                         </li>
 
+
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-files"></i>
-                                <span>Loan Management</span>
+                                <span>Contribution</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item">
+                                    <a href="/member_contribution" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Member Contribution
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/member_contribution_ledger_process_list" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Contribution Ledger 
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    
+                                </li>
+                               
+                                
+
+                                <ul class="nav-item-submenu">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-gear"></i>
+                                        <span>Setting</span>
+                                    </a>
+                                    <ul class="nav-group-sub collapse">
+                                       
+                                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a>
+                                       
+                                    </ul>
+
+                                </ul>
+                               
+
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-files"></i>
+                                <span>Loan</span>
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <li class="nav-item">
@@ -127,15 +173,6 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/member_contribution_ledger_process_list" class="nav-link">
-                                        <i class="ph-house"></i>
-                                        <span>
-                                            Contribution ledger
-                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
                                     <a href="/member_loan_ledger_list" class="nav-link">
                                         <i class="ph-house"></i>
                                         <span>
@@ -144,7 +181,28 @@
                                         </span>
                                     </a>
                                 </li>
+                                <!--<li class="nav-item">
+                                    <a href="/member_contribution_ledger_process_list" class="nav-link">
+                                        <i class="ph-house"></i>
+                                        <span>
+                                            Contribution ledger
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>-->
                                 <li class="nav-item">
+                                    <a href="contributionAndloanFilter" class="nav-link">
+                                        <i class="ph-house"></i>
+                                        <span>
+                                            Recipet 
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                
+
+
+                                <!--<li class="nav-item">
                                     <a href="/contributionAndloanFilter" class="nav-link">
                                         <i class="ph-house"></i>
                                         <span>
@@ -152,7 +210,7 @@
                                             {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                         </span>
                                     </a>
-                                </li>
+                                </li>-->
                                 
 
                                 <ul class="nav-item-submenu">
@@ -162,10 +220,10 @@
                                     </a>
                                     <ul class="nav-group-sub collapse">
                                         <li class="nav-item"><a href="/loneManagement" class="nav-link">Loan</a></li>
-                                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a>
+                                       <!-- <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a>
                                         <li class="nav-item"><a href="/member_contribution" class="nav-link">Member
                                                 Contribution</a>
-                                        </li>
+                                        </li>-->
                                     </ul>
 
                                 </ul>
@@ -177,7 +235,7 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-files"></i>
-                                <span>Donation</span>
+                                <span>Donations & Grativity </span>
                             </a>
                             <ul class="nav-group-sub collapse">
                                 <li class="nav-item">
@@ -185,7 +243,7 @@
                                         <i class="ph-user-list"></i>
                                         <span>
                                            
-                                            Death Gratuity Requests
+                                            Death Grativity Request
                                             {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                         </span>
                                     </a>
@@ -195,7 +253,7 @@
                                         <i class="ph-user-list"></i>
                                         <span>
                                             
-                                            Death Gratuity Requests Approval
+                                            Death Grativity Approval
                                             {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                         </span>
                                     </a>
@@ -207,7 +265,7 @@
                                         <span>Setting</span>
                                     </a>
                                     <ul class="nav-group-sub collapse">
-                                        <li class="nav-item"><a href="/donation" class="nav-link">Donation</a></li>
+                                        <li class="nav-item"><a href="/donation" class="nav-link">Donations</a></li>
                                         
                                     </ul>
 
@@ -220,22 +278,62 @@
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
                          
-                                <li class="nav-item"><a href="/memberReport" class="nav-link"> <i class="ph-file-text"></i>Report</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link"> <i class="ph-files"></i>Payment</a></li>
+                           
+
+                       
+                        
+                    </li>
+                        
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-file-text"></i>
+                                <span>Report </span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                           
+                                            Member information Sheet
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/memberReport" class="nav-link">
+                                        <i class="ph-files"></i>
+                                        <span>
+                                            
+                                            Advice of dedction 
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                               
                                
 
-                           
-                            
+                            </ul>
                         </li>
+
+
+
+
+
+
+
+
                        
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>
-                                <span>Process</span>
+                                <span>Tools</span>
                             </a>
                             <ul class="nav-group-sub collapse">
-                                <li class="nav-item"><a href="/loan_process" class="nav-link">Loan</a></li>
-                                <li class="nav-item"><a href="/member_contribution_ledger_process" class="nav-link">Contribution</a></li>
-
+                                <li class="nav-item"><a href="/loan_process" class="nav-link">Process  Loan </a></li>
+                                <li class="nav-item"><a href="/member_contribution_ledger_process" class="nav-link">Process Contribution</a></li>
+                                <li class="nav-item"><a href="/monthend_process" class="nav-link">Month End Process</a></li>
                             </ul>
                         </li>
                         <li class="nav-item nav-item-submenu">

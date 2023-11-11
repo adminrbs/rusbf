@@ -8,7 +8,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle')Member Contribution Ledger List @endslot
+@slot('subtitle')Contribution @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">

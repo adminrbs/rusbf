@@ -34,9 +34,17 @@
                 "header": [
                     [
                         {
-                            "text": "Star No",
-                            "align": "center",
+                            "text": "Ser No",
+                            "align": "left",
                             "format": "text"
+                        }
+                    ],
+                    [
+                        {
+                            "text": "Member Id",
+                            "align": "left",
+                            "format": "text",
+"visible":false
                         }
                     ],
                     [
@@ -73,30 +81,8 @@
                             "align": "right",
                             "format": "number"
                         }
-                    ],
-                    [
-                        {
-                            "text": "Remarks",
-                            "align": "left",
-                            "format": "text"
-                        }
                     ]
-                    ,
-                    [
-                        {
-                            "text": "Remarks2",
-                            "align": "left",
-                            "format": "text"
-                        }
-                    ]
-                    ,
-                    [
-                        {
-                            "text": "Remarks4",
-                            "align": "left",
-                            "format": "text"
-                        }
-                    ]
+                    
                 ],
 
 				"body": "@_$tabledata",
@@ -104,12 +90,12 @@
 				"width": "100%",
 				"x": 5,
 				"y": 0,
-				"margin-bottom": "5",
-                "margin-top": "5",
+				"margin-bottom": "0",
+                "margin-top": "0",
                 "margin-left": "100",
                 "margin-right": "100",
                
-				"sum": [""],
+				"sum": ["Amount"],
 				"font": {
 					"style": "lite",
 					"size": "10",
@@ -159,10 +145,10 @@
         {
             "img": {
                 "url": "@_$companylogo",
-                "width": "120",
-                "height": "120",
+                "width": "0",
+                "height": "0",
                 "x": 0,
-                "y": -160,
+                "y": 0,
                 "position": "fixed"
             }
         },
@@ -183,7 +169,7 @@
                 "bg-color": "white",
                 "color": "#000000",
                 "position": "fixed",
-                "x": "130",
+                "x": "100",
                 "y": "-150",
                 "font": {
                     "style": "Bold",
@@ -250,7 +236,7 @@
                 "color": "#000000",
                 "position": "fixed",
                 "x": "130",
-                "y": "-70",
+                "y": "-90",
                 "font": {
                     "style": "Bold",
                     "size": "20",

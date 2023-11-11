@@ -48,7 +48,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">contribution And Loan </h5>
+            <h5 class="mb-0">Contribution And Loan </h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 
@@ -74,16 +74,14 @@
                                             <option value="any">Any</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-1">
-
-                                    </div>
+                      
                                     <div class="col-md-3">
                                         <label>Computer Number</label>
                                         <select class="form-control select2" id="cmbcomputernum">
 
                                         </select>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3">
                                         <label>Member</label>
                                         <select class="form-control select2" id="cmbmember">
 
@@ -98,14 +96,36 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-md-1">
-
-                                    </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-6">
                                         <label>Full Name</label>
                                         <select class="form-control select2" id="cmbmembefullname">
 
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-2 mt-2">
+                                        <div class="row">
+                                            <div class="col-md-6" style="padding-top:10px;">
+                                                <button id="btnleft" style="background-color: transparent; border: none;" title="previous">
+                                                    <img src="assets/images/icons/leftarrow-png-24.png" alt="Left Arrow" style="width: 40px; height: 40px; transform: rotate(180deg);">
+                                                </button> &nbsp;
+                                            </div>
+                                            <div class="col-md-6" style="padding-top:10px;">
+                                                <button id="btnright" style="background-color: transparent; border: none;" title="next">
+                                                    <img src="assets/images/icons/leftarrow-png-24.png" alt="Left Arrow" style="width: 40px; height: 40px;">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 mt-2" style="text-align: right;padding-top:10px;">
+                                        <button class="btn btn-success" id="btnsave" style="width: 120px">Save</button>
+                                    </div>
+  
+                                    <div class="col-2 mt-2">
+                                        <img id="loadedImage" src="images/userimage.png" alt="Loaded Image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 100%; disply:block">
+
                                     </div>
                                 </div>
 
@@ -114,75 +134,46 @@
                             <div class="col-1">
                                 <div class="mb-8" style="width: 100px; height: 100px; text-align: left;">
                                     <label class="col-form-label mb-0"></label>
-                                    <img id="loadedImage" src="" alt="Loaded Image"
-                                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 100%; disply:block">
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-2">
-                                <div class="text-right">
-                                    <button id="btnleft" style="background-color: transparent; border: none;"
-                                        title="previous">
-                                        <img src="assets/images/icons/leftarrow-png-24.png" alt="Left Arrow"
-                                            style="width: 40px; height: 40px; transform: rotate(180deg);">
-                                    </button> &nbsp;
-
-                                    <button id="btnright" style="background-color: transparent; border: none;"
-                                        title="next">
-                                        <img src="assets/images/icons/leftarrow-png-24.png" alt="Left Arrow"
-                                            style="width: 40px; height: 40px;">
-                                    </button>
-                                </div>
-
-                            </div>
-                            <div class="col-2 text-left">
-                                <button class="btn btn-success" id="btnsave" style="width: 120px">Save</button>
-                            </div>
                         </div>
 
                         <hr>
 
-        
+
                         <!--tabs -->
-                        <ul class="nav nav-tabs mb-0" id="tabs" >
-                            <li class="nav-item rbs-nav-item" onclick="tabalerefresh2()">
-                                <a id="contributhion" href="#Contribution" class="nav-link active" aria-selected="false">Contribution</a>
+                        <ul class="nav nav-tabs mb-0" id="tabs">
+                            <li class="nav-item rbs-nav-item">
+                                <a id="contributhion" href="#Contribution" class="nav-link active" aria-selected="true">Contribution</a>
                             </li>
 
-                            <li class="nav-item rbs-nav-item" onclick="tabalerefresh()">
-                                <a href="#loantab" class="nav-link" aria-selected="false" >Loan</a>
+                            <li class="nav-item rbs-nav-item">
+                                <a href="#loantab" class="nav-link" aria-selected="false">Loan</a>
                             </li>
 
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="Contribution">
+                            <div class="tab-pane fade show active" id="Contribution">
                                 <div class="row">
 
                                     <div class="row">
                                         <h1>Contribution</h1>
 
                                         <div class="col-md-12 mb-4">
-                                           
-                                                
-                                                <table id="tblContribution"
-                                                    class="table table-striped datatable-fixed-both-member-contribution">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>id</th>
-                                                            <th>Code</th>
-                                                            <th>Title</th>
-    
-                                                            <th>Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                       
-                                                    </tbody>
-                                                </table>
-                                           
+
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Contribution</th>
+                                                        <th>Amount</th>
+                                                        <th>Received</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblContribution"></tbody>
+                                            </table>
+
 
                                         </div>
 
@@ -198,22 +189,20 @@
                                         <h1>Loan</h1>
 
                                         <div class="col-md-12 mb-4">
-                                           
-                                                <table id="tblloan" class="table table-striped datatable-fixed-both ">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Id</th>
-                                                            <th>Code</th>
-                                                            <th>Name</th>
-    
-                                                            <th>Amount</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        
-                                                    </tbody>
-                                                </table>
-                                           
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Loan</th>
+                                                        <th>Capital</th>
+                                                        <th>Received</th>
+                                                        <th>Interest</th>
+                                                        <th>Received</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tblLoan"></tbody>
+                                            </table>
+
 
                                         </div>
 
@@ -230,7 +219,7 @@
 
             </div>
         </div>
-                    
+
 
     </div>
     <hr>
@@ -253,6 +242,7 @@
 @section('scripts')
 <script src="{{URL::asset('assets/demo/pages/form_validation_library.js')}}"></script>
 <script src="{{URL::asset('assets/demo/pages/extra_noty.js')}}"></script>
+<script src="{{URL::asset('assets/js/vendor/notifications/bootbox.min.js')}}"></script>
 <script src="{{ URL::asset('assets/demo/pages/components_buttons.js') }}"></script>
 <!-- dataTables -->
 <script src="{{URL::asset('assets/js/vendor/tables/datatables/datatables.min.js')}}"></script>

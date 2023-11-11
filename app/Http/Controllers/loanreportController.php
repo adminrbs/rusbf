@@ -232,6 +232,18 @@ $designation = $jsonData['designation'];
 $computernumber = $jsonData['computernumber'];
 $worklocation = $jsonData['worklocation'];
 
+if ($id == "adviceofdeducation") {
+    return response()->json([
+       // 'year' => $year,
+       // 'month' => $month,
+       // 'subDepartments' => $subDepartments,
+        'designation' => $designation,
+       'computernumber' => $computernumber,
+         'worklocation' => $worklocation,
+       
+
+    ]);
+}
 
 }
 }

@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle') Loan Process  @endslot
+@slot('subtitle') Report @endslot
 @endcomponent
 <style>
     tr.highlighted {

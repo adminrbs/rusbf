@@ -51,96 +51,54 @@ class AdviceofdeductionController extends Controller
     
                 if ($nonNullCount > 1) {
 
-                  
-                    $query = "SELECT
-                    COALESCE(members.id, contributions.member_id, loans.member_id) AS member_id,
-                    members.member_number,
-                    members.full_name,
-                    members.computer_number,
-                    members.payroll_number,
-                     COALESCE(SUM(contributions.total_amount_for_month_year), 0) +
-                    COALESCE(SUM(loans.total_amount_for_month_year), 0) AS total_amount_for_month_year,
-                    COALESCE(contributions.year, loans.year) AS year
-                    
-                FROM (
-                   
-                    SELECT
-                        member_id,
-                        year,
-                        month,
-                        SUM(`amount`) AS total_amount_for_month_year
-                    FROM `member_contribution_ledgers`
-                    GROUP BY `member_id`, `year`, `month`
-                ) AS contributions
-                LEFT JOIN (
-                  
-                    SELECT
-                        MLL.member_id,
-                        MLL.year,
-                        MLL.month,
-                        COALESCE(SUM(MLL2.amount + MLL2.interest_amount), 0) AS total_amount_for_month_year
-                    FROM member_loan_ledgers MLL
-                    LEFT JOIN member_loan_ledgers MLL2 ON
-                        MLL.member_id = MLL2.member_id
-                        AND MLL.year = MLL2.year
-                        AND MLL.month = MLL2.month
-                    WHERE MLL.member_id = MLL2.member_id
-                    GROUP BY MLL.member_id, MLL.year, MLL.month
-                ) AS loans ON contributions.member_id = loans.member_id
-                           AND contributions.year = loans.year
-                           AND contributions.month = loans.month
-                LEFT JOIN members ON members.id = COALESCE(loans.member_id, contributions.member_id)
-               ";
-    
-    
-    
-                    $quryModify = "";
-                    if ($selectedepartment != null) {
-                        $quryModify .= "  members.serving_sub_department_id ='" . $selectedepartment . "'AND";
-                    }
-                    
-            
-                    if ($selectedesignation != null) {
-                        $quryModify .= "  members.designation_id ='" . $selectedesignation . "'AND";
-                    }
-                   
-            
-            
-                    if ($selectedecomputernumber != null) {
-                        $quryModify .= " members.computer_number ='" . $selectedecomputernumber . "'AND";
-                    }
-                    
-            
-                    if ($selectedelocation != null) {
-                        $quryModify .= " members.work_location_id ='" . $selectedelocation . "' AND";
-                    }
-                   
-            
-            
+                    $quryModify1 = "";
+                    $quryModify2 = "";
                     if ($selecteyear != null) {
-                        $quryModify .= " contributions.year, loans.year ='" . $selecteyear . "'AND";
+                        $quryModify1 .= " MCL.`year`= '".$selecteyear."' AND ";
+                        $quryModify2 .= " MLL.`year`= '".$selecteyear."' AND ";
                     }
                    
             
                     if ($selectemonth != null) {
-                        $quryModify .= " contributions.month, loans.month" . $selectemonth . "'AND";
+                        $quryModify1 .= " MCL.`month`= '".$selectemonth."' AND";
+                        $quryModify2 .= " MLL.`month`= '".$selectemonth."' AND";
                     }
+                    if ($selectedepartment != null) {
+                        $quryModify1 .= "  M.serving_sub_department_id= '".$selectedepartment."' AND";
+                        $quryModify2 .= "  M.serving_sub_department_id= '".$selectedepartment."' AND";
+                    }
+                    $quryModify1 = preg_replace('/\W\w+\s*(\W*)$/', '$1', $quryModify1);
+                    $quryModify2 = preg_replace('/\W\w+\s*(\W*)$/', '$1', $quryModify2);
+                  
+                    $query = "SELECT 
+ ROW_NUMBER() OVER (ORDER BY D.member_id) AS serial_number,
+D.member_id ,MMB.member_number,
+D.member_id , MMB.name_initials  , MMB.computer_number , MMB.cabinet_number  , D.Amount     FROM 
+
+                    (SELECT AD.member_id , SUM(AD.Amount) AS Amount FROM 
+                    
+                    ( SELECT  MCL.member_id , SUM(MCL.amount) AS Amount  FROM member_contribution_ledgers MCL 
+                    LEFT JOIN members M ON M.id=MCL.member_id 
+                    WHERE ".$quryModify1."
+                    GROUP BY member_id    
+                    
+                    UNION ALL 
+                    
+                    SELECT  MLL.member_id , SUM(MLL.amount+MLL.interest_amount) AS Amount  FROM member_loan_ledgers  MLL 
+                    LEFT JOIN members M ON M.id=MLL.member_id 
+                    WHERE ".$quryModify2."  
+                    GROUP BY member_id  ) AD    
+                    GROUP BY AD.member_id ) D 
+                    
+                    LEFT JOIN members MMB  ON MMB.id=D.member_id";
     
-                    if ($quryModify != "") {
-                        $quryModify = rtrim($quryModify, 'AND OR ');
-                        $query = $query . " where " . $quryModify . 'GROUP BY members.member_number,
-                        members.full_name,
-                        members.computer_number,
-                        members.payroll_number,
-                        COALESCE(contributions.year, loans.year),
-                        COALESCE(contributions.month, loans.month)';
-                    }
+    
     
                     //$query = $query . ' GROUP BY D.customer_id';
     
     
                     //$query = preg_replace('/\W\w+\s*(\W*)$/', '$1', $query);
-                    //dd($query);
+                    ///dd($query);
                     $result = DB::select($query);
     
                     $reportViwer = new ReportViewer();
@@ -150,65 +108,61 @@ class AdviceofdeductionController extends Controller
                     $reportViwer->addParameter("tabledata", $result);
                     //$reportViwer->addParameter("Customerledger_tabaledata", $result);
                 } else {
-    
-                    $query = "SELECT
-                    COALESCE(MAX(members.id), MAX(contributions.member_id), MAX(loans.member_id)) AS member_id,
-                    members.member_number,
-                    members.full_name,
-                    members.computer_number,
-                    members.payroll_number,
-                    COALESCE(SUM(contributions.total_amount_for_month_year), 0) +
-                    COALESCE(SUM(loans.total_amount_for_month_year), 0) AS total_amount_for_month_year,
-                    COALESCE(contributions.year, loans.year) AS year,
-                    COALESCE(contributions.month, loans.month) AS month
-                    
-                FROM (
-                    SELECT
-                        member_id,
-                        year,
-                        month,
-                        SUM(`amount`) AS total_amount_for_month_year
-                    FROM `member_contribution_ledgers`
-                    GROUP BY `member_id`, `year`, `month`
-                ) AS contributions
-                LEFT JOIN (
-                    SELECT
-                        MLL.member_id,
-                        MLL.year,
-                        MLL.month,
-                        COALESCE(SUM(MLL2.amount + MLL2.interest_amount), 0) AS total_amount_for_month_year
-                    FROM member_loan_ledgers MLL
-                    LEFT JOIN member_loan_ledgers MLL2 ON
-                        MLL.member_id = MLL2.member_id
-                        AND MLL.year = MLL2.year
-                        AND MLL.month = MLL2.month
-                    WHERE MLL.member_id = MLL2.member_id
-                    GROUP BY MLL.member_id, MLL.year, MLL.month
-                ) AS loans ON contributions.member_id = loans.member_id
-                           AND contributions.year = loans.year
-                           AND contributions.month = loans.month
-                LEFT JOIN members ON members.id = COALESCE(loans.member_id, contributions.member_id)";
+
+                    $quryModify1 = " WHERE ";
+                    $quryModify2 = " WHERE ";
+if($selecteyear == null && $selectemonth == null && $selectedepartment == null){
+    $quryModify1 = " ";
+    $quryModify2 = " ";
+}
+                    if ($selecteyear != null) {
+                        $quryModify1 .= " MCL.`year`= '".$selecteyear."' AND";
+                        $quryModify2 .= " MLL.`year`= '".$selecteyear."' AND ";
+                    }
+                   
+            
+                    if ($selectemonth != null) {
+                        $quryModify1 .= " MCL.`month`= '".$selectemonth."' AND ";
+                        $quryModify2 .= " MLL.`month`= '".$selectemonth."' AND ";
+                    }
+                    if ($selectedepartment != null) {
+                        $quryModify1 .= "  M.serving_sub_department_id= '".$selectedepartment."' AND ";
+                        $quryModify2 .= "  M.serving_sub_department_id= '".$selectedepartment."' AND";
+                    }
+                    $quryModify1 = preg_replace('/\W\w+\s*(\W*)$/', '$1', $quryModify1);
+                    $quryModify2 = preg_replace('/\W\w+\s*(\W*)$/', '$1', $quryModify2);
+                  
+                    $query = "SELECT 
+                    ROW_NUMBER() OVER (ORDER BY D.member_id) AS serial_number,
+                   D.member_id ,MMB.member_number,
+                   D.member_id , MMB.name_initials  , MMB.computer_number , MMB.cabinet_number  , D.Amount     FROM 
+                   
+                                       (SELECT AD.member_id , SUM(AD.Amount) AS Amount FROM 
+                                       
+                                       ( SELECT  MCL.member_id , SUM(MCL.amount) AS Amount  FROM member_contribution_ledgers MCL 
+                                       LEFT JOIN members M ON M.id=MCL.member_id 
+                                        ".$quryModify1."
+                                       GROUP BY member_id    
+                                       
+                                       UNION ALL 
+                                       
+                                       SELECT  MLL.member_id , SUM(MLL.amount+MLL.interest_amount) AS Amount  FROM member_loan_ledgers  MLL 
+                                       LEFT JOIN members M ON M.id=MLL.member_id 
+                                      ".$quryModify2."  
+                                       GROUP BY member_id  ) AD    
+                                       GROUP BY AD.member_id ) D 
+                                       
+                                       LEFT JOIN members MMB  ON MMB.id=D.member_id";
         
-        $quryModify = ""; // Your existing modification code...
+       
+       
         
-        if ($quryModify != "") {
-            $query = $query . " WHERE " . $quryModify . ' GROUP BY members.member_number,
-                            members.full_name,
-                            members.computer_number,
-                            members.payroll_number,
-                            COALESCE(contributions.year, loans.year),
-                            COALESCE(contributions.month, loans.month)';
-        } else {
-            $query = $query . ' GROUP BY members.member_number,
-                            members.full_name,
-                            members.computer_number,
-                            members.payroll_number,
-                            COALESCE(contributions.year, loans.year),
-                            COALESCE(contributions.month, loans.month)';
-        }
+
+       
+      
         
         // Rest of your code...
-dd($query);
+//dd($query);
         $result = DB::select($query);
         //dd($result);
         
@@ -220,8 +174,25 @@ dd($query);
                     $reportViwer->addParameter("tabledata",$result);
                 }
 
-    
-                $reportViwer = new ReportViewer();
+                $selectemonthN = $searchOption[5]->selectemonth;
+               
+$monthNames = [
+    1 => "January",
+    2 => "February",
+    3 => "March",
+    4 => "April",
+    5 => "May",
+    6 => "June",
+    7 => "July",
+    8 => "August",
+    9 => "September",
+    10 => "October",
+    11 => "November",
+    12 => "December",
+];
+
+$selectemonth = isset($monthNames[$selectemonthN]) ? $monthNames[$selectemonthN] : "";
+
     
     
                 if ($searchOption !== null) {

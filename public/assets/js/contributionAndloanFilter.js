@@ -1,332 +1,141 @@
 
-
-/* ----------data table---------------- */
-
-const DatatableFixedColumnss = function () {
-
-
-    //
-    // Setup module components
-    //
-
-    // Basic Datatable examples
-    const _componentDatatableFixedColumns = function () {
-        if (!$().DataTable) {
-            console.warn('Warning - datatables.min.js is not loaded.');
-            return;
-        }
-
-        // Setting datatable defaults
-        $.extend($.fn.dataTable.defaults, {
-            columnDefs: [{
-                orderable: false,
-                width: 100,
-                targets: [2]
-            }],
-            dom: '<"datatable-header"fl><"datatable-scroll datatable-scroll-wrap"t><"datatable-footer"ip>',
-            language: {
-                search: '<span class="me-3"></span> <div style="display: none;" class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
-                //searchPlaceholder: 'Type to filter...',
-                lengthMenu: '<span style="display: none;" class="me-3">Show:</span>',
-                paginate: { 'first': 'First', 'last': 'Last', 'next': document.dir == "rtl" ? '&larr;' : '&rarr;', 'previous': document.dir == "rtl" ? '&rarr;' : '&larr;' }
-            }
-        });
-
-
-
-        // Left and right fixed columns
-        var table = $('#tblContribution').DataTable({
-            columnDefs: [
-                {
-                    orderable: false,
-                    targets: 2
-                },
-                {
-                    width: 200,
-                    targets: 0
-                },
-                {
-                    width: 200,
-                    targets: 1
-                },
-                {
-                    width: '100%',
-                    targets: [2]
-                }
-
-            ],
-            scrollX: true,
-            /* scrollY: 350, */
-            scrollCollapse: true,
-            fixedColumns: {
-                leftColumns: 0,
-                rightColumns: 1
-            },
-            "pageLength": 100,
-            "order": [],
-            "columns": [
-                { "data": "id" },
-                { "data": "code" },
-                { "data": "titel" },
-                //{ "data": "month" },
-                { "data": "amount" },
-               
-
-
-            ], "stripeClasses": ['odd-row', 'even-row'],
-        }); table.column(0).visible(false);
-
-        //
-        // Fixed column with complex headers
-        //
-
-    };
-
-
-    //
-    // Return objects assigned to module
-    //
-
-    return {
-        init: function () {
-            _componentDatatableFixedColumns();
-        }
-    }
-}();
-
-
-// Initialize module
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-    DatatableFixedColumnss.init();
-});
-
-/////////////////////////////////////////   Loan Table        ////////////////////////////////////////////////////
-
-
-/* ----------data table---------------- */
-
-const DatatableFixedColumns = function () {
-
-
-    //
-    // Setup module components
-    //
-
-    // Basic Datatable examples
-    const _componentDatatableFixedColumns = function () {
-        if (!$().DataTable) {
-            console.warn('Warning - datatables.min.js is not loaded.');
-            return;
-        }
-
-        // Setting datatable defaults
-        $.extend($.fn.dataTable.defaults, {
-            columnDefs: [{
-                orderable: false,
-                width: 100,
-                targets: [2]
-            }],
-            dom: '<"datatable-header"fl><"datatable-scroll datatable-scroll-wrap"t><"datatable-footer"ip>',
-            language: {
-                search: '<span style="display: none;" class=""></span> <div style="display: none;" class="form-control-feedback form-control-feedback-end flex-fill">_INPUT_<div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div></div>',
-               // searchPlaceholder: 'Type to filter...',
-                lengthMenu: '<span style="display: none;" class="me-1 mt-2"></span>',
-                paginate: { 'first': 'First', 'last': 'Last', 'next': document.dir == "rtl" ? '&larr;' : '&rarr;', 'previous': document.dir == "rtl" ? '&rarr;' : '&larr;' }
-            }
-        });
-
-
-
-        // Left and right fixed columns
-        var table = $('#tblloan').DataTable({
-            columnDefs: [
-                {
-                    orderable: false,
-                    targets: 2
-                },
-                {
-                    width: 200,
-                    targets: 0
-                },
-                {
-                    width: '100%',
-                    targets: 1
-                },
-                {
-                    width: 200,
-                    targets: [2]
-                }
-
-            ],
-            scrollX: true,
-            /* scrollY: 350, */
-            scrollCollapse: true,
-            fixedColumns: {
-                leftColumns: 0,
-                rightColumns: 1
-            },
-            "pageLength": 100,
-            "order": [],
-            "columns": [
-                { "data": "id" },
-                { "data": "code" },
-                { "data": "name" },
-                //{ "data": "month" },
-                { "data": "amount" },
-               
-
-
-            ], "stripeClasses": ['odd-row', 'even-row'],
-        }); table.column(0).visible(false);
-
-        //
-        // Fixed column with complex headers
-        //
-
-    };
-
-
-    //
-    // Return objects assigned to module
-    //
-
-    return {
-        init: function () {
-            _componentDatatableFixedColumns();
-        }
-    }
-}();
-
-
-// Initialize module
-// ------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-    DatatableFixedColumns.init();
-});
-
-
-/* --------------end of data table--------- */
 var formData = new FormData();
 
 var nameid = 0;
 var memberid = 0;
 var subserveid;
+var COMPUTER_NUMBER = [];
+var MEMBER_NUMBER = [];
+var FULL_NAME = [];
+
 $(document).ready(function () {
     $('#tabs a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
-   
- 
-    Fullname(0)
-    memberNumber(0);
-    computerNumber(0);
-    imageloard(0);
-    servsubdepartment(0)
-   
-
-    $('#cmbmember').change(function () {
-        memberid = $(this).val();
-        Fullname(memberid);
-        computerNumber(nameid);
-        servsubdepartment(memberid)
-        imageloard(memberid);
-        getLoan();
-        getcontribution()
-       
-       // amountset(memberid)
-    })
-
-    $('#cmbmembefullname').change(function () {
-        nameid = $(this).val();
-        servsubdepartment(nameid)
-        memberNumber(nameid);
-        imageloard(nameid);
-        computerNumber(nameid);
-        getLoan();
-        getcontribution()
-        //amountset(memberid);
-        subserveid = $('#cmbservsubdepartment').val();
-    });
-    $('#cmbcomputernum').change(function () {
-        nameid = $(this).val();
-        servsubdepartment(nameid)
-        memberNumber(nameid);
-        Fullname(memberid);
-        imageloard(memberid);
-        getLoan();
-        getcontribution()
-
-        
-        //amountset(memberid);
-        subserveid = $('#cmbservsubdepartment').val();
-    });
-    
-
-
-
-
-
-
-    getLoan()
-    getcontribution() 
-
 
     // Default initialization
     $('.select2').select2();
-    subserveid = $('#cmbservsubdepartment').val();
+
+
+    $('#cmbmember').change(function () {
+        var id = $(this).val();
+        servsubdepartment(id);
+        computerNumber(id);
+        Fullname(id);
+        imageloard(id);
+        loadContribution();
+        loadLoan();
+
+    })
+
+
+    $('#cmbcomputernum').change(function () {
+        var id = $(this).val();
+        memberNumber(id);
+        servsubdepartment(id);
+        Fullname(id);
+        imageloard(id);
+        loadContribution();
+        loadLoan();
+    });
+
 
     $('#cmbservsubdepartment').on('change', function () {
-        subserveid = $('#cmbservsubdepartment').val();
-        $.ajax({
-            url: '/subserveDepartmentmember/' + subserveid,
-            type: 'get',
-            async: false,
-            success: function (response) {
-           nameid = response[0].id
+        var id = $(this).val();
+        computerNumber(id);
+        memberNumber(id);
+        Fullname(id);
+        imageloard(id);
+        loadContribution();
+        loadLoan();
 
-            }, error: function (response) {
-                console.log(response)
-            }
-    
-        })
-
-        memberNumber(nameid);
-        computerNumber(nameid);
-        Fullname(nameid);
-        imageloard(nameid);
-        getcontribution()
-        getLoan()
     });
-  
-    $('#btnleft').on('click', function () {
-       //alert(subserveid)
-       subserveid -= 1;
-       $('#cmbservsubdepartment').val(subserveid).trigger('change');
 
-       getLoan();
-       getcontribution()
+
+    $('#cmbmembefullname').change(function () {
+        var id = $(this).val();
+        computerNumber(id);
+        memberNumber(id);
+        servsubdepartment(id);
+        imageloard(id);
+        loadContribution();
+        loadLoan();
+    });
+
+    $('#btnleft').on('click', function () {
+
+        var row = $('#tblContribution').find('tr');
+        for (var i = 0; i < row.length; i++) {
+
+            var cell = $(row[i]).find('td');
+            var settlement = $($(cell[2]).children()[0]);
+            if (settlement.attr('data-edited') == "true") {
+                showConfirmation("Previous");
+                return;
+            }
+
+        }
+
+        var row = $('#tblLoan').find('tr');
+        for (var i = 0; i < row.length; i++) {
+
+            var cell = $(row[i]).find('td');
+            var settlement1 = $($(cell[2]).children()[0]);
+            var settlement2 = $($(cell[4]).children()[0]);
+            if (settlement1.attr('data-edited') == "true" || settlement2.attr('data-edited') == "true") {
+                showConfirmation("Previous");
+                return;
+            }
+
+        }
+
+
+        previous($('#cmbservsubdepartment').val(), $('#cmbmember').val());
+
+
     });
 
     $('#btnright').on('click', function () {
-        subserveid ++;
+        var row = $('#tblContribution').find('tr');
+        for (var i = 0; i < row.length; i++) {
 
-       $('#cmbservsubdepartment').val(subserveid).trigger('change');
-       getLoan();
-       getcontribution()
+            var cell = $(row[i]).find('td');
+            var settlement = $($(cell[2]).children()[0]);
+            if (settlement.attr('data-edited') == "true") {
+                showConfirmation("Next");
+                return;
+            }
+
+        }
+
+
+        var row = $('#tblLoan').find('tr');
+        for (var i = 0; i < row.length; i++) {
+
+            var cell = $(row[i]).find('td');
+            var settlement1 = $($(cell[2]).children()[0]);
+            var settlement2 = $($(cell[4]).children()[0]);
+            if (settlement1.attr('data-edited') == "true" || settlement2.attr('data-edited') == "true") {
+                showConfirmation("Next");
+                return;
+            }
+
+        }
+
+        next($('#cmbservsubdepartment').val(), $('#cmbmember').val());
+
+
     });
 
     $('#cmb_year').on('change', function () {
-        getcontribution()
-        getLoan()
+        loadContribution();
+        loadLoan();
     });
 
     $('#cmb_month').on('change', function () {
-        getcontribution()
-        getLoan()
+        loadContribution();
+        loadLoan();
     });
     var currentYear = new Date().getFullYear();
     var yearDropdown = document.getElementById("cmb_year");
@@ -351,12 +160,60 @@ $(document).ready(function () {
     // Populate the month options
     for (var i = 0; i < monthNames.length; i++) {
         var option = document.createElement("option");
-        option.value =i + 1; // Set the month name as the option value
+        option.value = i + 1; // Set the month name as the option value
         option.text = monthNames[i];
         monthDropdown.appendChild(option);
     }
     var currentMonth = monthNames[new Date().getMonth()];
-    
+
+
+
+
+    $('#btnsave').on('click', function () {
+        var is_edited_contribution = false;
+        var contribution_row = $('#tblContribution').find('tr');
+        for (var i = 0; i < contribution_row.length; i++) {
+
+            var cell = $(contribution_row[i]).find('td');
+            var settlement = $($(cell[2]).children()[0]);
+            if (settlement.attr('data-edited') == "true") {
+                is_edited_contribution = true;
+                break;
+            }
+
+        }
+        if (is_edited_contribution) {
+            saveContribution();
+        }
+
+
+        var is_edited_loan = false;
+        var loan_row = $('#tblLoan').find('tr');
+        for (var i = 0; i < loan_row.length; i++) {
+
+            var cell = $(loan_row[i]).find('td');
+            var settlement1 = $($(cell[2]).children()[0]);
+            var settlement2 = $($(cell[4]).children()[0]);
+            if (settlement1.attr('data-edited') == "true" || settlement2.attr('data-edited') == "true") {
+                is_edited_loan = true;
+                break;
+            }
+
+        }
+
+        if (is_edited_loan) {
+            saveLoan();
+        }
+    });
+
+
+    getGlobalYearMonth();
+    servsubdepartment(null);
+    computerNumber(null);
+    memberNumber(null);
+    Fullname(null);
+    loadContribution();
+    loadLoan();
 
 });
 
@@ -374,142 +231,34 @@ function getMemberloan() {
             var membersname = "";
             membersOptions += "<option value='0'>Any</option>";
             membersname += "<option value='0'>Any</option>";
-        for (var i = 0; i < members.length; i++) {
-            membersOptions += "<option value='" + members[i].member_number + "'>" + members[i].member_number + "</option>";
-            membersname += "<option value='" + members[i].full_name + "'>" + members[i].full_name + "</option>";
-        }
-
-        $('#cmb_number').html(membersOptions);
-        $('#cmb_name').html(membersname);
-}
-    });
-}
-
-//////  contribution table ////////////
-
-function getcontribution() {
-    formData.append('cmb_year',$('#cmb_year').val());
-    formData.append('cmb_month',$('#cmb_month').val());
-    $.ajax({
-       
-        url: "/getcontribution/"+ $('#cmbmember').val(),
-        method: 'POST',
-        enctype: 'multipart/form-data',
-        data: formData,
-        processData: false,
-        contentType: false,
-        cache: false,
-        async: false,
-        timeout: 800000,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-      
-        success: function (response) {
-
-            var dt = response.data;
-            console.log(dt);
-            var data = [];
-            for (i = 0; i < dt.length; i++) {
-
-                    data.push({
-                        "id": dt[i].contribution_id,
-                        "code": dt[i].contribution_code,
-                        "titel": dt[i].contribution_title,
-                      
-                        "amount": dt[i].amount,
-                       
-                    });
-                
-               
-               
-
+            for (var i = 0; i < members.length; i++) {
+                membersOptions += "<option value='" + members[i].member_number + "'>" + members[i].member_number + "</option>";
+                membersname += "<option value='" + members[i].full_name + "'>" + members[i].full_name + "</option>";
             }
-            var table = $('#tblContribution').DataTable();
-            table.clear();
-            table.rows.add(data).draw();
 
-        },
-        error: function (data) {
-            console.log(data);
-        }, complete: function () {
-
+            $('#cmb_number').html(membersOptions);
+            $('#cmb_name').html(membersname);
         }
     });
 }
 
 
-//////  Loan table ////////////
-
-function getLoan() {
-    formData.append('cmb_year',$('#cmb_year').val());
-    formData.append('cmb_month',$('#cmb_month').val());
-   
-        $.ajax({
-           
-           // url: '/getLoan',
-            url: "/getLoan/"+ $('#cmbmember').val(),
-            method: 'POST',
-            enctype: 'multipart/form-data',
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            async: false,
-            timeout: 800000,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-          
-            
-            success: function (response) {
-    
-                var dt = response.data;
-                console.log(dt);
-                var data = [];
-                for (i = 0; i < dt.length; i++) {
-                  
-                   
-                        data.push({
-                            "id": dt[i].member_loan_ledger_id,
-                            "code": dt[i].loan_code,
-                            "name": dt[i].loan_name,
-                            "amount": dt[i].amount,
-                           
-                        });
-                   
-    
-                }
-                var table = $('#tblloan').DataTable();
-                table.clear();
-                table.rows.add(data).draw();
-    
-            },
-            error: function (data) {
-                console.log(data);
-            }, complete: function () {
-    
-            }
-        });
-    }
-    
 
 
-function memberNumber(id) {
+
+function memberNumber(member_id) {
+
     $('#cmbmember').empty();
     $.ajax({
-        url: '/memberNumber/' + id,
+        url: '/memberNumber/' + $('#cmbservsubdepartment').val(),
         type: 'get',
         async: false,
         success: function (data) {
-            var htmlContent = "";
-
-
-            $.each(data, function (key, value) {
-
-                htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
-            });
-            $('#cmbmember').html(htmlContent);
+            MEMBER_NUMBER = data;
+            appendMemberNumber(MEMBER_NUMBER);
+            if (member_id != null && member_id != 0) {
+                $('#cmbmember').val(member_id);
+            }
 
 
         }, error: function (data) {
@@ -520,25 +269,30 @@ function memberNumber(id) {
 
 }
 
+function appendMemberNumber(data) {
+    if (data.length > 0) {
+        var htmlContent = "";
+        $.each(data, function (key, value) {
+            htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
+        });
+        $('#cmbmember').html(htmlContent);
+    }
+}
 
 
-function computerNumber(id) {
-    $('#cmbcomputernum').empty();
+
+function computerNumber(member_id) {
+
     $.ajax({
-        url: '/computerNumber/' + id,
+        url: '/computerNumber/' + $('#cmbservsubdepartment').val(),
         type: 'get',
         async: false,
         success: function (data) {
-            var htmlContent = "";
-
-
-            $.each(data, function (key, value) {
-
-                htmlContent += "<option value='" + value.id + "'>" + value.computer_number + "</option>";
-            });
-            $('#cmbcomputernum').html(htmlContent);
-
-
+            COMPUTER_NUMBER = data;
+            appendComputerNumber(COMPUTER_NUMBER);
+            if (member_id != null && member_id != 0) {
+                $('#cmbcomputernum').val(member_id);
+            }
         }, error: function (data) {
             console.log(data)
         }
@@ -547,35 +301,53 @@ function computerNumber(id) {
 
 }
 
+function appendComputerNumber(data) {
+    if (data.length > 0) {
+        var htmlContent = "";
+        $.each(data, function (key, value) {
+
+            htmlContent += "<option value='" + value.id + "'>" + value.computer_number + "</option>";
+        });
+        $('#cmbcomputernum').html(htmlContent);
+    }
+}
 
 
-function Fullname(id) {
 
-    $('#cmbmembefullname').empty();
+function Fullname(member_id) {
+
     $.ajax({
-        url: '/fullName/' + id,
+        url: '/fullName/' + $('#cmbservsubdepartment').val(),
         type: 'get',
         async: false,
         success: function (data) {
             console.log(data);
-            var htmlContent = "";
-
-
-            $.each(data, function (key, value) {
-
-                htmlContent += "<option value='" + value.id + "'>" + value.full_name + "</option>";
-            });
-            $('#cmbmembefullname').html(htmlContent);
+            FULL_NAME = data;
+            appendFullName(FULL_NAME);
+            if (member_id != null && member_id != 0) {
+                $('#cmbmembefullname').val(member_id);
+            }
 
         },
     })
 }
 
-function servsubdepartment(id) {
 
-  // $('#cmbservsubdepartment').empty(); 
+function appendFullName(data) {
+    if (data.length > 0) {
+        var htmlContent = "";
+        $.each(data, function (key, value) {
+            htmlContent += "<option value='" + value.id + "'>" + value.full_name + "</option>";
+        });
+        $('#cmbmembefullname').html(htmlContent);
+    }
+}
+
+function servsubdepartment(member_id) {
+
+    $('#cmbservsubdepartment').empty();
     $.ajax({
-        url: '/subdepartment/' + id,
+        url: '/member_subdepartment',
         type: 'get',
         async: false,
         success: function (data) {
@@ -588,7 +360,9 @@ function servsubdepartment(id) {
                 htmlContent += "<option value='" + value.id + "'>" + value.name + "</option>";
             });
             $('#cmbservsubdepartment').html(htmlContent);
-
+            if (member_id != null && member_id != 0) {
+                $('#cmbservsubdepartment').val(member_id);
+            }
         },
     })
 }
@@ -598,16 +372,13 @@ function servsubdepartment(id) {
 
 function imageloard(id) {
 
+    var defaultImageUrl = 'images/userimage.png';
 
+
+    $('#loadedImage').attr('src', defaultImageUrl);
     if (id == 0 || id == null) {
 
-        var defaultImageUrl = 'images/userimage.png';
-
-
-        var imageElement = document.getElementById('loadedImage');
-
-        // Set the src attribute to the default image URL
-        imageElement.src = defaultImageUrl;
+       
     } else {
 
         $.ajax({
@@ -616,13 +387,7 @@ function imageloard(id) {
             async: false,
             success: function (response) {
 
-                $.each(response, function (key, value) {
-
-                    var imageElement = document.getElementById('loadedImage');
-
-
-                    imageElement.src = value.path;
-                });
+                $('#loadedImage').attr('src', response.path);
 
 
             },
@@ -631,11 +396,413 @@ function imageloard(id) {
 
 }
 
-function tabalerefresh() {
-    var table2 = $('#tblloan').DataTable();
-    table2.columns.adjust().draw();
+
+
+function getGlobalYearMonth() {
+    $.ajax({
+        type: "GET",
+        url: '/getGlobalYearMonth',
+        async: false,
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+            $('#cmb_year').val(response.year);
+            $('#cmb_month').val(response.month);
+
+        },
+        error: function (error) {
+            console.log(error);
+
+        },
+        complete: function () {
+
+        }
+
+    });
 }
-function tabalerefresh2() {
-    var table2 = $('#tblContribution').DataTable();
-    table2.columns.adjust().draw();
+
+
+function loadContribution() {
+    $.ajax({
+        type: "GET",
+        url: '/loadContribution/' + $('#cmb_year').val() + "/" + $('#cmb_month').val() + "/" + $('#cmbmember').val(),
+        async: false,
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+            $('#tblContribution').empty();
+            if (response.status) {
+                var data = response.data;
+                for (var i = 0; i < data.length; i++) {
+                    var row = '<tr>';
+                    row += '<td>';
+                    row += data[i].contribution_name;
+                    row += '</td>';
+                    row += '<td>';
+                    row += parseFloat(data[i].amount).toFixed(2);
+                    row += '</td>';
+                    row += '<td>';
+                    row += '<input data-id="' + data[i].member_contribution_ledger_id + '" data-edited="false" type="text" class="form-control" style="max-width:100px;text-align:right;" oninput="isEdited(this)" value="' + parseFloat(data[i].paid_amount).toFixed(2) + '">';
+                    row += '</td>';
+                    row += '</tr>';
+                    $('#tblContribution').append(row);
+                }
+            }
+
+
+        },
+        error: function (error) {
+            console.log(error);
+
+        },
+        complete: function () {
+
+        }
+
+    });
 }
+
+
+
+function loadLoan() {
+    $.ajax({
+        type: "GET",
+        url: '/loadLoan/' + $('#cmb_year').val() + "/" + $('#cmb_month').val() + "/" + $('#cmbmember').val(),
+        async: false,
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+            $('#tblLoan').empty();
+            if (response.status) {
+                var data = response.data;
+                for (var i = 0; i < data.length; i++) {
+                    var row = '<tr>';
+                    row += '<td>';
+                    row += data[i].loan_name;
+                    row += '</td>';
+                    row += '<td>';
+                    row += parseFloat(data[i].amount).toFixed(2);
+                    row += '</td>';
+                    row += '<td>';
+                    row += '<input data-id="' + data[i].member_loan_ledger_id + '"  data-edited="false" type="text" class="form-control "  style="max-width:100px;text-align:right;" oninput="isEdited(this)" value="' + parseFloat(data[i].paid_amount).toFixed(2) + '">';
+                    row += '</td>';
+                    row += '<td>';
+                    row += parseFloat(data[i].interest_amount).toFixed(2);
+                    row += '</td>';
+                    row += '<td>';
+                    row += '<input data-id="' + data[i].member_loan_ledger_id + '"  data-edited="false" type="text" class="form-control"  style="max-width:100px;text-align:right;" oninput="isEdited(this)"  value="' + parseFloat(data[i].paid_interest).toFixed(2) + '">';
+                    row += '</td>';
+                    row += '</tr>';
+                    $('#tblLoan').append(row);
+                }
+            }
+
+
+        },
+        error: function (error) {
+            console.log(error);
+
+        },
+        complete: function () {
+
+        }
+
+    });
+}
+
+function isEdited(event) {
+
+    $(event).attr("data-edited", false);
+    if ($(event).val().trim().length > 0) {
+        $(event).attr("data-edited", true);
+    }
+}
+
+
+function saveContribution() {
+
+    var collection = [];
+    var row = $('#tblContribution').find('tr');
+    for (var i = 0; i < row.length; i++) {
+
+        var cell = $(row[i]).find('td');
+        var settlement = $($(cell[2]).children()[0]);
+        if (settlement.attr('data-edited') == "true") {
+            collection.push(JSON.stringify({ "id": settlement.attr('data-id'), "value": settlement.val() }));
+        }
+
+    }
+    var formData = new FormData();
+    formData.append("data", JSON.stringify(collection));
+    $.ajax({
+        url: '/saveContribution',
+        method: 'post',
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 800000,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function () {
+
+        }, success: function (response) {
+            console.log(response);
+
+            if (response.status) {
+                resetContributionTable();
+                new Noty({
+                    text: 'Contribution Saved!',
+                    type: 'success'
+                }).show();
+            } else {
+                new Noty({
+                    text: 'Something went wrong.',
+                    type: 'error'
+                }).show();
+            }
+
+
+        }, error: function (data) {
+            console.log(data.responseText);
+            new Noty({
+                text: 'Something went wrong.',
+                type: 'error'
+            }).show();
+        }, complete: function () {
+
+        }
+    });
+}
+
+
+function saveLoan() {
+
+    var collection = [];
+    var row = $('#tblLoan').find('tr');
+    for (var i = 0; i < row.length; i++) {
+
+        var cell = $(row[i]).find('td');
+        var settlement1 = $($(cell[2]).children()[0]);
+        var settlement2 = $($(cell[4]).children()[0]);
+        if (settlement1.attr('data-edited') == "true" || settlement2.attr('data-edited') == "true") {
+            collection.push(JSON.stringify({ "id": settlement1.attr('data-id'), "value1": settlement1.val(), "value2": settlement2.val() }));
+        }
+
+    }
+    var formData = new FormData();
+    formData.append("data", JSON.stringify(collection));
+    $.ajax({
+        url: '/saveLoan',
+        method: 'post',
+        data: formData,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 800000,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        beforeSend: function () {
+
+        }, success: function (response) {
+            console.log(response);
+
+            if (response.status) {
+                resetLoanTable();
+                new Noty({
+                    text: 'Loan Saved!',
+                    type: 'success'
+                }).show();
+            } else {
+                new Noty({
+                    text: 'Something went wrong.',
+                    type: 'error'
+                }).show();
+            }
+
+
+        }, error: function (data) {
+            console.log(data.responseText);
+            new Noty({
+                text: 'Something went wrong.',
+                type: 'error'
+            }).show();
+        }, complete: function () {
+
+        }
+    });
+}
+
+
+function resetContributionTable() {
+
+    var contribution_row = $('#tblContribution').find('tr');
+    for (var i = 0; i < contribution_row.length; i++) {
+
+        var cell = $(contribution_row[i]).find('td');
+        var settlement = $($(cell[2]).children()[0]);
+        settlement.attr('data-edited', "false");
+
+    }
+
+}
+
+
+function resetLoanTable() {
+
+    var loan_row = $('#tblLoan').find('tr');
+    for (var i = 0; i < loan_row.length; i++) {
+
+        var cell = $(loan_row[i]).find('td');
+        var settlement1 = $($(cell[2]).children()[0]);
+        var settlement2 = $($(cell[4]).children()[0]);
+        settlement1.attr('data-edited', "false");
+        settlement2.attr('data-edited', "false");
+
+    }
+}
+
+
+function showConfirmation(title) {
+    bootbox.confirm({
+        title: title + ' confirmation',
+        message: '<div class="d-flex justify-content-center align-items-center mb-3"><i id="question-icon" class="fa fa-question fa-5x text-warning animate-question"></i></div><div class="d-flex justify-content-center align-items-center"><p class="h2">Are you sure? to discard change</p></div>',
+        buttons: {
+            confirm: {
+                label: '<i class="fa fa-check"></i>&nbsp;Yes',
+                className: 'btn-warning'
+            },
+            cancel: {
+                label: '<i class="fa fa-times"></i>&nbsp;No',
+                className: 'btn-link'
+            }
+        },
+        callback: function (result) {
+            //console.log('Confirmation result:', result);
+            if (result) {
+                resetContributionTable();
+                resetLoanTable();
+                if (title == "Previous") {
+                    previous($('#cmbservsubdepartment').val(), $('#cmbmember').val());
+                } else if (title == "Next") {
+                    next($('#cmbservsubdepartment').val(), $('#cmbmember').val());
+                }
+            } else {
+
+            }
+        },
+        onShow: function () {
+            $('#question-icon').addClass('swipe-question');
+        },
+        onHide: function () {
+            $('#question-icon').removeClass('swipe-question');
+        }
+    });
+
+    $('.bootbox').find('.modal-header').addClass('bg-warning text-white');
+}
+
+
+function next(dept_id, member_id) {
+
+    $.ajax({
+        type: "GET",
+        url: '/next/' + dept_id + "/" + member_id,
+        async: false,
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.status) {
+                var id = response.data;
+                appendComputerNumber(COMPUTER_NUMBER);
+                $('#cmbcomputernum').val(id);
+                appendMemberNumber(MEMBER_NUMBER);
+                $('#cmbmember').val(id);
+                appendFullName(FULL_NAME);
+                $('#cmbmembefullname').val(id);
+                imageloard(id);
+                loadContribution();
+                loadLoan();
+
+            }
+
+        },
+        error: function (error) {
+            console.log(error);
+
+        },
+        complete: function () {
+
+        }
+
+    });
+
+    loadContribution();
+    loadLoan();
+}
+
+
+function previous(dept_id, member_id) {
+
+    $.ajax({
+        type: "GET",
+        url: '/previous/' + dept_id + "/" + member_id,
+        async: false,
+        processData: false,
+        contentType: false,
+        cache: false,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+            console.log(response);
+            if (response.status) {
+                var id = response.data;
+                appendComputerNumber(COMPUTER_NUMBER);
+                $('#cmbcomputernum').val(id);
+                appendMemberNumber(MEMBER_NUMBER);
+                $('#cmbmember').val(id);
+                appendFullName(FULL_NAME);
+                $('#cmbmembefullname').val(id);
+                imageloard(id);
+                loadContribution();
+                loadLoan();
+
+            }
+
+        },
+        error: function (error) {
+            console.log(error);
+
+        },
+        complete: function () {
+
+        }
+
+    });
+    loadContribution();
+    loadLoan();
+}
+
