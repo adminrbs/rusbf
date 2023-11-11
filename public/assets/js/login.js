@@ -2,6 +2,7 @@ console.log("login js loading");
 
 var formData = new FormData();
 $(document).ready(function () {
+    $('#erros_box').hide();
     $("#btnLogout").click(function (event) {
         event.preventDefault();
         // Make a POST request to the logout route using jQuery AJAX
@@ -50,9 +51,18 @@ function submit() {
         success: function (response) {
             if (response.status == 200) {
                 location.href = "/dashboard";
-            }else{
-                alert("Your credentials are invalid!");
-            }
+            }else if(response == "201"){
+                /* showWarningMessage('Incorrect user name or password'); */
+                $('#txtEmail').addClass('is-invalid')
+                $('#txtPassword').addClass('is-invalid')
+                $('#erros_box').removeAttr('hidden');
+                $('#erros_box').fadeIn(500);
+                
+    
+                setTimeout(function() {
+                    $('#erros_box').fadeOut(500); // Fade out with animation (adjust the duration as needed)
+                  }, 3000);
+               }
         },
         error: function (error) {
             console.log(error);

@@ -34,7 +34,7 @@ $(document).ready(function () {
     // Populate the month options
     for (var i = 0; i < monthNames.length; i++) {
         var option = document.createElement("option");
-        option.value = i+1; // Set the month name as the option value
+        option.value = i + 1; // Set the month name as the option value
         option.text = monthNames[i];
         monthDropdown.appendChild(option);
     }
@@ -71,7 +71,7 @@ $(document).ready(function () {
         if (this.checked) {
 
             selectemonth = $('#month').val();
-           // alert(selectemonth)
+            // alert(selectemonth)
         } else {
             selectemonth = null
 
@@ -105,7 +105,7 @@ $(document).ready(function () {
         }
 
     })
-    
+
     // select report
     $("#adviceofdeducation").prop("checked", true);
     var isChecked = $("#adviceofdeducation").prop("checked");
@@ -144,12 +144,13 @@ $(document).ready(function () {
                     { selectemonth: selectemonth }
                 ];
                 $('#pdfContainer').attr('src', '/adviceofdeductionReport/' + JSON.stringify(requestData));
-            }else if(report == 'undefined'){
+            }
+            if (report == null || report == undefined) {
                 new Noty({
                     text: 'Select Report',
                     type: 'warning',
                 }).show();
-}
+            }
         }
 
 
@@ -174,7 +175,7 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             dataType: 'json',
-            url: "/filterhidden/"+ report,
+            url: "/filterhidden/" + report,
             data: JSON.stringify(jsonData),
             processData: false,
             contentType: false,
@@ -185,21 +186,21 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (typeof response.year === 'undefined') {
-                        
+
                     $('#year').prop('disabled', false);
                     $('#chkyear').prop('disabled', false);
                 } else {
-                   
+
                     $('#year').prop('disabled', true);
                     $('#chkyear').prop('disabled', true);
                 }
 
                 if (typeof response.month === 'undefined') {
-                        
+
                     $('#month').prop('disabled', false);
                     $('#chkMonth').prop('disabled', false);
                 } else {
-                   
+
                     $('#month').prop('disabled', true);
                     $('#chkMonth').prop('disabled', true);
                 }
@@ -207,43 +208,43 @@ $(document).ready(function () {
 
 
                 if (typeof response.subDepartments === 'undefined') {
-                        
+
                     $('#cmbsavingDepartment').prop('disabled', false);
                     $('#chksavingDepartment').prop('disabled', false);
                 } else {
-                   
+
                     $('#cmbsavingDepartment').prop('disabled', true);
                     $('#chksavingDepartment').prop('disabled', true);
                 }
 
 
                 if (typeof response.designation === 'undefined') {
-                        
+
                     $('#cmbDesignation').prop('disabled', false);
                     $('#chkdesignation').prop('disabled', false);
                 } else {
-                   
+
                     $('#cmbDesignation').prop('disabled', true);
                     $('#chkdesignation').prop('disabled', true);
                 }
 
 
                 if (typeof response.computernumber === 'undefined') {
-                        
+
                     $('#cmbcomputernumber').prop('disabled', false);
                     $('#chkcomputernumber').prop('disabled', false);
                 } else {
-                   
+
                     $('#cmbcomputernumber').prop('disabled', true);
                     $('#chkcomputernumber').prop('disabled', true);
                 }
 
                 if (typeof response.worklocation === 'undefined') {
-                        
+
                     $('#cmbworklocation').prop('disabled', false);
                     $('#cbxworklocation').prop('disabled', false);
                 } else {
-                   
+
                     $('#cmbworklocation').prop('disabled', true);
                     $('#cbxworklocation').prop('disabled', true);
                 }

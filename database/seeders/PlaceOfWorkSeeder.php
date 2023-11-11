@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PlaceOfWorkSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class PlaceOfWorkSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('master_place_works')->insert([
+        FacadesDB::table('master_place_works')->insert([
             'name' => 'Not Applicable',
             'status' => '1',
             'created_at' => Carbon::now(),

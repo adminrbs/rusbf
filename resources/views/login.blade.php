@@ -51,9 +51,15 @@ and open the template in the editor.
                     </span>
 
                 </div>
+                <div style="display: inline-block; background-color: red;color: white;padding: 2px 55px;border-radius:5px;text-align: center;width:320px; font-size: 13px;" id="erros_box" hidden>Invalid User Name or Password</div>
+                <br>
                 <label id="lblMessage" style="color: red;" class="danger"></label>
+               
                 <input type="button" id="submitform" class="btn btn-primary" value="Login" style="background-color:rgb(36,116,187); font-size:18px">
                 {{-- <button type="button" class="btn btn-light border mt-3 w-100">Log in with Google</button> --}}
+
+              
+                
             </form>
         </div>
     </div>
