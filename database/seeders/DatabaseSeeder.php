@@ -21,8 +21,8 @@ class DatabaseSeeder extends Seeder
             //PlaceOfWorkSeeder::class,
            // SubDepartmentSeeder::class,
             //PlaceOfPayrollSeeder::class,
-            premission::class,
-            modulePermission::class,
+            //premission::class,
+            PermissionTableSeeder::class,
         ]);
     }
 }

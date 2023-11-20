@@ -329,11 +329,11 @@ Route::post('/cbxdonation/{id}', [DonationController::class, 'cbxdonation']);
 //  Death_gratuity_requests
 
 Route::get('/Death_gratuity_requests', function () {
-    return view('death_gratuity_requests');
+    return view('Death_gratuity_requests');
 })->middleware(['is.logged']);
 
 Route::get('/Death_gratuity_all_requests', function () {
-    return view('death_gratuity_requests_list');
+    return view('Death_gratuity_requests_list');
 })->middleware(['is.logged','can:donations_and_grativity_request']);
 
 Route::get('/alldatamemberShip/{id}', [DeathGratuityRequestsController::class, 'alldatamemberShip']);

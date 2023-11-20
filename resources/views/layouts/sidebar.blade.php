@@ -389,9 +389,17 @@
                                 @if(Auth::user()->can('user_list'))
                                 <li class="nav-item"><a href="/view_users_list" class="nav-link">User List</a></li>
                                 @endif
+                                @if(Auth::user()->can('permission'))
+                                <li class="nav-item"><a href="/permission" class="nav-link">Permission</a></li>
+                                @endif
                             </ul>
                         </li>
                         @endif
+                       
+                       
+                       
+                       
+                       
 
                     </ul>
                 </div>
