@@ -119,8 +119,8 @@ class MembersLoanRequestController extends Controller
 
             $memberlon->loan_id  = $request->get('cbxlone');
             $memberlon->term_id  = $request->get('cbxloneterm');
-            $memberlon->year  = $request->get('cbxyear');
-            $memberlon->month  = $request->get('cbxmonth');
+            $memberlon->deduction_year  = $request->get('cbxyear');
+            $memberlon->deduction_month  = $request->get('cbxmonth');
 
             if ($memberlon->save()) {
 
@@ -188,8 +188,8 @@ class MembersLoanRequestController extends Controller
 
             $memberlon->loan_id  = $request->get('cbxlone');
             $memberlon->term_id  = $request->get('cbxloneterm');
-            $memberlon->year  = $request->get('cbxyear');
-            $memberlon->month  = $request->get('cbxmonth');
+            $memberlon->deduction_year  = $request->get('cbxyear');
+            $memberlon->deduction_month  = $request->get('cbxmonth');
 
 
 
