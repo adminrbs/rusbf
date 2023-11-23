@@ -27,17 +27,19 @@ class MemberContributionLedgerProcessController extends Controller
         try {
             $members = Member::all();
             foreach ($members as $member) {
-                $member_contributions  = member_contribution::where('member_id', '=', $member->id)->first();
-                if ($member_contributions) {
-                    $memberContributionLedger = new MemberContributionLedger();
-                    $memberContributionLedger->contribution_id = $member_contributions->contributions_id;
-                    $memberContributionLedger->member_id = $member->id;
-                    $memberContributionLedger->year = $request->get('current_year');
-                    $memberContributionLedger->month = $request->get('current_month');
-                    $memberContributionLedger->amount = $member_contributions->amount;
-                    $memberContributionLedger->processed_date = Carbon::now()->format('Y-m-d');
-                    $memberContributionLedger->status = 1;
-                    $status = $memberContributionLedger->save();
+                $member_contributions  = member_contribution::where('member_id', '=', $member->id)->get();
+                foreach ($member_contributions as $member_contribution) {
+                    if ($member_contribution) {
+                        $memberContributionLedger = new MemberContributionLedger();
+                        $memberContributionLedger->contribution_id = $member_contribution->contributions_id;
+                        $memberContributionLedger->member_id = $member->id;
+                        $memberContributionLedger->year = $request->get('current_year');
+                        $memberContributionLedger->month = $request->get('current_month');
+                        $memberContributionLedger->amount = $member_contribution->amount;
+                        $memberContributionLedger->processed_date = Carbon::now()->format('Y-m-d');
+                        $memberContributionLedger->status = 1;
+                        $status = $memberContributionLedger->save();
+                    }
                 }
             }
             $globalSetting = GlobalSetting::find(1);
