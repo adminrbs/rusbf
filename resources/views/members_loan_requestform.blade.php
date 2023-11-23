@@ -159,23 +159,37 @@
 
                         <div class="row">
 
-                            <div class="col-3">
+                          <!--  <div class="col-3">
 
                                 <label class="col-form-label">Period of service ( years )</label>
                                 <input type="number" class="form-control" id="txtpriodofservice"
                                     name="priodofservice" />
-                            </div>
+                            </div>-->
                             <div class="col-3">
 
                                 <label class="col-form-label">Monthly basic salary Rs.</label>
                                 <input type="number" class="form-control " id="txtpresetmonthlybSalary"
                                     name="presetmonthlybSalary" />
                             </div>
-                            <div class="col-3">
+                            <!--<div class="col-3">
 
                                 <label class="col-form-label">Manner of repayment</label>
                                 <input type="number" class="form-control " id="txtManageofrepayment"
                                     name="Manageofrepayment" />
+                            </div>-->
+                            <div class="col-3">
+
+                                <label class="col-form-label">Deduction Year</label>
+                                <select id="cbxyear" class="form-select ">
+
+                                </select>
+                            </div>
+                            <div class="col-3">
+
+                                <label class="col-form-label">Deduction Month</label>
+                                <select id="cbxmonth" class="form-select ">
+
+                                </select>
                             </div>
 
                         </div>

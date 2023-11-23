@@ -350,7 +350,6 @@ Route::delete('/deletadeathgratuityttachment/{id}', [DeathGratuityRequestsContro
 Route::delete('/deletedeathgratuity/{id}', [DeathGratuityRequestsController::class, 'deletedeathgratuity']);
 
 // approvel
-
 Route::get('/Death_gratuity_requests_Approvel', function () {
     return view('Death_gratuity_requests_Approvallist');
 })->middleware(['is.logged','can:donations_and_grativity_approval']);

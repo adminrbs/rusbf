@@ -104,14 +104,14 @@ class MembersLoanRequestController extends Controller
             $memberlon->member_id  = $request->get('txtmembershipno');
             $memberlon->membership_no = $request->get('txtmembershipno');
             $memberlon->contact_no  = $request->get('txtcontactno');
-            $memberlon->service_period  = $request->get('txtpriodofservice');
+            $memberlon->service_period  = null;//$request->get('txtpriodofservice');
 
             $memberlon->date_of_enlistment  = $request->get('txtdateofenlistment');
             $memberlon->Monthly_basic_salary  = $request->get('txtpresetmonthlybSalary');
             $memberlon->computer_no  = $request->get('txtcomputerno');
 
             $memberlon->nic_no  = $request->get('txtnicNo2');
-            $memberlon->manner_of_repayment  = $request->get('txtManageofrepayment');
+            $memberlon->manner_of_repayment  = null;//$request->get('txtManageofrepayment');
             $memberlon->reason  = $request->get('txtresontoobtain');
 
             $memberlon->private_address  = $request->get('txtprivetAddress');
@@ -119,6 +119,8 @@ class MembersLoanRequestController extends Controller
 
             $memberlon->loan_id  = $request->get('cbxlone');
             $memberlon->term_id  = $request->get('cbxloneterm');
+            $memberlon->year  = $request->get('cbxyear');
+            $memberlon->month  = $request->get('cbxmonth');
 
             if ($memberlon->save()) {
 
@@ -169,22 +171,26 @@ class MembersLoanRequestController extends Controller
 
             $memberlon = members_loan_request::find($id);
             $memberlon->member_id  = $request->get('txtmembershipno');
+            $memberlon->membership_no = $request->get('txtmembershipno');
             $memberlon->contact_no  = $request->get('txtcontactno');
-            $memberlon->membership_no = $memberno->member_number;
-            $memberlon->service_period  = $request->get('txtpriodofservice');
+            $memberlon->service_period  = null;//$request->get('txtpriodofservice');
 
             $memberlon->date_of_enlistment  = $request->get('txtdateofenlistment');
             $memberlon->Monthly_basic_salary  = $request->get('txtpresetmonthlybSalary');
             $memberlon->computer_no  = $request->get('txtcomputerno');
 
             $memberlon->nic_no  = $request->get('txtnicNo2');
-            $memberlon->manner_of_repayment  = $request->get('txtManageofrepayment');
+            $memberlon->manner_of_repayment  = null;//$request->get('txtManageofrepayment');
             $memberlon->reason  = $request->get('txtresontoobtain');
 
             $memberlon->private_address  = $request->get('txtprivetAddress');
             $memberlon->date  = $request->get('txtdate');
+
             $memberlon->loan_id  = $request->get('cbxlone');
             $memberlon->term_id  = $request->get('cbxloneterm');
+            $memberlon->year  = $request->get('cbxyear');
+            $memberlon->month  = $request->get('cbxmonth');
+
 
 
             if ($memberlon->update()) {

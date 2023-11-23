@@ -72,11 +72,8 @@ class premission extends Seeder
  ['name' => 'Settings', 'slug' => 'setting', 'sub' => 'null', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //34
  ['name' => 'User Roles', 'slug' => 'user_role', 'sub' => '34', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //35
  ['name' => 'User List', 'slug' => 'user_list', 'sub' => '34', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //36
-
  // Permission
  ['name' => 'Permission', 'slug' => 'permission', 'sub' => '34', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //37
- //['name' => 'User Roles', 'slug' => 'user_role', 'sub' => '34', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //38
- //['name' => 'User List', 'slug' => 'user_list', 'sub' => '34', 'action' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], //39
  
 
 

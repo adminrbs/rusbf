@@ -219,17 +219,7 @@
                                         </span>
                                     </a>
                                 </li>-->
-                                @if(Auth::user()->can('recipt'))
-                                <li class="nav-item">
-                                    <a href="contributionAndloanFilter" class="nav-link">
-                                        <i class="ph-house"></i>
-                                        <span>
-                                            Recipet
-                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
-                                        </span>
-                                    </a>
-                                </li>
-                                @endif
+                                
                                 <!--<li class="nav-item">
                                     <a href="/contributionAndloanFilter" class="nav-link">
                                         <i class="ph-house"></i>
@@ -310,6 +300,18 @@
                             </ul>
                         </li>
                         @endif
+
+                        @if(Auth::user()->can('recipt'))
+                        <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
+                        <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
+                        <li class="nav-item nav-item-submenu">
+
+                        <li class="nav-item"><a href="contributionAndloanFilter" class="nav-link"> <i class="ph-files"></i>Recipet</a></li>
+
+                        </li>
+                        @endif
+                        
+
                         @if(Auth::user()->can('payment'))
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->

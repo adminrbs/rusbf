@@ -172,6 +172,48 @@ $(document).ready(function () {
         }
     });
 
+    var currentYear = new Date().getFullYear();
+
+    // Select the year dropdown
+    var yearDropdown = document.getElementById("cbxyear");
+
+    // Add options for ten years backward and two years forward
+    for (var i = currentYear - 10; i <= currentYear + 5; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i;
+        yearDropdown.appendChild(option);
+    }
+
+
+    yearDropdown.value = currentYear;
+
+
+    var monthDropdown = document.getElementById("cbxmonth");
+
+    // Create an array of month names
+    var monthNames = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
+
+    // Populate the month options
+    for (var i = 0; i < monthNames.length; i++) {
+        var option = document.createElement("option");
+        option.value = i + 1; // Set the month name as the option value
+        option.text = monthNames[i];
+        monthDropdown.appendChild(option);
+    }
+    var currentMonth = new Date().getMonth() + 1;
+    monthDropdown.value = currentMonth;
+
+
+
+
+
+
+
+
     $('input[type="text"]').val('');
     $('input[type="number"]').val('');
     $('input[type="date"]').val('');
@@ -208,7 +250,7 @@ $(document).ready(function () {
         memberid = $(this).val();
 
         //getalldetails(memberid, 1);
-       // membershipno(memberid);
+        // membershipno(memberid);
         memberShip(memberid)
     })
     $('#txtnic').on('change', function () {
@@ -406,6 +448,7 @@ $(document).ready(function () {
 function save_memberlonrequest() {
 
     var loan = $('#cbxlone').val();
+
     if (loan > 0) {
 
 
@@ -439,6 +482,8 @@ function save_memberlonrequest() {
         formData.append('txtdate', $('#txtdate').val());
         formData.append('cbxlone', $('#cbxlone').val());
         formData.append('cbxloneterm', $('#cbxloneterm').val());
+        formData.append('cbxyear', $('#cbxyear').val());
+        formData.append('cbxmonth', $('#cbxmonth').val());
 
 
         console.log(formData);
@@ -508,7 +553,7 @@ function getmemberlone(id) {
 
             $('#id').val(response.members_loan_request_id);
             $("#txtmembershipno").val(response.member_id).trigger('change');
-           $('#txtcontactno').val(response.contact_no);
+            $('#txtcontactno').val(response.contact_no);
             $('#txtpriodofservice').val(response.service_period);
 
             $('#txtdateofenlistment').val(response.date_of_enlistment);
@@ -526,6 +571,9 @@ function getmemberlone(id) {
             // $('#txtcomputerno').val(response.description);
             $('#cbxloneterm').val(response.term_id).trigger('change');
             $('#cbxlone').val(response.loan_id).trigger('change');
+            $('#cbxyear').val(response.year);
+            $('#cbxmonth').val(response.month);
+
 
             getAttachment();
 
@@ -573,6 +621,8 @@ function update_memberlonrequest() {
         formData.append('txtdate', $('#txtdate').val());
         formData.append('cbxlone', $('#cbxlone').val());
         formData.append('cbxloneterm', $('#cbxloneterm').val());
+        formData.append('cbxyear', $('#cbxyear').val());
+        formData.append('cbxmonth', $('#cbxmonth').val());
 
         $.ajax({
             type: "POST",
@@ -758,8 +808,8 @@ function getcontributeview(id) {
             console.log(response);
 
             $('#id').val(response.members_loan_request_id);
-           // $("#txtmembershipno").val(response.member_id).trigger('change');
-           // $('#txtcontactno').val(response.contact_no);
+            // $("#txtmembershipno").val(response.member_id).trigger('change');
+            // $('#txtcontactno').val(response.contact_no);
             //$('#txtpriodofservice').val(response.service_period);
 
             $('#txtdateofenlistment').val(response.date_of_enlistment);
@@ -812,106 +862,107 @@ function cbxcontribute(id) {
 
 function memberShip(id) {
     var mid = id
-        $.ajax({
-            url: '/memberShip/' + id,
-            type: 'get',
-            dataType: 'json',
-             async: false,
-    
-    
-            success: function (response) {
+    $.ajax({
+        url: '/memberShip/' + id,
+        type: 'get',
+        dataType: 'json',
+        async: false,
 
-    if(mid>0){
-        $('#txtmembershipno').html('');
-        $('#txtnic').html('');
-        $('#txtcomputerno').html('');
-       
-    
-        var dt = response.data;
-    
-        for (var i = 0; i < dt.length; i++) {
-    
-            $('#txtmembershipno').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
-            $('#txtnic').append("<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>");
-            $('#txtcomputerno').append("<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>");
-           
-    
-        }
-       
 
-        //$('#txtaddressinfull').val(dt[0].personal_address);
+        success: function (response) {
 
-        var dateOfJoining = new Date(dt[0].date_of_joining);
+            if (mid > 0) {
+                $('#txtmembershipno').html('');
+                $('#txtnic').html('');
+                $('#txtcomputerno').html('');
 
-        if (!isNaN(dateOfJoining)) {
-            var currentDate = new Date();
 
-            var years = currentDate.getFullYear() - dateOfJoining.getFullYear();
-            var months = currentDate.getMonth() - dateOfJoining.getMonth();
+                var dt = response.data;
 
-            if (months < 0) {
-                years--;
-                months += 12;
+                for (var i = 0; i < dt.length; i++) {
+
+                    $('#txtmembershipno').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
+                    $('#txtnic').append("<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>");
+                    $('#txtcomputerno').append("<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>");
+
+
+                }
+
+
+                //$('#txtaddressinfull').val(dt[0].personal_address);
+
+                var dateOfJoining = new Date(dt[0].date_of_joining);
+
+                if (!isNaN(dateOfJoining)) {
+                    var currentDate = new Date();
+
+                    var years = currentDate.getFullYear() - dateOfJoining.getFullYear();
+                    var months = currentDate.getMonth() - dateOfJoining.getMonth();
+
+                    if (months < 0) {
+                        years--;
+                        months += 12;
+                    }
+                    var newage = years + " years and " + months + " months";
+                    $("#memberage").val(newage);
+                } else {
+                    console.log("Invalid date format ");
+                }
+                console.log(dt[0].id);
+
+                $('#name').val(dt[0].name_initials);
+                $('#txtDesignation').val(dt[0].designation);
+                $('#txtStaffno').val(dt[0].cabinet_number);//no
+
+                $("#txtplaseemployment").val(dt[0].work_location);
+                $('#txtbirthday').val(dt[0].date_of_birth);
+                $('#txtpaysheetno').val(dt[0].payroll_number);
+                $('#txtprivetAddress').val(dt[0].personal_address);
+
+
+
+
+
+            } else {
+
+
+                var dt = response.data
+
+
+                var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
+                var htmlNicOptions = "<option value='0'>Select National ID</option>";
+                var htmlComputercode = "<option value='0'>Select Computer Code</option>";
+
+
+                for (var i = 0; i < dt.length; i++) {
+                    // console.log(dt[i].full_name);
+                    htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
+                    htmlNicOptions += "<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>";
+                    htmlComputercode += "<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>";
+
+                }
+
+                // Set the HTML content of the select elements after the loop
+                $('#txtmembershipno').html(htmlMembershipOptions);
+                $('#txtnic').html(htmlNicOptions);
+                $('#txtcomputerno').html(htmlComputercode);
+
+
             }
-            var newage = years + " years and " + months + " months";
-            $("#memberage").val(newage);
-        } else {
-            console.log("Invalid date format ");
+
+
+
+
+
+
+        }, error: function (data) {
+            console.log(data)
         }
-        console.log(dt[0].id);
 
-        $('#name').val(dt[0].name_initials);
-        $('#txtDesignation').val(dt[0].designation);
-        $('#txtStaffno').val(dt[0].cabinet_number);//no
+    })
 
-        $("#txtplaseemployment").val(dt[0].work_location);
-        $('#txtbirthday').val(dt[0].date_of_birth);
-        $('#txtpaysheetno').val(dt[0].payroll_number);
+}
 
-
-
-
-    
-    }else{
-    
-    
-        var dt = response.data
-    
-
-        var htmlMembershipOptions = "<option value='0'>Select Membership No</option>";
-        var htmlNicOptions = "<option value='0'>Select National ID</option>";
-        var htmlComputercode = "<option value='0'>Select Computer Code</option>";
-    
-    
-        for (var i = 0; i < dt.length; i++) {
-           // console.log(dt[i].full_name);
-           htmlMembershipOptions += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
-           htmlNicOptions += "<option value='" + dt[i].id + "'>" + dt[i].national_id_number + "</option>";
-           htmlComputercode += "<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>";
-          
-        }
-    
-        // Set the HTML content of the select elements after the loop
-        $('#txtmembershipno').html(htmlMembershipOptions);
-        $('#txtnic').html(htmlNicOptions);
-        $('#txtcomputerno').html(htmlComputercode);
-        
-    
-    }     
-
-
-
-
-               
-    
-            }, error: function (data) {
-                console.log(data)
-            }
-    
-        })
-    
-    }
-    
 
 
 
