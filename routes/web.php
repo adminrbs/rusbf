@@ -28,6 +28,7 @@ use App\Http\Controllers\memberLoanLedgerListController;
 use App\Http\Controllers\memberreportController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Http\Controllers\MonthendProcessController;
+use App\Http\Controllers\PaymentVoucerController;
 use App\Http\Controllers\PermissionController;
 use App\Models\member_contribution;
 use App\Models\User;
@@ -106,7 +107,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 //members routes
 Route::get('/members', function () {
     return view('view_all_members');
-})->middleware(['is.logged','can:members']);
+})->middleware(['is.logged', 'can:members']);
 Route::get('/member_form', [MemberController::class, 'view_member_form']);
 Route::get('/get_member_data/{id}', [MemberController::class, 'get_member_data']);
 Route::post('/member_form/update', [MemberController::class, 'update']);
@@ -117,7 +118,7 @@ Route::delete('/delete_member/{id}', [MemberController::class, 'delete']);
 // Master Data - Designation
 Route::get('/master_designation', function () {
     return view('designation');
-})->middleware(['is.logged','can:designation']);
+})->middleware(['is.logged', 'can:designation']);
 Route::post('/save_designation', [MasterDesignationController::class, 'save_designation']);
 Route::get('/get_all_designations', [MasterDesignationController::class, 'get_all_designations']);
 Route::get('/get_designation_data/{id}', [MasterDesignationController::class, 'get_designation_data']);
@@ -128,7 +129,7 @@ Route::post('/designationStatus/{id}', [MasterDesignationController::class, 'des
 // Master Data - Place of Work
 Route::get('/master_place_of_work', function () {
     return view('place_of_work');
-})->middleware(['is.logged','can:place_of_work']);
+})->middleware(['is.logged', 'can:place_of_work']);
 Route::post('/save_place_of_work', [MasterPlaceWorkController::class, 'save_place_of_work']);
 Route::get('/get_all_place_of_work', [MasterPlaceWorkController::class, 'get_all_place_of_work']);
 Route::get('/get_place_of_work_data/{id}', [MasterPlaceWorkController::class, 'get_place_of_work_data']);
@@ -139,7 +140,7 @@ Route::post('/place_of_workStatus/{id}', [MasterPlaceWorkController::class, 'pla
 // Master Data - Serving Sub-Department
 Route::get('/master_sub_department', function () {
     return view('serving_sub_department');
-})->middleware(['is.logged','can:sub_department']);
+})->middleware(['is.logged', 'can:sub_department']);
 Route::post('/save_department', [MasterSubDepartmentController::class, 'save_department']);
 Route::get('/get_all_departments', [MasterSubDepartmentController::class, 'get_all_departments']);
 Route::get('/get_department_data/{id}', [MasterSubDepartmentController::class, 'get_department_data']);
@@ -150,7 +151,7 @@ Route::post('/departmentStatus/{id}', [MasterSubDepartmentController::class, 'de
 // Master Data - Place of Payroll
 Route::get('/master_place_of_payroll', function () {
     return view('place_of_payroll');
-})->middleware(['is.logged','can:place_of_payeroll']);
+})->middleware(['is.logged', 'can:place_of_payeroll']);
 Route::post('/save_payroll', [MasterPayrollController::class, 'save_payroll']);
 Route::get('/get_all_payroll', [MasterPayrollController::class, 'get_all_payroll']);
 Route::get('/get_payroll_data/{id}', [MasterPayrollController::class, 'get_payroll_data']);
@@ -161,7 +162,7 @@ Route::post('/payrollStatus/{id}', [MasterPayrollController::class, 'payrollStat
 //Settings- Roles
 Route::get('/user_role_list', function () {
     return view('role_list');
-})->middleware(['is.logged','can:user_role']);
+})->middleware(['is.logged', 'can:user_role']);
 Route::post('/save_user_role', [RoleController::class, 'save_user_role']);
 Route::get('/get_user_roles', [RoleController::class, 'get_user_roles']);
 Route::get('/get_role_data/{id}', [RoleController::class, 'get_role_data']);
@@ -172,7 +173,7 @@ Route::post('/user_role_status/{id}', [RoleController::class, 'user_role_status'
 //Settings- User list
 Route::get('/get_user_role', [UserController::class, 'get_user_role']);
 Route::post('/save_user', [UserController::class, 'save_user']);
-Route::get('/view_users_list', [UserController::class, 'view_users_list'])->middleware(['is.logged','can:user_list']);
+Route::get('/view_users_list', [UserController::class, 'view_users_list'])->middleware(['is.logged', 'can:user_list']);
 Route::get('/load_users_list', [UserController::class, 'load_users_list']);
 Route::get('/get_user_data/{id}', [UserController::class, 'get_user_data']);
 Route::post('/update_user/{id}', [UserController::class, 'update_user']);
@@ -184,7 +185,7 @@ Route::post('/change_password/{id}', [UserController::class, 'change_password'])
 // Lone Management
 Route::get('/loneManagement', function () {
     return view('loanManagement');
-})->middleware(['is.logged','can:loan_setting']);
+})->middleware(['is.logged', 'can:loan_setting']);
 Route::post('/loansave', [loneManagementController::class, 'loansave']);
 Route::get('/loneallData', [loneManagementController::class, 'loanallData']);
 Route::get('/getlone/{id}', [loneManagementController::class, 'getloan']);
@@ -202,7 +203,7 @@ Route::get('/getloneAllData/{id}', [loneManagementController::class, 'getloneAll
 // contribution
 Route::get('/contribution', function () {
     return view('contribution');
-})->middleware(['is.logged','can:process_contribution']);
+})->middleware(['is.logged', 'can:process_contribution']);
 
 Route::post('/save_contribution', [contributnController::class, 'save_contribution']);
 Route::get('/allcontributedata', [contributnController::class, 'allcontributedata']);
@@ -218,7 +219,7 @@ Route::post('/cbxcontribute/{id}', [contributnController::class, 'cbxcontribute'
 
 Route::get('/members_loan_request', function () {
     return view('members_loan_request');
-})->middleware(['is.logged','can:loan_request']);
+})->middleware(['is.logged', 'can:loan_request']);
 
 Route::get('/members_loan_form', function () {
     return view('members_loan_requestform');
@@ -226,7 +227,7 @@ Route::get('/members_loan_form', function () {
 
 Route::get('/members_loan_request_Approvel', function () {
     return view('members_loan_requestform_ApprovelList');
-})->middleware(['is.logged','can:loan_request_approval']);
+})->middleware(['is.logged', 'can:loan_request_approval']);
 
 Route::get('/memberShip/{id}', [MembersLoanRequestController::class, 'memberShip']);
 Route::get('/memberShipdesignation/{id}', [MembersLoanRequestController::class, 'MembersLoanRequestController']);
@@ -255,7 +256,7 @@ Route::get('allmemberlonrequestapprovel', [MembersLoanRequestController::class, 
 //Member Contribution ledger process
 Route::get('/member_contribution_ledger_process', function () {
     return view('member_contribution_ledger_process');
-})->middleware(['is.logged','can:process_contribution']);
+})->middleware(['is.logged', 'can:process_contribution']);
 
 Route::get('/getCurrentYearMonth', [MemberContributionLedgerProcessController::class, 'getCurrentYearMonth']);
 Route::post('/member_contribution_ledger_process', [MemberContributionLedgerProcessController::class, 'member_contribution_ledger_process']);
@@ -263,7 +264,7 @@ Route::post('/member_contribution_ledger_process', [MemberContributionLedgerProc
 //Member Contribution ledger process list
 Route::get('/member_contribution_ledger_process_list', function () {
     return view('member_contribution_ledger_process_list');
-})->middleware(['is.logged','can:contribution_ledger']);
+})->middleware(['is.logged', 'can:contribution_ledger']);
 
 Route::get('/getMemberContributions/{filters}', [MemberContributionLedgerProcessListController::class, 'getMemberContributions']);
 Route::get('/getMembers', [MemberContributionLedgerProcessListController::class, 'getMembers']);
@@ -272,7 +273,7 @@ Route::get('/getMembers', [MemberContributionLedgerProcessListController::class,
 
 Route::get('/member_loan', function () {
     return view('member_loan');
-})->middleware(['is.logged','can:member_loan']);
+})->middleware(['is.logged', 'can:member_loan']);
 
 Route::get('/memberloandata/{id}', [MemberLoanController::class, 'memberloandata']);
 Route::post('/memberlonestatus/{id}', [MemberLoanController::class, 'memberlonestatus']);
@@ -281,14 +282,14 @@ Route::post('/memberlonestatus/{id}', [MemberLoanController::class, 'memberlones
 //Loan Process
 Route::get('/loan_process', function () {
     return view('loan_process');
-})->middleware(['is.logged','can:process_loan']);
+})->middleware(['is.logged', 'can:process_loan']);
 
 Route::post('/member_loan_ledger_process', [MemberLoanLedgerController::class, 'member_loan_ledger_process']);
 
 // Report
 Route::get('/memberReport', function () {
     return view('memberreport');
-})->middleware(['is.logged','can:advice_of_dedction']);
+})->middleware(['is.logged', 'can:advice_of_dedction']);
 
 Route::get('/getmembersreport', [memberreportController::class, 'getmembersreport']);
 Route::get('/loanReport/{search}', [loanreportController::class, 'loanReport']);
@@ -297,14 +298,14 @@ Route::post('/filterhidden/{id}', [loanreportController::class, 'filterhidden'])
 // lone ledger
 Route::get('/member_loan_ledger_list', function () {
     return view('member_loan_ledger_list');
-})->middleware(['is.logged','can:loan_ledger']);
+})->middleware(['is.logged', 'can:loan_ledger']);
 
 Route::get('getMemberloan', [memberLoanLedgerListController::class, 'getMemberloan']);
 Route::post('/allmemberloanledgerdata', [memberLoanLedgerListController::class, 'allmemberloanledgerdata']);
 
 Route::get('/contributionAndloanFilter', function () {
     return view('contributionAndloanFilter');
-})->middleware(['is.logged','can:recipt']);
+})->middleware(['is.logged', 'can:recipt']);
 
 Route::get('/getmember', [contributionandLoanFilterController::class, 'getmember']);
 Route::post('/getcontribution/{id}', [contributionandLoanFilterController::class, 'getcontribution']);
@@ -316,7 +317,7 @@ Route::get('/subserveDepartmentmember/{id}', [contributionandLoanFilterControlle
 
 Route::get('/donation', function () {
     return view('donation');
-})->middleware(['is.logged','can:donations_and_grativity']);
+})->middleware(['is.logged', 'can:donations_and_grativity']);
 
 Route::post('/save_donetion', [DonationController::class, 'save_donetion']);
 Route::get('/get_donetion', [DonationController::class, 'get_donetion']);
@@ -334,7 +335,7 @@ Route::get('/Death_gratuity_requests', function () {
 
 Route::get('/Death_gratuity_all_requests', function () {
     return view('Death_gratuity_requests_list');
-})->middleware(['is.logged','can:donations_and_grativity_request']);
+})->middleware(['is.logged', 'can:donations_and_grativity_request']);
 
 Route::get('/alldatamemberShip/{id}', [DeathGratuityRequestsController::class, 'alldatamemberShip']);
 Route::get('/getPosition', [DeathGratuityRequestsController::class, 'getPosition']);
@@ -352,7 +353,7 @@ Route::delete('/deletedeathgratuity/{id}', [DeathGratuityRequestsController::cla
 // approvel
 Route::get('/Death_gratuity_requests_Approvel', function () {
     return view('Death_gratuity_requests_Approvallist');
-})->middleware(['is.logged','can:donations_and_grativity_approval']);
+})->middleware(['is.logged', 'can:donations_and_grativity_approval']);
 
 Route::get('/alldeathgratuityapprovelapprovel', [DeathGratuityRequestsController::class, 'alldeathgratuityapprovelapprovel']);
 Route::get('/approvedeathgratuityRequest/{id}', [DeathGratuityRequestsController::class, 'approvedeathgratuityRequest']);
@@ -364,7 +365,7 @@ Route::get('adviceofdeductionReport/{search}', [AdviceofdeductionController::cla
 //Monthend Process
 Route::get('/monthend_process', function () {
     return view('monthend_process');
-})->middleware(['is.logged','can:month_end_process']);
+})->middleware(['is.logged', 'can:month_end_process']);
 
 Route::get('/getCurrentYearMonthMonthend', [MonthendProcessController::class, 'getCurrentYearMonth']);
 Route::post('/monthend_process', [MonthendProcessController::class, 'monthend_process']);
@@ -376,7 +377,7 @@ Route::post('/monthend_process', [MonthendProcessController::class, 'monthend_pr
 //member_contribution
 Route::get('/member_contribution', function () {
     return view('member_contribution');
-})->middleware(['is.logged','can:member_contribution']);
+})->middleware(['is.logged', 'can:member_contribution']);
 
 Route::get('/membercontributedata/{id}', [member_contributionController::class, 'membercontributedata']);
 Route::get('/memberNumber/{dept_id}', [member_contributionController::class, 'memberNumber']);
@@ -411,3 +412,14 @@ Route::post('/addRoleModule/{module_id}/{role_id}', [PermissionController::class
 Route::delete('/deleteRoleModule/{module_id}/{role_id}', [PermissionController::class, 'deleteRoleModule']);
 
 //End of Permission
+
+
+// Payment Voucher
+Route::get('/paymentVoucher', function () {
+    return view('paymentVoucher');
+})->middleware(['is.logged']);
+Route::post('/payment_voucher/save', [PaymentVoucerController::class, 'save']);
+Route::get('/payment_voucher/getMembers', [PaymentVoucerController::class, 'getMembers']);
+Route::get('/payment_voucher/getMemberName/{id}', [PaymentVoucerController::class, 'getMemberName']);
+
+// End of Payment Voucher
