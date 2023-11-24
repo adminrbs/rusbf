@@ -49,9 +49,26 @@ class member_contributionController extends Controller
 
     public function memberNumber($dept_id)
     {
+        if ($dept_id > 0) {
+            $filteredMember =  Member::where('id', $dept_id)->get();
 
-        $members = Member::all();
-        return response()->json($members);
+          
+            if ($filteredMember) {
+              
+                $unfilteredMembers = Member::where('id', '<>', $dept_id)->get();
+        
+                $members = $filteredMember->toBase()->merge($unfilteredMembers);
+                return response()->json($members);
+            } else {
+               
+                return response()->json(['error' => 'Member not found'], 404);
+            }
+            // $members = Member::where('id', $dept_id)->get();
+            // return response()->json($members);
+        } else {
+            $members = Member::all();
+            return response()->json($members);
+        }
     }
 
 

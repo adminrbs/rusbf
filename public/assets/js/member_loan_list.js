@@ -130,6 +130,7 @@ $(document).ready(function () {
 
     $('#cmbmember').change(function () {
         memberid = $(this).val();
+
         /*Fullname(memberid);
         computerNumber(nameid);*/
         imageloard(memberid);
@@ -256,13 +257,14 @@ function memberShip(id) {
     
     
             success: function (response) {
+
     if(mid>0){
        // $('#cmbnameinfull').html('');
         $('#cmbmember').html('');
         $('#cmbcomputer').html('');
         $('#cmbName').html('');
     
-        var dt = response.data;
+        var dt = response;
     
         for (var i = 0; i < dt.length; i++) {
     
@@ -277,7 +279,7 @@ function memberShip(id) {
     }else{
     
     
-        var dt = response.data
+        var dt = response
     
        // var cmbnameinfull = "<option value='0'>Select Name In Full</option>";
         var cmbmember = "<option value='0'>Select Member Number</option>";

@@ -284,6 +284,6 @@
 @section('scripts')
 <script src="{{URL::asset('assets/demo/pages/form_validation_library.js')}}"></script>
 <script src="{{URL::asset('assets/demo/pages/extra_noty.js')}}"></script>
-<script src="{{URL::asset('assets/js/death_gratuity_requests.js')}}?random=<?php echo uniqid(); ?>"></script>
+<script src="{{URL::asset('assets/js/Death_gratuity_requests.js')}}?random=<?php echo uniqid(); ?>"></script>
 
 @endsection

@@ -14,14 +14,15 @@ class MemberLoanController extends Controller
     {
         try {
 
-            if ($id == 0) {
-
+            //if ($id =="null") {
+                if ($id ==null) {
 
                 $query = "SELECT ml.member_loan_id,ml.member_id, ml.no_of_terms,ml.term_amount,ml.status,ml.term_interest_precentage,l.loan_name,l.loan_code,l.amount
                 FROM member_loans ml
                 LEFT JOIN loans l ON l.loan_id = ml.loan_id";
 
                 $contribution = DB::select($query);
+
                 if ($contribution) {
                     return response()->json((['success' => 'Data loaded', 'data' => $contribution]));
                 } else {
@@ -34,7 +35,7 @@ class MemberLoanController extends Controller
                 WHERE ml.member_id= $id";
 
                 $contribution = DB::select($query);
-                //dd($contribution);
+               // dd($contribution);
 
                 return response()->json((['success' => 'Data loaded', 'data' => $contribution]));
             }
