@@ -423,3 +423,10 @@ Route::get('/payment_voucher/getMembers', [PaymentVoucerController::class, 'getM
 Route::get('/payment_voucher/getMemberName/{id}', [PaymentVoucerController::class, 'getMemberName']);
 
 // End of Payment Voucher
+
+// Payment Voucher List
+Route::get('/paymentVoucherList', function () {
+    return view('paymentVoucherList');
+})->middleware(['is.logged']);
+Route::get('/payment_voucher/all_vouchers', [PaymentVoucerController::class, 'all_vouchers']);
+// End of Payment Voucher List

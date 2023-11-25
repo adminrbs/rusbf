@@ -8,6 +8,7 @@ use App\Models\PaymentVoucherItem;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PaymentVoucerController extends Controller
 {
@@ -71,6 +72,29 @@ class PaymentVoucerController extends Controller
             $member = Member::find($id);
 
             return response()->json(["status" => true, "data" => $member]);
+        } catch (Exception $exception) {
+            return response()->json(["status" => false, "data" => $exception]);
+        }
+    }
+
+
+
+    public function all_vouchers()
+    {
+
+        try {
+            $query = "SELECT members.name_initials,
+            payment_vouchers.voucher_date,
+            payment_vouchers.cheque_number,
+            SUM(payment_voucher_items.amount) AS amount
+            FROM payment_vouchers INNER JOIN members
+            ON payment_vouchers.member_number = members.id
+            INNER JOIN payment_voucher_items 
+            ON payment_vouchers.payment_voucher_id = payment_voucher_items.payment_voucher_id GROUP BY  members.id";
+
+            $result = DB::select($query);
+
+            return response()->json(["status" => true, "data" => $result]);
         } catch (Exception $exception) {
             return response()->json(["status" => false, "data" => $exception]);
         }
