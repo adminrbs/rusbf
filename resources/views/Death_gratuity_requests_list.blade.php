@@ -15,7 +15,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">Death Gratuity Requests</h5>
+            <h5 class="mb-0">Death Grativity Requests</h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 

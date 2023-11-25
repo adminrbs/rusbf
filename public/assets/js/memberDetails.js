@@ -242,6 +242,7 @@ function saveMember() {
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
     formData.append('ref_by', $('#ref_by').val());
+    formData.append('enrolmentdate',$('#enrolmentdate').val());
 
     $.ajax({
         type: "POST",
@@ -336,6 +337,7 @@ function updateMember(){
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
     formData.append('ref_by', $('#ref_by').val());
+    formData.append('enrolmentdate',$('#enrolmentdate').val());
 
     $.ajax({
         type: "POST",
@@ -465,6 +467,7 @@ function loadMemberData(id){
                 $('#member_email').val(data[0].member_email);
                 $('#member_whatsapp').val(data[0].member_whatsapp);
                 $('#ref_by').val(data[0].ref_by).trigger('change');
+$('#enrolmentdate').val(data[0].enrolment_date);
 
                 if(pathData != "not_available"){
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };

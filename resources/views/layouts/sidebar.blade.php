@@ -255,7 +255,7 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-files"></i>
-                                <span>Donations & Grativity </span>
+                                <span>Donations & Gratuity </span>
                             </a>
                             <ul class="nav-group-sub collapse">
                                 @if(Auth::user()->can('donations_and_grativity_request'))
@@ -276,7 +276,7 @@
                                         <i class="ph-user-list"></i>
                                         <span>
 
-                                            Death Grativity Approval
+                                            Death  Grativity Approval
                                             {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                         </span>
                                     </a>
@@ -317,7 +317,7 @@
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
 
-                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i class="ph-files"></i>Payment</a></li>
+                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i class="fa fa-credit-card-alt"></i>Payment</a></li>
 
                         </li>
                         @endif
@@ -359,7 +359,7 @@
                         @if(Auth::user()->can('tools'))
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
-                                <i class="ph-gear"></i>
+                                <i class="fa fa-wrench"></i>
                                 <span>Tools</span>
                             </a>
                             <ul class="nav-group-sub collapse">

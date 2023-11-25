@@ -72,6 +72,7 @@ function save_department(){
     }
         var formData = new FormData();
         formData.append('name', name);
+        formData.append('sub_department_code',$('#sub_department_code').val());
 
         $.ajax({
             type: "POST",
@@ -175,6 +176,7 @@ function edit(id){
 
             if (response) {
                 $('#sub_department_name').val(name); 
+                $('#sub_department_code').val(code);
             }else{
                 console.log('error');
             }
@@ -209,6 +211,7 @@ function update_department(){
 
         formData.append('id', $('#hidden_id').val());
         formData.append('name', $('#sub_department_name').val());
+        formData.append('sub_department_code',$('#sub_department_code').val());
 
         $.ajax({
             type: "POST",

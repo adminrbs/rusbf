@@ -66,6 +66,10 @@
                     @csrf
                     <input type="hidden" class="form-control" id="hidden_id" name="hidden_id"/>
                     <div class="mb-3">
+                        <label class="col-form-label">Code<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sub_department_code" name="sub_department_code" placeholder="Not Applicable"  required/>
+                    </div>
+                    <div class="mb-3">
                         <label class="col-form-label">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sub_department_name" name="sub_department_name" placeholder="Not Applicable"  required/>
                     </div>

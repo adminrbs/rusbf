@@ -891,13 +891,13 @@ function memberShip(id) {
 
                 //$('#txtaddressinfull').val(dt[0].personal_address);
 
-                var dateOfJoining = new Date(dt[0].date_of_joining);
+                var enrolment_date = new Date(dt[0].enrolment_date);
 
-                if (!isNaN(dateOfJoining)) {
+                if (!isNaN(enrolment_date)) {
                     var currentDate = new Date();
 
-                    var years = currentDate.getFullYear() - dateOfJoining.getFullYear();
-                    var months = currentDate.getMonth() - dateOfJoining.getMonth();
+                    var years = currentDate.getFullYear() - enrolment_date.getFullYear();
+                    var months = currentDate.getMonth() - enrolment_date.getMonth();
 
                     if (months < 0) {
                         years--;

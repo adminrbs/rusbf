@@ -221,6 +221,11 @@
                             @endif
                         </select>
                     </div>
+
+                </div>
+                <div class="col-md-6">
+                    <label class="col-form-label mb-0">Enrolment Date</label>
+                    <input type="date" name="enrolmentdate" id="enrolmentdate" placeholder="Beneficiary NIC" class="form-control form-control-sm">
                 </div>
             </div>
 

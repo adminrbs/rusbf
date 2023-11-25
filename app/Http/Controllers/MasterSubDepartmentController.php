@@ -16,6 +16,7 @@ class MasterSubDepartmentController extends Controller
         try{
             $department = new MasterSubDepartment();
             $department->name = $request->get('name');
+            $department->code = $request->get('sub_department_code');
             
             if($department->save()){
                 return response()->json(["status" => "succeed"]);
@@ -51,7 +52,7 @@ class MasterSubDepartmentController extends Controller
         try{
 
             $data = DB::table("master_sub_departments")
-                            ->select('master_sub_departments.name')
+                            ->select('master_sub_departments.name,master_sub_departments.code')
                             ->where('id',$id)
                             ->first();
 
@@ -69,7 +70,7 @@ class MasterSubDepartmentController extends Controller
             $department = MasterSubDepartment::find($id);
     
             $department->name = $request->get('name');
-            
+            $department->code = $request->get('sub_department_code');
             if($department->update()){
                 return response()->json(["status" => "updated"]);
             }else{

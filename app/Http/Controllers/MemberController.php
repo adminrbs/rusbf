@@ -83,6 +83,7 @@ class MemberController extends Controller
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
             $member->ref_by = $request->get('ref_by');
+$member->enrolment_date = $request->get('enrolmentdate');
 
             if ($member->save()) {
 
@@ -186,7 +187,8 @@ class MemberController extends Controller
 
             return compact('all_members');*/
             $all_members = "SELECT members.*,MSD.id AS msid,MSD.name AS subname FROM members
-            INNER JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id";
+            LEFT JOIN master_sub_departments MSD ON members.serving_sub_department_id = MSD.id
+            ORDER BY members.id DESC;";
             $result = DB::select($all_members);
             return response()->json((['success' => 'Data loaded', 'data' => $result]));
         } catch (Exception $ex) {
@@ -272,7 +274,7 @@ class MemberController extends Controller
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
             $member->ref_by = $request->get('ref_by');
- 
+            $member->enrolment_date = $request->get('enrolmentdate');
            
             if ($member->save()) {
 
