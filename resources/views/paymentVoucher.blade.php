@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-2">
                     <label>Amount</label>
-                    <input type="number" class="form-control" id="txtAmount" style="text-align: right;">
+                    <input type="number" class="form-control" id="txtAmount" style="text-align: right;" value="0.00">
                 </div>
                 <div class="col-md-1 mt-3">
                     <button class="btn btn-primary" id="btnAdd" style="height: 35px;">Add</button>

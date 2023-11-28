@@ -287,3 +287,4 @@
 <script src="{{URL::asset('assets/js/Death_gratuity_requests.js')}}?random=<?php echo uniqid(); ?>"></script>
 
 @endsection
+

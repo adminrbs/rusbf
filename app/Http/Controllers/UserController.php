@@ -69,8 +69,8 @@ class UserController extends Controller
                     'users.user_type',
                     'roles.name AS role_name' // Include the role name from the roles table
                 )
-                ->leftJoin('user_roles', 'users.id', '=', 'user_roles.user_id')
-                ->leftJoin('roles', 'user_roles.role_id', '=', 'roles.id') // Join the roles table
+                ->leftJoin('users_roles', 'users.id', '=', 'users_roles.user_id')
+                ->leftJoin('roles', 'users_roles.role_id', '=', 'roles.id') // Join the roles table
                 ->get();
 
 
@@ -90,10 +90,10 @@ class UserController extends Controller
     //                     ->where('id', $id)
     //                     ->first();
 
-    //         $role_name = DB::table('user_roles')
+    //         $role_name = DB::table('users_roles')
     //                         ->select('roles.id','roles.name')
-    //                         ->join('roles', 'user_roles.role_id', '=', 'roles.id')
-    //                         ->where('user_roles.user_id', $id)
+    //                         ->join('roles', 'users_roles.role_id', '=', 'roles.id')
+    //                         ->where('users_roles.user_id', $id)
     //                         ->first();
 
     //         return [$data, $role_name];
@@ -136,7 +136,7 @@ class UserController extends Controller
         try {
             $quary = "SELECT U.id, U.name, U.email, U.user_type, R.id AS role_id, R.name AS role_name
 FROM users U
-INNER JOIN user_roles UR ON UR.user_id = U.id
+INNER JOIN users_roles UR ON UR.user_id = U.id
 INNER JOIN roles R ON R.id = UR.role_id
 WHERE U.id =$id";
 
@@ -172,7 +172,7 @@ WHERE U.id =$id";
                     $userRoleId = $request->input('userrole');
                     $userId = $user->id;
 
-                    $query = "UPDATE `user_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
+                    $query = "UPDATE `users_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
 
                     $result = \DB::statement($query);
 
@@ -197,7 +197,7 @@ WHERE U.id =$id";
                 $userRoleId = $request->input('userrole');
                 $userId = $user->id;
 
-                $query = "UPDATE `user_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
+                $query = "UPDATE `users_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
 
                 $result = \DB::statement($query);
 
@@ -255,7 +255,7 @@ WHERE U.id =$id";
 
             $user->delete();
     
-           $quary="DELETE FROM user_roles WHERE user_roles.user_id=$id";
+           $quary="DELETE FROM users_roles WHERE users_roles.user_id=$id";
            $result = \DB::statement($quary);
     
             return response()->json(['success' => 'Record has been deleted']);

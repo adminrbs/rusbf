@@ -350,4 +350,15 @@ $member->enrolment_date = $request->get('enrolmentdate');
             return $ex;
         }
     }
+
+public function selectMember(){
+try{
+$quary = "SELECT M.id,M.full_name FROM members M";
+$result= DB::select($quary);
+return response()->json($result);
+}catch(Exception $ex){
+return $ex;
+}
+
+}
 }

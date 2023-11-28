@@ -249,7 +249,7 @@ Route::get('/getterm/{id}', [MembersLoanRequestController::class, 'getterm']);
 Route::get('/membershipno/{id}', [MembersLoanRequestController::class, 'membershipno']);
 
 //approval
-Route::get('allmemberlonrequestapprovel', [MembersLoanRequestController::class, 'allmemberlonrequestapprovel']);
+Route::get('/allmemberlonrequestapprovel', [MembersLoanRequestController::class, 'allmemberlonrequestapprovel']);
 
 
 
@@ -423,3 +423,16 @@ Route::get('/payment_voucher/getMembers', [PaymentVoucerController::class, 'getM
 Route::get('/payment_voucher/getMemberName/{id}', [PaymentVoucerController::class, 'getMemberName']);
 
 // End of Payment Voucher
+
+// Payment Voucher List
+Route::get('/paymentVoucherList', function () {
+    return view('paymentVoucherList');
+})->middleware(['is.logged']);
+Route::get('/payment_voucher/all_vouchers', [PaymentVoucerController::class, 'all_vouchers']);
+// End of Payment Voucher List
+
+Route::get('/memberwebcamAttachment', function () {
+    return view('memberwebcamAttachment');
+});
+
+Route::get('/selectMember',[MemberController::class,'selectMember']);

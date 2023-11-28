@@ -255,7 +255,7 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-files"></i>
-                                <span>Donations & Gratuity </span>
+                                <span>Donations & Grativity </span>
                             </a>
                             <ul class="nav-group-sub collapse">
                                 @if(Auth::user()->can('donations_and_grativity_request'))
@@ -317,7 +317,7 @@
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
 
-                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i class="fa fa-credit-card-alt"></i>Payment</a></li>
+                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i class="ph-files"></i>Payment</a></li>
 
                         </li>
                         @endif
