@@ -436,3 +436,5 @@ Route::get('/memberwebcamAttachment', function () {
 });
 
 Route::get('/selectMember',[MemberController::class,'selectMember']);
+Route::post('/saveAttachment',[MemberController::class,'saveAttachment']);
+Route::get('/memberwebimage/{id}',[MemberController::class,'memberwebimage']);

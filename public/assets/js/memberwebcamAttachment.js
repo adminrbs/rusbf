@@ -1,9 +1,21 @@
 var dropzoneSingle = undefined;
 var print_list = [];
+var file = file;
+var formData = new FormData();
 $(document).ready(function () {
+    $('#saveAttachment').prop('disabled', false);
     $('.select2').select2();
     initDropzone();
     membername();
+    $('#saveAttachment').on('click', function () {
+        saveAttachment();
+    });
+    $('#selectMember').change(function () {
+        nameid = $(this).val();
+        memberwebimage(nameid);
+        $('#saveAttachment').prop('disabled', false);
+       
+    });
 
 });
 
@@ -19,12 +31,14 @@ function initDropzone() {
         autoProcessQueue: false,
         addRemoveLinks: true,
         selectedImage: undefined,
-        imageIcon: undefined,
         status: "new",
         init: function () {
             this.on('addedfile', function (file) {
+
                 console.log(file);
+
                 this.selectedImage = file;
+
 
                 const reader = new FileReader();
                 reader.onload = () => {
@@ -53,6 +67,7 @@ function initDropzone() {
                     this.removeFile(this.fileTracker);
                 }
                 this.fileTracker = file;
+
             });
             this.on('removedfile', function (file) {
                 $('.dz-default').remove();
@@ -61,7 +76,9 @@ function initDropzone() {
                 this.status = "new";
             });
             this.on("success", function (file, responseText) {
-                console.log(responseText); // console should show the ID you pointed to
+                console.log(file);
+
+                // console should show the ID you pointed to
             });
             this.on("complete", function (file) {
 
@@ -101,6 +118,8 @@ function openWebCam() {
 
 
 function stopWebCam() {
+    $('#saveAttachment').prop('disabled', false);
+
 
     var video = document.querySelector("#videoElement");
     var stream = video.srcObject;
@@ -113,7 +132,7 @@ function stopWebCam() {
     var ctx = canvas.getContext("2d");
     ctx.drawImage(videoElement, 0, 0, video.videoWidth, video.videoHeight + 30);
     var dataURL = canvas.toDataURL();
-
+    //var thisDropzone = this;
     var mockFile = { name: 'image', size: 12345, type: 'image/png' };
     dropzoneSingle.emit("addedfile", mockFile);
     dropzoneSingle.emit("thumbnail", mockFile, dataURL);
@@ -141,7 +160,7 @@ function membername() {
         success: function (response) {
             console.log(response);
             var htmlContent = "";
-
+            htmlContent += "<option value='0'>Select Member</option>";
 
             $.each(response, function (key, value) {
 
@@ -151,4 +170,119 @@ function membername() {
 
         },
     })
+}
+
+function memberwebimage(id) {
+
+    $.ajax({
+        type: "get",
+        enctype: 'multipart/form-data',
+        url: '/memberwebimage/' + id,
+        data: formData,
+        processData: false,
+        contentType: false,
+
+        success: function (response) {
+            var memberArray = response.member;
+            console.log(memberArray);
+            if (memberArray.length > 0) {
+
+
+
+                var imageIcon = memberArray[0].attachment;
+                console.log(imageIcon);
+                if (imageIcon === undefined) {
+                    resetForm();
+                } else {
+
+                    var mockFile = { name: 'image', size: 12345, type: 'image/png' };
+                    dropzoneSingle.emit("addedfile", mockFile);
+                    dropzoneSingle.emit("thumbnail", mockFile, imageIcon);
+                    dropzoneSingle.emit("success", mockFile);
+                }
+            }else if(memberArray.length <= 0){
+                openWebCam()
+               // resetForm();
+}
+
+        },
+
+
+    });
+}
+
+
+
+
+function saveAttachment() {
+
+    formData.append('selectMember', $('#selectMember').val());
+    // formData.append("file", file);
+    formData.append('image', dropzoneSingle.selectedImage);
+
+    var member = $('#selectMember').val();
+
+    if (member > 0) {
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: '/saveAttachment',
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            timeout: 800000,
+            beforeSend: function () {
+                $('#saveAttachment').prop('disabled', true);
+            },
+            success: function (response) {
+                console.log(response);
+                if (response.status === true) {
+                    new Noty({
+                        text: 'Successfully saved!',
+                        type: 'success'
+                    }).show();
+                    resetForm();
+                    $('#saveAttachment').prop('disabled', true);
+                    resetForm();
+                } else if (response.status === false) {
+                    new Noty({
+                        text: 'Select Image!',
+                        type: 'error'
+                    }).show();
+                }
+
+            },
+            error: function (error) {
+
+                showErrorMessage('Something went wrong');
+                console.log(error);
+
+            },
+
+            complete: function () {
+                //$('#saveAttachment').prop('disabled', false);
+            }
+        });
+    } else {
+        new Noty({
+            text: 'Select member',
+            type: 'error'
+        }).show();
+        return
+    }
+
+
+}
+function resetForm() {
+
+    if (dropzoneSingle) {
+        dropzoneSingle.removeAllFiles(true);
+
+    }
+
 }

@@ -1303,29 +1303,20 @@ function download(attachmentId) {
 
 
         success: function (response) {
-            // var fileName = response.attachment;
-
+           
             var attachmentData = response.attachment;
-            // var fileName = response.filename;
-
-            // Create a Blob object from the attachment data
+           
             var blob = new Blob([attachmentData], { type: 'pdf' });
 
-            // Create a temporary URL for the Blob
             var url = window.URL.createObjectURL(blob);
 
-            // Create an anchor element for downloading
             var a = document.createElement('a');
             a.style.display = 'flex';
             a.href = url;
-            a.download = attachmentData; // Set the desired file name
-
-            // Trigger a click event on the anchor element to initiate the download
+            a.download = attachmentData; 
             document.body.appendChild(a);
             a.click();
 
-            // Clean up the temporary URL
-            //window.URL.revokeObjectURL(url);
         },
         error: function (data) {
             console.log(data);

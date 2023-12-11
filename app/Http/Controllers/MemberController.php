@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\member_webcam_attachments;
 use App\Models\MemberAttachment;
 use Illuminate\Http\Request;
 use Exception;
@@ -83,7 +84,7 @@ class MemberController extends Controller
             $member->beneficiary_email = $request->get('beneficiary_email');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
             $member->ref_by = $request->get('ref_by');
-$member->enrolment_date = $request->get('enrolmentdate');
+            $member->enrolment_date = $request->get('enrolmentdate');
 
             if ($member->save()) {
 
@@ -199,6 +200,7 @@ $member->enrolment_date = $request->get('enrolmentdate');
     public function get_member_data($id)
     {
 
+
         try {
 
             $quary = "SELECT members.*,
@@ -206,9 +208,10 @@ $member->enrolment_date = $request->get('enrolmentdate');
             users.name AS createname,
             CASE WHEN U.name IS NULL THEN 'NULL' ELSE U.name END AS updatename
      FROM members
-     INNER JOIN users ON members.create_by = users.id
+     LEFT JOIN users ON members.create_by = users.id
      LEFT JOIN users AS U ON members.update_by = U.id
      WHERE members.id =$id";
+
             $memberRequest = DB::select($quary);
 
 
@@ -239,12 +242,12 @@ $member->enrolment_date = $request->get('enrolmentdate');
             $id = $request->input('id');
 
             $file =  $request->file('file');
-           
+
 
             $member = Member::find($request->id);
 
-           //dd($request->get('beneficiary_full_name'));
-           $member->update_by = Auth::user()->id;
+            //dd($request->get('beneficiary_full_name'));
+            $member->update_by = Auth::user()->id;
             $member->beneficiary_full_name = $request->get('beneficiary_full_name');
             $member->beneficiary_private_address = $request->get('beneficiary_private_address');
             $member->beneficiary_relationship = $request->get('beneficiary_relationship');
@@ -275,7 +278,7 @@ $member->enrolment_date = $request->get('enrolmentdate');
             $member->beneficiary_nic = $request->get('beneficiary_nic');
             $member->ref_by = $request->get('ref_by');
             $member->enrolment_date = $request->get('enrolmentdate');
-           
+
             if ($member->save()) {
 
                 if (isset($file)) {
@@ -351,14 +354,121 @@ $member->enrolment_date = $request->get('enrolmentdate');
         }
     }
 
-public function selectMember(){
-try{
-$quary = "SELECT M.id,M.full_name FROM members M";
-$result= DB::select($quary);
-return response()->json($result);
-}catch(Exception $ex){
-return $ex;
-}
+    public function selectMember()
+    {
+        try {
+            $quary = "SELECT M.id,M.full_name FROM members M";
+            $result = DB::select($quary);
+            return response()->json($result);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 
-}
+    public function saveAttachment(Request $request)
+    {
+        try {
+            $file = $request->file('image');
+
+            if ($file === null) {
+               return response()->json(['status'=>false]);
+            } else {
+              
+           
+
+            $member = new member_webcam_attachments();
+            $oldmember = $request->get('selectMember');
+            $allmember = member_webcam_attachments::where('member_id', $oldmember)->get();
+
+            if (count($allmember) == 0) {
+                $member->member_id = $request->get('selectMember');
+
+                if ($member->save()) {
+                    $this->uploadwebcamAttachment($file, $member->id);
+                    return response()->json(['status' => true, 'file' => $file]);
+                }
+            } else {
+                if ($allmember) {
+                    $this->updatedwebcamAttachment($file, $allmember->first()->id);
+                    return response()->json(['status' => true, 'file' => $file]);
+                }
+            }
+        }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+    // image upload
+    public function uploadwebcamAttachment($file, $id)
+    {
+
+        if ($file) {
+
+            $file_name = $file->getClientOriginalName();
+
+            $filename = url('/') . '/attachments/webcam_attachment/' . uniqid() . '' . time() . '.' . str_replace(' ', '', $file_name);
+            $filename = str_replace(' ', '', str_replace('\'', '', $filename));
+            $file->move(public_path('attachments/webcam_attachment'), $filename);
+
+            $attachment = member_webcam_attachments::find($id);
+
+            $attachment->attachment = $filename;
+            $attachment->save();
+        }
+    }
+
+
+    public function updatedwebcamAttachment($file, $id)
+    {
+        try {
+            if ($file) {
+                $file_name = $file->getClientOriginalName();
+                $filename = url('/') . '/attachments/webcam_attachment/' . uniqid() . '' . time() . '.' . str_replace(' ', '', $file_name);
+                $filename = str_replace(' ', '', str_replace('\'', '', $filename));
+                $file->move(public_path('attachments/webcam_attachment'), $filename);
+
+
+
+                $attachment = member_webcam_attachments::find($id);
+               
+              
+                $filePath = $attachment->attachment;
+    
+                if ($filePath) {
+                    $baseUrl = url('/') . "/attachments/webcam_attachment/";
+    
+                    $file =  str_replace($baseUrl, '', $filePath);
+                    $file = public_path('attachments/webcam_attachment/') . '/' . $file;
+    
+                    if (file_exists($file)) {
+                        unlink($file);
+                    }
+    
+                    
+                }
+
+                $attachment->attachment = $filename;
+
+                $attachment->update();
+            }
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
+
+
+
+
+
+
+    public function memberwebimage($id)
+    {
+        try {
+            $member = member_webcam_attachments::where('member_id', $id)->get();
+            return response()->json(["member" => $member]);
+        } catch (Exception $ex) {
+            return $ex;
+        }
+    }
 }

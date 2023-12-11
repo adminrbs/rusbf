@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-3 mb-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <div action="#" class="dropzone" id="dropzone_single" style="min-height: 250px; max-height: 250px;"></div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 mt-1">
-                                <button type="button" class="btn btn-success" id="saveAttachment" name="saveAttachment" style="min-width: 100%;">Save  Attachment</button>
+                                <button type="button" class="btn btn-success" id="saveAttachment" name="saveAttachment" style="min-width: 100%;" disabled>Save  Attachment</button>
                             </div>
                         </div>
                     </div>
