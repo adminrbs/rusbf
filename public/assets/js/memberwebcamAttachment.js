@@ -1,6 +1,6 @@
 var dropzoneSingle = undefined;
 var print_list = [];
-var file = file;
+ var file = file;
 var formData = new FormData();
 $(document).ready(function () {
     $('#saveAttachment').prop('disabled', false);
@@ -31,11 +31,10 @@ function initDropzone() {
         autoProcessQueue: false,
         addRemoveLinks: true,
         selectedImage: undefined,
+        imageIcon: undefined,
         status: "new",
         init: function () {
             this.on('addedfile', function (file) {
-
-                console.log(file);
 
                 this.selectedImage = file;
 
@@ -67,7 +66,7 @@ function initDropzone() {
                     this.removeFile(this.fileTracker);
                 }
                 this.fileTracker = file;
-
+                
             });
             this.on('removedfile', function (file) {
                 $('.dz-default').remove();
@@ -189,7 +188,7 @@ function memberwebimage(id) {
 
 
 
-                var imageIcon = memberArray[0].attachment;
+                var imageIcon = memberArray[0].path;
                 console.log(imageIcon);
                 if (imageIcon === undefined) {
                     resetForm();
@@ -203,7 +202,7 @@ function memberwebimage(id) {
             }else if(memberArray.length <= 0){
                 openWebCam()
                // resetForm();
-}
+            }
 
         },
 
@@ -219,6 +218,8 @@ function saveAttachment() {
     formData.append('selectMember', $('#selectMember').val());
     // formData.append("file", file);
     formData.append('image', dropzoneSingle.selectedImage);
+    // formData.append('imageIcon', dropzoneSingle.imageIcon);
+    // formData.append("image_status", dropzoneSingle.status);
 
     var member = $('#selectMember').val();
 
@@ -237,7 +238,7 @@ function saveAttachment() {
             },
             timeout: 800000,
             beforeSend: function () {
-                $('#saveAttachment').prop('disabled', true);
+                //$('#saveAttachment').prop('disabled', true);
             },
             success: function (response) {
                 console.log(response);

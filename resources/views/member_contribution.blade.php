@@ -89,11 +89,11 @@
                 </div>
 
             </div>
-            <die class="row">
+            <div class="row">
                 <div class="col-md-12 mt-3" style="text-align: right;">
                     <button class="btn btn-primary" id="btnSave">Save</button>
                 </div>
-            </die>
+            </div>
 
         </div>
 

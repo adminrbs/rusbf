@@ -30,7 +30,7 @@ and open the template in the editor.
 
             <form method="post" action="#" name="login" class="vw-100 p-md-3 p-2 ">
                 <div style="text-align: center;">
-                    <img src="images/login_logo.png" class="img-w">
+                    <img src="images/logoimage3.png" class="img-w" style="width:300px;height:300px">
                 </div>
                 <div class="mb-4 mt-3" style="text-align: center;">
                     <h4 class="login-title">EasywinBiz LMS</h4>

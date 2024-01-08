@@ -111,23 +111,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+var element;
 var nameid = 0;
 var memberid = 0;
 var formData = new FormData();
 $(document).ready(function () {
     $('.select2').select2();
-    allcontributedata(0);
-    Fullname(0)
+    var mi = $('#cmbmember').val()
+
+
+    // Fullname(0)
     memberNumber(0);
-    computerNumber(0);
+    //  computerNumber(0);
     imageloard(0);
     $('input[type="number"]').val('');
 
     $('#cmbmember').change(function () {
         memberid = $(this).val();
-        Fullname(memberid);
-        computerNumber(nameid);
+        memberNumber(memberid);
+        // Fullname(memberid);
+        // computerNumber(memberid);
         imageloard(memberid);
         allcontributedata(memberid)
         amountset(memberid)
@@ -137,19 +140,19 @@ $(document).ready(function () {
         nameid = $(this).val();
 
         memberNumber(nameid);
-        computerNumber(nameid);
+        // computerNumber(nameid);
         imageloard(nameid);
-        allcontributedata(memberid);
-        amountset(memberid);
+        allcontributedata(nameid);
+        amountset(nameid);
     });
     $('#cmbcomputer').change(function () {
-        nameid = $(this).val();
+        var computre = $(this).val();
 
-        memberNumber(nameid);
-        Fullname(memberid);
-        imageloard(nameid);
-        allcontributedata(memberid);
-        amountset(memberid);
+        memberNumber(computre);
+        // Fullname(computre);
+        imageloard(computre);
+        allcontributedata(computre);
+        amountset(computre);
     });
     $('input[type="checkbox"]').on('change', function () {
         if ($(this).is(':checked')) {
@@ -171,51 +174,38 @@ $(document).ready(function () {
     $('.datatable-header').hide();
     $('.datatable-footer').hide();
 
+
+
 });
 
 
 function memberNumber(id) {
-    $('#cmbmember').empty();
-    $.ajax({
-        url: '/memberNumber/' + id,
-        type: 'get',
-        async: false,
-        success: function (data) {
-            var htmlContent = "";
 
-
-            $.each(data, function (key, value) {
-
-                htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
-            });
-            $('#cmbmember').html(htmlContent);
-
-
-        }, error: function (data) {
-            console.log(data)
-        }
-
-    })
-
-}
-
-
-
-function computerNumber(id) {
-    $('#cmbcomputer').empty();
+    // $('#cmbmember').empty();
     $.ajax({
         url: '/computerNumber/' + id,
         type: 'get',
         async: false,
         success: function (data) {
-            var htmlContent = "";
+
+            var dt = data
+
+
+            allcontributedata(dt[0].id);
+            var htmlContent;
+            var htmlContent1;
+            var htmlContent2;
 
 
             $.each(data, function (key, value) {
 
-                htmlContent += "<option value='" + value.id + "'>" + value.computer_number + "</option>";
+                htmlContent += "<option value='" + value.id + "'>" + value.member_number + "</option>";
+                htmlContent1 += "<option value='" + value.id + "'>" + value.computer_number + "</option>";
+                htmlContent2 += "<option value='" + value.id + "'>" + value.full_name + "</option>";
             });
-            $('#cmbcomputer').html(htmlContent);
+            $('#cmbmember').html(htmlContent);
+            $('#cmbcomputer').html(htmlContent1);
+            $('#cmbName').html(htmlContent2);
 
 
         }, error: function (data) {
@@ -226,29 +216,6 @@ function computerNumber(id) {
 
 }
 
-
-
-function Fullname(id) {
-
-    $('#cmbName').empty();
-    $.ajax({
-        url: '/fullName/' + id,
-        type: 'get',
-        async: false,
-        success: function (data) {
-            console.log(data);
-            var htmlContent = "";
-
-
-            $.each(data, function (key, value) {
-
-                htmlContent += "<option value='" + value.id + "'>" + value.full_name + "</option>";
-            });
-            $('#cmbName').html(htmlContent);
-
-        },
-    })
-}
 
 
 function imageloard(id) {
@@ -291,7 +258,7 @@ function allcontributedata(id) {
 
     $.ajax({
         type: "GET",
-        url: "/membercontributedata/" + $('#cmbmember').val(),
+        url: "/membercontributedata/" + id,
         cache: false,
         timeout: 800000,
         beforeSend: function () { },
@@ -309,14 +276,17 @@ function allcontributedata(id) {
 
                 var isChecked = dt[i].member_id > 0 ? "checked" : "";
                 var checkboxId = "contributionmember_" + dt[i].contribution_id;
+                var amountDivId = "amountDiv_" + dt[i].contribution_id;
+
                 data.push({
                     "id": dt[i].contribution_id,
                     "code": dt[i].contribution_code,
                     "name": dt[i].contribution_title,
-                    "amount": dt[i].amount,
-                    "select": '<label class=""><input data-id="' + dt[i].contribution_id + '" type="checkbox" id="contributionmember" required ' + isChecked + '></label>',
+                    "amount": `<div id="${amountDivId}" onclick="typeamount(this, '${dt[i].contribution_id}', '${dt[i].amount}')" class="amountDiv">${dt[i].amount}</div>`,
 
-                });
+                    "select": `<label class=""><input data-id="${dt[i].contribution_id}" type="checkbox" id="${checkboxId}" required ${isChecked} onchange="checkboxChanged(this)"></label>`,
+
+                });//dt[i].amount
             }
 
 
@@ -335,6 +305,33 @@ function allcontributedata(id) {
 
 }
 
+function typeamount(element, contributionId, typamount) {
+    element = element
+    $(element).dblclick();
+
+    // Select the text content inside the element
+    if (window.getSelection) {
+        var range = document.createRange();
+        range.selectNodeContents(element);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else if (document.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+    }
+}
+function checkboxChanged(checkbox) {
+    var contributionId = checkbox.getAttribute("data-id");
+    var amount = parseFloat($("#amountDiv_" + contributionId).text());
+
+    if (amount === 0) {
+        // If the amount is zero, uncheck the checkbox
+        $('#' + checkbox.id).prop('checked', false);
+    }
+
+}
 function updateContribution() {
 
     var collection = [];
@@ -371,7 +368,6 @@ function updateContribution() {
     formData.append('cmbmember', $('#cmbmember').val());
 
 
-
     $.ajax({
         type: "POST",
         url: "/save_memberContribution",
@@ -388,12 +384,19 @@ function updateContribution() {
         },
         success: function (response) {
             //suplyGroupAllData();
+            if (response.massage == "notsave") {
+                new Noty({
+                    text: '0 not saved',
+                    type: 'success'
+                }).show();
+            } else {
+                new Noty({
+                    text: 'Successfully saved',
+                    type: 'success'
+                }).show();
+            }
 
 
-            new Noty({
-                text: 'Successfully saved',
-                type: 'success'
-            }).show();
 
 
         },

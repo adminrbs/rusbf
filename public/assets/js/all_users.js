@@ -132,7 +132,7 @@ function loadusers() {
         type: 'GET',
         url: '/load_users_list',
         success: function (response) {
-            var dt = response.userData;
+            var dt = response;
             console.log(dt);
             var data = [];
             for (i = 1; i < dt.length; i++) {
@@ -149,7 +149,7 @@ function loadusers() {
                     "thusername": username,
                     "themail": email,
                     "throle": role_name,
-                    "thtype": user_type === 1 ? "Employee" : "Guest",
+                    "thtype": user_type,
                     "thactions": '<button title="Edit" class="btn btn-primary btn-icon" onclick="edit(' + id + ')"><i class="ph-pencil-simple" aria-hidden="true"></i></button> ' +
                         '<button title="Delete" class="btn btn-danger btn-icon" onclick="_delete(' + id + ')"><i class="ph-trash" aria-hidden="true"></i></button>',
                 });
@@ -278,9 +278,9 @@ function edit(id) {
 
         success: function (response) {
 
-            /* console.log(response);
+             console.log(response);
  
-             $('#hiddenuserid').val(response.id); 
+            /* $('#hiddenuserid').val(response.id); 
              $('#edit_username').val(response.name); 
              $('#edit_email').val(response.email); 
              $('#userrole').val(response.role_id);
@@ -347,7 +347,7 @@ function update_user() {
     var password = $('#password').val();
     var confirmPassword = $('#confirmPassword').val();
 
-    if (password != "" && confirmPassword != "") {
+  
 
         if (password !== confirmPassword) {
 
@@ -400,48 +400,7 @@ function update_user() {
             }
         });
 
-    } else {
-        var id = $('#hiddenuserid').val();
-
-
-        formData.append('username', $('#username').val());
-        formData.append('email', $('#email').val());
-        //formData.append('password', password); // Use the password variable
-        formData.append('userrole', $('#userrole').val());
-        formData.append('usertype', $('#usertype').val());
-
-
-
-        $.ajax({
-            type: "POST",
-            url: "/update_user/" + id,
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            processData: false,
-            contentType: false,
-            cache: false,
-            timeout: 800000,
-            beforeSend: function () {
-
-            },
-            success: function (response) {
-
-                $('#add_modal').modal('hide');
-                console.log(response);
-                new Noty({
-                    text: 'User created successfully!',
-                    type: 'success',
-                }).show();
-
-                loadusers();
-
-            }
-        });
-
-    }
-
+    
 }
 
 

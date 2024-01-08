@@ -52,6 +52,66 @@
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
                                 <i class="ph-gear"></i>
+                                <span>Member Information</span>
+                            </a>
+                            <ul class="nav-group-sub collapse">
+                                @if(Auth::user()->can('members'))
+                                <li class="nav-item">
+                                    <a href="/members" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Members
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                @endif
+                                <li class="nav-item">
+                                    <a href="/memberwebcamAttachment" class="nav-link">
+                                        <i class="ph-user-list"></i>
+                                        <span>
+                                            Member's Photo
+                                            {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
+                                        </span>
+                                    </a>
+                                </li>
+                                @if(Auth::user()->can('setting'))
+                                <ul class="nav-item-submenu">
+                                    <a href="#" class="nav-link">
+                                        <i class="ph-gear"></i>
+                                        <span>Setting</span>
+                                    </a>
+                                    <ul class="nav-group-sub collapse">
+                                        @if(Auth::user()->can('designation'))
+                                        <li class="nav-item"><a href="/master_designation"
+                                                class="nav-link">Designation</a></li>
+                                        @endif
+                                        @if(Auth::user()->can('place_of_work'))
+                                        <li class="nav-item"><a href="/master_place_of_work" class="nav-link">Place of
+                                                work</a>
+                                        </li>
+                                        @endif
+                                        @if(Auth::user()->can('sub_department'))
+                                        <li class="nav-item"><a href="/master_sub_department" class="nav-link">Serving
+                                                Sub Department</a></li>
+                                        @endif
+                                        @if(Auth::user()->can('place_of_payeroll'))
+                                        <li class="nav-item"><a href="/master_place_of_payroll" class="nav-link">Place
+                                                of Payeoll Preparation</a></li>
+                                        @endif
+                                    </ul>
+
+                                </ul>
+                                @endif
+                            </ul>
+                        </li>
+@endif
+
+
+                        {{-- @if(Auth::user()->can('member_information'))
+                        <li class="nav-item nav-item-submenu">
+                            <a href="#" class="nav-link">
+                                <i class="ph-gear"></i>
 
                                 <span>Member Information</span>
                             </a>
@@ -63,7 +123,7 @@
                                             <span>
                                                 Member Loan
                                                 {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
-                                            </span>
+                                           {{-- </span>
                                         </a>
                                     </li>-->
                                     @if(Auth::user()->can('members'))
@@ -71,11 +131,11 @@
                                                 class="ph-user-list"></i>Members</a></li>
                                     @endif
                                 </ul>
-                                <!--<ul class="nav-item-submenu">
+                                <ul class="nav-item-submenu">
                                     <li class="nav-item"><a href="/member_contribution" class="nav-link"> <i
-                                                class="ph-user-list"></i>Member Contribution</a></li>
+                                                class="ph-user-list"></i>Member's Photo</a></li>
 
-                                </ul>-->
+                                </ul>
                                 @if(Auth::user()->can('setting'))
                                 <ul class="nav-item-submenu">
                                     <a href="#" class="nav-link">
@@ -107,7 +167,7 @@
 
                             </ul>
                         </li>
-                        @endif
+                        @endif --}}
                         @if(Auth::user()->can('contribution'))
                         <li class="nav-item nav-item-submenu">
                             <a href="#" class="nav-link">
@@ -219,7 +279,7 @@
                                         </span>
                                     </a>
                                 </li>-->
-                                
+
                                 <!--<li class="nav-item">
                                     <a href="/contributionAndloanFilter" class="nav-link">
                                         <i class="ph-house"></i>
@@ -276,7 +336,7 @@
                                         <i class="ph-user-list"></i>
                                         <span>
 
-                                            Death  Grativity Approval
+                                            Death Grativity Approval
                                             {{-- <span class="d-block fw-normal opacity-50">No pending orders</span> --}}
                                         </span>
                                     </a>
@@ -306,18 +366,19 @@
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
 
-                        <li class="nav-item"><a href="contributionAndloanFilter" class="nav-link"> <i class="ph-files"></i>Recipet</a></li>
+                        <li class="nav-item"><a href="contributionAndloanFilter" class="nav-link"> <i
+                                    class="ph-files"></i>Recipet</a></li>
 
                         </li>
                         @endif
-                        
 
                         @if(Auth::user()->can('payment'))
                         <!--<li class="nav-item"><a href="/loneManagement" class="nav-link">Setting</a></li>
                         <li class="nav-item"><a href="/contribution" class="nav-link">Contribution</a></li>-->
                         <li class="nav-item nav-item-submenu">
 
-                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i class="ph-files"></i>Payment</a></li>
+                        <li class="nav-item"><a href="/paymentVoucher" class="nav-link"> <i
+                                    class="ph-files"></i>Payment</a></li>
 
                         </li>
                         @endif
@@ -385,7 +446,7 @@
                             </a>
                             <ul class="nav-group-sub collapse">
                                 @if(Auth::user()->can('user_role'))
-                                
+
                                 <li class="nav-item"><a href="/user_role_list" class="nav-link">User Roles</a></li>
                                 @endif
                                 @if(Auth::user()->can('user_list'))
@@ -394,14 +455,12 @@
                                 @if(Auth::user()->can('permission'))
                                 <li class="nav-item"><a href="/permission" class="nav-link">Permission</a></li>
                                 @endif
+                                @if(Auth::user()->can('memberportal'))
+                                <li class="nav-item"><a href="/memberportal" class="nav-link">Member Portal</a></li>
+                                @endif
                             </ul>
                         </li>
                         @endif
-                       
-                       
-                       
-                       
-                       
 
                     </ul>
                 </div>

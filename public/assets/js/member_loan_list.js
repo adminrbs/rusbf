@@ -120,7 +120,7 @@ var memberid = 0;
 var formData = new FormData();
 $(document).ready(function () {
     $('.select2').select2();
-    allcontributedata(0);
+   // allcontributedata(0);
    /* Fullname(0)
     memberNumber(0);
     computerNumber(0);*/
@@ -250,58 +250,31 @@ function Fullname(id) {
 function memberShip(id) {
     var mid = id
         $.ajax({
-            url: '/memberNumber/' + id,
+            url: '/computerNumber/' + id,
             type: 'get',
             dataType: 'json',
             // async: false,
     
     
-            success: function (response) {
+            success: function (data) {
+var dt =data
 
-    if(mid>0){
-       // $('#cmbnameinfull').html('');
-        $('#cmbmember').html('');
-        $('#cmbcomputer').html('');
-        $('#cmbName').html('');
+                allcontributedata(dt[0].id)
+                var htmlContent;
+                var htmlContent1 ;
+                var htmlContent2;
+               
     
-        var dt = response;
+                $.each(data, function (key, value) {
     
-        for (var i = 0; i < dt.length; i++) {
+                    htmlContent += "<option value='" + value.id + "'>" + value.membser_number + "</option>";
+                    htmlContent1 += "<option value='" + value.id + "'>" + value.csomputer_number + "</option>";
+                    htmlContent2 += "<option value='" + value.id + "'>" + value.fsull_name + "</option>";
+                });
+                $('#cmbmember').html(htmlContent);
+                $('#cmbcomputer').html(htmlContent1);
+                $('#cmbName').html(htmlContent2);
     
-           // $('#cmbnameinfull').append("<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>");
-            $('#cmbmember').append("<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>");
-            $('#cmbcomputer').append("<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>");
-             $('#cmbName').append("<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>");
-    
-        }
-     
-    
-    }else{
-    
-    
-        var dt = response
-    
-       // var cmbnameinfull = "<option value='0'>Select Name In Full</option>";
-        var cmbmember = "<option value='0'>Select Member Number</option>";
-        var cmbcomputer = "<option value='0'>Select Computer Number</option>";
-        var cmbName = "<option value='0'>Select Full Name</option>";
-    
-    
-        for (var i = 0; i < dt.length; i++) {
-           // console.log(dt[i].full_name);
-          ///  cmbnameinfull += "<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>";
-          cmbmember += "<option value='" + dt[i].id + "'>" + dt[i].member_number + "</option>";
-          cmbcomputer += "<option value='" + dt[i].id + "'>" + dt[i].computer_number + "</option>";
-          cmbName += "<option value='" + dt[i].id + "'>" + dt[i].full_name + "</option>";
-        }
-    
-        // Set the HTML content of the select elements after the loop
-       // $('#cmbnameinfull').html(cmbnameinfull);
-        $('#cmbmember').html(cmbmember);
-        $('#cmbcomputer').html(cmbcomputer);
-        $('#cmbName').html(cmbName);
-    
-    }     
                
     
             }, error: function (data) {
@@ -366,7 +339,7 @@ function allcontributedata(id) {
 
     $.ajax({
         type: "GET",
-        url: "/memberloandata/"+ $('#cmbmember').val(),
+        url: "/memberloandata/"+id,
         cache: false,
         timeout: 800000,
         beforeSend: function () { },

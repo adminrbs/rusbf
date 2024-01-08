@@ -21,7 +21,7 @@ $(document).ready(function () {
     //         this.on('addedfile', function (file) {
     //             alert("addedfile");
     //             image = file;
- 
+
     //             if (this.fileTracker) {
     //                 this.removeFile(this.fileTracker);
     //             }
@@ -44,7 +44,7 @@ $(document).ready(function () {
     // End of Single files
     dropzoneSingle = new Dropzone("#dropzone_single", {
         paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 2, // MB
+        maxFilesize: 6, // MB
         maxFiles: 1,
         acceptedFiles: ".jpeg,.jpg,.png,",
         dictDefaultMessage: 'Drop file to upload <span>or CLICK</span> (File formats: jpeg,jpg,png)',
@@ -108,16 +108,16 @@ $(document).ready(function () {
             return;
         }
         // dropzoneSingle.processQueue();
-        if($('#btnsave').text().trim()=='Save'){
+        if ($('#btnsave').text().trim() == 'Save') {
             saveMember();
         }
-        else{
+        else {
             updateMember();
         }
-        
+
     });
 
-    
+
 
     //Reset button
     $('#btnReset').on('click', function () {
@@ -133,7 +133,7 @@ $(document).ready(function () {
 
     // Name initials
     const txtFullNameInput = document.getElementById("full_name");
-    txtFullNameInput.addEventListener("input", function() {
+    txtFullNameInput.addEventListener("input", function () {
         this.value = this.value.replace(/\s+/g, " ");
     });
     const fullNameInput = document.getElementById('full_name');
@@ -147,10 +147,10 @@ $(document).ready(function () {
         const initialsExceptLast2 = words.slice(0, -2).map(word => word.charAt(0).toUpperCase()).join('.');
         const lastWord = words[words.length - 1];
         const lastWord2 = words[words.length - 2];
-        
+
         if (lastWord.trim() === '') {
             initNameInput.value = initialsExceptLast2 + ' ' + lastWord2;
-          
+
         } else {
             initNameInput.value = initialsExceptLast + ' ' + lastWord;
         }
@@ -180,23 +180,23 @@ $(document).ready(function () {
         var param = sPageURL.split('?');
         var id = param[0].split('=')[1].split('&')[0];
         var action = param[0].split('=')[2].split('&')[0];
-        
+
         ID = id;
         ACTION = action;
         loadMemberData(id);
 
-        if(action == 'view'){
+        if (action == 'view') {
             $("#member_reg_frm :input").prop("disabled", true);
             $("#btnsave").hide();
             $("#btnReset").hide();
-           /// $("#divcreate").show();
+            /// $("#divcreate").show();
             //$("#divupdate").show();
-        }else if(action == 'edit'){
+        } else if (action == 'edit') {
             $('#btnsave').text('Update');
             $("#divcreate").hide();
             $("#divupdate").hide();
         }
-    // call your "getdata(id)" function here
+        // call your "getdata(id)" function here
 
     } else {
         ACTION = 'save';
@@ -205,7 +205,7 @@ $(document).ready(function () {
 });
 
 
-function saveMember() {   
+function saveMember() {
 
     var formData = new FormData();
 
@@ -242,7 +242,7 @@ function saveMember() {
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
     formData.append('ref_by', $('#ref_by').val());
-    formData.append('enrolmentdate',$('#enrolmentdate').val());
+    formData.append('enrolmentdate', $('#enrolmentdate').val());
 
     $.ajax({
         type: "POST",
@@ -261,7 +261,13 @@ function saveMember() {
         success: function (response) {
             console.log(response);
             $('#btnsave').prop('disabled', false);
-            if (response.status == "success") {
+            if (response.message === 'create_members') {
+                new Noty({
+                    text: 'Member Code can not be duplicated!',
+                    type: 'error'
+                }).show();
+                $('#btnsave').prop('disabled', false);
+            } else if (response.status == "success") {
 
                 new Noty({
                     text: 'Member details saved with image!',
@@ -270,7 +276,7 @@ function saveMember() {
 
                 resetForm();
                 $('#btnsave').prop('disabled', false);
-            } else if(response.status == "without_img") {
+            } else if (response.status == "without_img") {
 
                 new Noty({
                     text: 'Member details saved without image!',
@@ -279,14 +285,16 @@ function saveMember() {
 
                 resetForm();
                 $('#btnsave').prop('disabled', false);
-            }else if(response.status == "failed"){
+            } else if (response.status == "failed") {
 
                 new Noty({
                     text: 'Saving process error!',
                     type: 'error'
                 }).show();
 
-            }else{
+            }
+
+            else {
 
                 new Noty({
                     text: 'Something went wrong.',
@@ -299,7 +307,7 @@ function saveMember() {
 
 }
 
-function updateMember(){
+function updateMember() {
 
     var formData = new FormData();
 
@@ -337,7 +345,7 @@ function updateMember(){
     formData.append('beneficiary_email', $('#beneficiary_email').val());
     formData.append('beneficiary_nic', $('#beneficiary_nic').val());
     formData.append('ref_by', $('#ref_by').val());
-    formData.append('enrolmentdate',$('#enrolmentdate').val());
+    formData.append('enrolmentdate', $('#enrolmentdate').val());
 
     $.ajax({
         type: "POST",
@@ -356,7 +364,13 @@ function updateMember(){
         success: function (response) {
 
             console.log(response);
-            if (response.status == "success") {
+            if (response.message === 'create_members') {
+                new Noty({
+                    text: 'Member Code can not be duplicated!',
+                    type: 'error'
+                }).show();
+                $('#btnsave').prop('disabled', false);
+            } else if (response.status == "success") {
 
                 new Noty({
                     text: 'Member details updated with image!',
@@ -367,7 +381,7 @@ function updateMember(){
                     window.location.reload();
                 }, 2300);
                 $('#btnsave').prop('disabled', false);
-            } else if(response.status == "without_img") {
+            } else if (response.status == "without_img") {
 
                 new Noty({
                     text: 'Member details updated without image!',
@@ -378,14 +392,14 @@ function updateMember(){
                     window.location.reload();
                 }, 2300);
                 $('#btnsave').prop('disabled', false);
-            }else if(response.status == "failed"){
+            } else if (response.status == "failed") {
 
                 new Noty({
                     text: 'Updating process error!',
                     type: 'error'
                 }).show();
                 $('#btnsave').prop('disabled', false);
-            }else{
+            } else {
 
                 new Noty({
                     text: 'Something went wrong.',
@@ -404,8 +418,8 @@ function updateMember(){
     });
 }
 
-function loadMemberData(id){
-    
+function loadMemberData(id) {
+
     // if (window.location.search.length > 0) {
     //     var sPageURL = window.location.search.substring(1);
     //     var param = sPageURL.split('&');
@@ -418,7 +432,7 @@ function loadMemberData(id){
     //         $("#btnsave").hide();
     //         $("#btnReset").hide();
     //     }
-       
+
     // }
     $.ajax({
         type: "GET",
@@ -467,35 +481,35 @@ function loadMemberData(id){
                 $('#member_email').val(data[0].member_email);
                 $('#member_whatsapp').val(data[0].member_whatsapp);
                 $('#ref_by').val(data[0].ref_by).trigger('change');
-$('#enrolmentdate').val(data[0].enrolment_date);
+                $('#enrolmentdate').val(data[0].enrolment_date);
 
-                if(pathData != "not_available"){
+                if (pathData != "not_available") {
                     var mockFile = { name: 'Name Image', size: 12345, type: 'image/png' };
                     dropzoneSingle.emit("addedfile", mockFile);
                     dropzoneSingle.emit("success", mockFile);
                     dropzoneSingle.emit("thumbnail", mockFile, pathData)
                 }
-var creatby = data[0].create_by;
-var updteby = data[0].update_by;
+                var creatby = data[0].create_by;
+                var updteby = data[0].update_by;
 
-console.log(updteby);
+                console.log(updteby);
 
-if (ACTION == "view"){
-if(updteby == null){
-    $("#divcreate").show();
-    $("#divupdate").hide();
-    $('#createby').val(data[0].createname);
-    //$('#updateby').val(data[0].updatename);
-}else if(updteby != null && creatby != null) {
-    $("#divcreate").show();
-    $("#divupdate").show();
-    $('#createby').val(data[0].createname);
-    $('#updateby').val(data[0].updatename);
-}
+                if (ACTION == "view") {
+                    if (updteby == null) {
+                        $("#divcreate").show();
+                        $("#divupdate").hide();
+                        $('#createby').val(data[0].createname);
+                        //$('#updateby').val(data[0].updatename);
+                    } else if (updteby != null && creatby != null) {
+                        $("#divcreate").show();
+                        $("#divupdate").show();
+                        $('#createby').val(data[0].createname);
+                        $('#updateby').val(data[0].updatename);
+                    }
 
-    
-}
-                
+
+                }
+
             }
 
         },

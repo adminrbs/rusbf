@@ -52,15 +52,15 @@ class member_contributionController extends Controller
         if ($dept_id > 0) {
             $filteredMember =  Member::where('id', $dept_id)->get();
 
-          
+
             if ($filteredMember) {
-              
+
                 $unfilteredMembers = Member::where('id', '<>', $dept_id)->get();
-        
+
                 $members = $filteredMember->toBase()->merge($unfilteredMembers);
                 return response()->json($members);
             } else {
-               
+
                 return response()->json(['error' => 'Member not found'], 404);
             }
             // $members = Member::where('id', $dept_id)->get();
@@ -77,8 +77,40 @@ class member_contributionController extends Controller
     public function computerNumber($dept_id)
     {
 
-        $members = Member::all();
-        return response()->json($members);
+
+        if ($dept_id > 0) {
+
+            $filteredMember =  DB::select("SELECT M.id,M.member_number,M.full_name,M.computer_number FROM members M WHERE M.id='$dept_id'");
+
+            if ($filteredMember) {
+
+
+
+                $members = DB::select("
+                SELECT 
+                    M.id,
+                    M.member_number,
+                    M.full_name,
+                    M.computer_number
+                FROM 
+                    members M
+                
+                ORDER BY
+                    M.id = '$dept_id' DESC, M.id ASC;");
+                return response()->json($members);
+            } else {
+
+                return response()->json(['error' => 'Member not found'], 404);
+            }
+            // $members = Member::where('id', $dept_id)->get();
+            // return response()->json($members);
+        } else {
+            $members = DB::select("SELECT M.id,M.member_number,M.full_name,M.computer_number FROM members M");
+            return response()->json($members);
+        }
+
+        // $members = Member::all();
+        // return response()->json($members);
     }
 
     public function member_subdepartment()
@@ -116,22 +148,26 @@ class member_contributionController extends Controller
     {
 
         try {
-            $collection = json_decode($request->get('data'));
 
-            member_contribution::where([['member_id', '=', $request->get('cmbmember')]])->delete();
+            $collection = json_decode($request->get('data'));
+            member_contribution::where('member_id', $request->get('cmbmember'))->delete();
 
             foreach ($collection as $data) {
                 $array = json_decode($data);
-                $contribution = new member_contribution();
-                $contribution->member_id  = $request->get('cmbmember');
-                if ($array->amount) {
-                    $contribution->amount  = $array->amount;
-                } else {
-                    $contribution->amount  = 0;
-                }
-                $contribution->contributions_id =  $array->contribution_id;
-                $contribution->save();
+
+                preg_match('/<div id="amountDiv_\d+"[^>]*>(\d+)<\/div>/', $array->amount, $matches);
+
+                $contributionAmount = isset($matches[1]) ? $matches[1] : 0;
+                if ($contributionAmount > 0) {
+                    $contribution = new member_contribution();
+                    $contribution->member_id = $request->get('cmbmember');
+                    $contribution->amount = $contributionAmount;
+                    $contribution->contributions_id = $array->contribution_id;
+                   
+                    $contribution->save();
+                 }
             }
+
 
             return response()->json(['status' => true]);
         } catch (Exception $ex) {

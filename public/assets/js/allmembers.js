@@ -213,27 +213,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 $(document).ready(function () {
 
-    getBranchDetails();
-
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(document).ready(function () {
+   // getBranchDetails();
     loadmembers();
+
 });
+
+
 
 function loadmembers() {
     $.ajax({
@@ -277,7 +262,7 @@ function loadmembers() {
             var table = $('#tableMembers').DataTable();
             table.clear();
             table.rows.add(data).draw();
-            MemberTable.refresh();
+           // MemberTable.refresh();
         },
     });
 }

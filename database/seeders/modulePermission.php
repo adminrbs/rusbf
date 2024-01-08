@@ -57,6 +57,7 @@ DB::table('module_permissions')->insert([
     ['module_id' => '1','permission_id' => '35','created_at' => Carbon::now(),'updated_at' => Carbon::now()],
     ['module_id' => '1','permission_id' => '36','created_at' => Carbon::now(),'updated_at' => Carbon::now()],
     ['module_id' => '1','permission_id' => '37','created_at' => Carbon::now(),'updated_at' => Carbon::now()],
+    ['module_id' => '1','permission_id' => '38','created_at' => Carbon::now(),'updated_at' => Carbon::now()],
 ]);
     }
 }

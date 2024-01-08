@@ -7,7 +7,7 @@
 @section('content')
 @component('components.page-header')
 @slot('title') Home @endslot
-@slot('subtitle') Member Attachment @endslot
+@slot('subtitle') Member @endslot
 @endcomponent
 <!-- Content area -->
 <div class="content">
@@ -15,7 +15,7 @@
     <!-- Dashboard content -->
     <div class="card">
         <div class="card-header d-flex align-items-center">
-            <h5 class="mb-0">Member Attachment</h5>
+            <h5 class="mb-0">Member's Photo</h5>
             <div class="d-inline-flex ms-auto"></div>
         </div>
 
@@ -54,7 +54,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 mt-1">
-                                <button type="button" class="btn btn-success" id="saveAttachment" name="saveAttachment" style="min-width: 100%;" disabled>Save  Attachment</button>
+                                <button type="button" class="btn btn-success" id="saveAttachment" name="saveAttachment" style="min-width: 100%;" disabled>Save Image</button>
                             </div>
                         </div>
                     </div>

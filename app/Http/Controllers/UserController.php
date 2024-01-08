@@ -7,8 +7,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 use Exception;
-use DB;
-use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -61,20 +60,22 @@ class UserController extends Controller
 
         try {
 
-            $userData = DB::table("users")
-                ->select(
-                    'users.id',
-                    'users.name',
-                    'users.email',
-                    'users.user_type',
-                    'roles.name AS role_name' // Include the role name from the roles table
-                )
-                ->leftJoin('users_roles', 'users.id', '=', 'users_roles.user_id')
-                ->leftJoin('roles', 'users_roles.role_id', '=', 'roles.id') // Join the roles table
-                ->get();
+            $userData = DB::select("SELECT
+            U.id,
+            U.name,
+            U.email,
+            CASE WHEN U.user_type = 1 THEN 'Employee' ELSE 'User' END AS user_type,
+            R.name AS role_name
+        FROM
+            users U
+        LEFT JOIN
+            users_roles US ON US.user_id = U.id
+        LEFT JOIN
+            roles R ON R.id = US.role_id;
+        ");
 
 
-            return compact('userData');
+            return response()->json($userData);
         } catch (Exception $ex) {
             return $ex->getMessage();
         }
@@ -135,10 +136,10 @@ class UserController extends Controller
 
         try {
             $quary = "SELECT U.id, U.name, U.email, U.user_type, R.id AS role_id, R.name AS role_name
-FROM users U
-INNER JOIN users_roles UR ON UR.user_id = U.id
-INNER JOIN roles R ON R.id = UR.role_id
-WHERE U.id =$id";
+            FROM users U
+            LEFT JOIN users_roles UR ON UR.user_id = U.id
+            LEFT JOIN roles R ON R.id = UR.role_id
+            WHERE U.id =$id";
 
             $result = DB::select($quary);
             return response()->json($result);
@@ -155,92 +156,64 @@ WHERE U.id =$id";
 
 
 
+
+
+            $user = User::findOrFail($id);
+
             $inputPassword = $request->get('password');
 
-            if ($inputPassword  != null) {
+            if (Hash::check($inputPassword, $user->password) || $inputPassword == null) {
 
-                $user = User::findOrFail($id);
-                // if ($inputPassword) {
+
                 if ($user) {
+                    $user->name = $request->input('username');
+                    $user->email = $request->input('email');
+                    //$user->user_id = $request->input('cmbuEmployee');
+                    // $user_type = $request->input('usertype');
 
-                    $user->name = $request->get('username');
-                    $user->email = $request->get('email');
-                    $user->user_type = $request->get('usertype');
-                    $user->password = Hash::make($request->get('password'));
-                    $user->update();
+                    $user->user_type = $request->input('usertype');
+                    $user->save();
+
 
                     $userRoleId = $request->input('userrole');
-                    $userId = $user->id;
+                    $userRole = UserRole::where('user_id', $user->id)->firstOrFail();
 
-                    $query = "UPDATE `users_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
-
-                    $result = \DB::statement($query);
-
-
+                    if ($userRoleId !== 'null') {
+                        $userRole->role_id = $userRoleId;
+                        $userRole->save();
+                    }
 
                     return response()->json(['status' => true]);
                 } else {
                     return response()->json(['error' => 'User not found']);
                 }
             } else {
-                $user = User::findOrFail($id);
+
+                if ($user) {
+                    $user->name = $request->get('username');
+                    $user->email = $request->get('email');
+                    $user->password = Hash::make($request->get('password'));
+                    $user_type = $request->input('usertype');
+                    $user->user_type = ($user_type == 0) ? '0' : '1';
+                    $user->save();
 
 
-                $user->name = $request->get('username');
-                $user->email = $request->get('email');
-                $user->user_type = $request->get('usertype');
-                //$user->password = Hash::make($request->get('password'));
-                $user->save();
+                    $userRoleId = $request->input('userrole');
+                    $userRole = UserRole::where('user_id', $user->id)->firstOrFail();
 
 
+                    if ($userRoleId !== 'null') {
+                        $userRole->role_id = $userRoleId;
+                        $userRole->save();
+                    }
 
-                $userRoleId = $request->input('userrole');
-                $userId = $user->id;
-
-                $query = "UPDATE `users_roles` SET `role_id` = '$userRoleId' WHERE `user_id` = $userId";
-
-                $result = \DB::statement($query);
-
-
-
-                return response()->json($result);
+                    return response()->json(['status' => true]);
+                } else {
+                    return response()->json(['error' => 'User not found']);
+                }
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /* $password = $request->password;
-            if ($password != null) {
-                $user = User::findOrFail($id);
-                $user->name = $request->get('username');
-                $user->email = $request->get('email');
-                $user->user_type = $request->get('usertype');
-                $user->password = Hash::make($request->get('password'));
-
-                $user->update();
-                return response()->json($user);
-            } else {
-                $user = User::findOrFail($id);
-                $user->name = $request->get('username');
-                $user->email = $request->get('email');
-                $user->user_type = $request->get('usertype');
-                $user->update();
-                return response()->json($user);
-            }*/
         } catch (Exception $ex) {
 
             return $ex;
@@ -248,20 +221,19 @@ WHERE U.id =$id";
     }
 
 
-    public function deleteusers($id){
+    public function deleteusers($id)
+    {
         try {
 
-           $user = User::find($id);
+            $user = User::find($id);
 
             $user->delete();
-    
-           $quary="DELETE FROM users_roles WHERE users_roles.user_id=$id";
-           $result = \DB::statement($quary);
-    
+            $userRole = UserRole::where('user_id', $id)->first();
+            $userRole->delete();
+
             return response()->json(['success' => 'Record has been deleted']);
         } catch (Exception $ex) {
             return response()->json(['error' => $ex->getMessage()]);
         }
     }
-    
 }

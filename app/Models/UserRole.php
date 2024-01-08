@@ -11,6 +11,6 @@ use Spatie\Activitylog\LogOptions;
 
 class UserRole extends Model
 {
-    protected $table = 'user_roles';
+    protected $table = 'users_roles';
     use HasFactory;
 }

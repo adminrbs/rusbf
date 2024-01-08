@@ -25,6 +25,7 @@ use App\Http\Controllers\MemberContributionLedgerProcessListController;
 use App\Http\Controllers\MemberLoanController;
 use App\Http\Controllers\MemberLoanLedgerController;
 use App\Http\Controllers\memberLoanLedgerListController;
+use App\Http\Controllers\MemberPortalController;
 use App\Http\Controllers\memberreportController;
 use App\Http\Controllers\MembersLoanRequestController;
 use App\Http\Controllers\MonthendProcessController;
@@ -380,10 +381,10 @@ Route::get('/member_contribution', function () {
 })->middleware(['is.logged', 'can:member_contribution']);
 
 Route::get('/membercontributedata/{id}', [member_contributionController::class, 'membercontributedata']);
-Route::get('/memberNumber/{dept_id}', [member_contributionController::class, 'memberNumber']);
+//Route::get('/memberNumber/{dept_id}', [member_contributionController::class, 'memberNumber']);
 Route::get('/computerNumber/{dept_id}', [member_contributionController::class, 'computerNumber']);
-Route::get('/member_subdepartment', [member_contributionController::class, 'member_subdepartment']);
-Route::get('/fullName/{dept_id}', [member_contributionController::class, 'fullName']);
+//Route::get('/member_subdepartment', [member_contributionController::class, 'member_subdepartment']);
+//Route::get('/fullName/{dept_id}', [member_contributionController::class, 'fullName']);
 Route::get('/imageloard/{id}', [member_contributionController::class, 'imageloard']);
 Route::get('/amountset/{id}', [member_contributionController::class, 'amountset']);
 Route::get('/next/{dept_id}/{member_id}', [member_contributionController::class, 'next']);
@@ -438,3 +439,15 @@ Route::get('/memberwebcamAttachment', function () {
 Route::get('/selectMember',[MemberController::class,'selectMember']);
 Route::post('/saveAttachment',[MemberController::class,'saveAttachment']);
 Route::get('/memberwebimage/{id}',[MemberController::class,'memberwebimage']);
+
+
+Route::get('/memberportal', function () {
+    return view('member_portal');
+})->middleware(['is.logged']);
+Route::post('/savemembwrPortal',[MemberPortalController::class,'savemembwrPortal']);
+Route::get('/getallmembers/{id}',[MemberPortalController::class,'getallmembers']);
+Route::get('/memberportalAllData',[MemberPortalController::class,'memberportalAllData']);
+Route::get('/get_memberportel_data/{id}',[MemberPortalController::class,'get_memberportel_data']);
+Route::post('/update_embwrPortal/{id}',[MemberPortalController::class,'update_embwrPortal']);
+Route::delete('/deletememberpotal/{id}',[MemberPortalController::class,'deletememberpotal']);
+Route::post('/cbxmemberportelStatus/{id}',[MemberPortalController::class,'cbxmemberportelStatus']);

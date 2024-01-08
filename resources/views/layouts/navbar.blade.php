@@ -15,7 +15,7 @@
                 {{-- <a href="/dashboard" style="color: white"><h1>Pharma ERP</h1></a> --}}
             </div>
 
-            <ul class="nav flex-row">
+            {{-- <ul class="nav flex-row">
                 <li class="nav-item d-lg-none">
                     <a href="#navbar_search" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
                         data-bs-toggle="collapse">
@@ -91,12 +91,12 @@
                 </li>
 
                 <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
-                    <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
+                     <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill"
                         data-bs-toggle="dropdown" data-bs-auto-close="outside">
                         <i class="ph-chats"></i>
                         <span
                             class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">8</span>
-                    </a>
+                    </a> 
 
                     <div class="dropdown-menu wmin-lg-400 p-0">
                         <div class="d-flex align-items-center p-3">
@@ -206,11 +206,11 @@
                         </div>
                     </div>
                 </li>
-            </ul>
+            </ul> --}}
 
             <div class="navbar-collapse justify-content-center flex-lg-1 order-2 order-lg-1 collapse"
                 id="navbar_search">
-                <div class="navbar-search flex-fill position-relative mt-2 mt-lg-0 mx-lg-3">
+                {{-- <div class="navbar-search flex-fill position-relative mt-2 mt-lg-0 mx-lg-3">
                     <div class="form-control-feedback form-control-feedback-start flex-grow-1"
                         data-color-theme="dark">
                         <input type="text" class="form-control bg-transparent rounded-pill" placeholder="Search"
@@ -407,7 +407,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                <span style="font-weight: 400;color:#FFD648">Customer Support +94 70 766 2728 /+94 71 187 0575/+94 71 431 0100</span>
             </div>
 
             <ul class="nav flex-row justify-content-end order-1 order-lg-2">

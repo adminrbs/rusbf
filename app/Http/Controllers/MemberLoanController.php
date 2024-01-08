@@ -32,7 +32,7 @@ class MemberLoanController extends Controller
                 $query = "SELECT ml.member_loan_id,ml.member_id, ml.no_of_terms,ml.term_amount,ml.status,ml.term_interest_precentage,l.loan_name,l.loan_code,l.amount
                 FROM member_loans ml
                 LEFT JOIN loans l ON l.loan_id = ml.loan_id
-                WHERE ml.member_id= $id";
+                WHERE ml.member_id= '$id'";
 
                 $contribution = DB::select($query);
                // dd($contribution);
